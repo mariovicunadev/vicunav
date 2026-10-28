@@ -23,7 +23,7 @@ keep it fast and accessible as content grows.
 |---|---|---|
 | Host | **Cloudflare Workers static assets** (`wrangler.jsonc`, no Worker script), connected to the GitHub repo | Cloudflare's current Git flow; free, preview build per PR, DNS and analytics in the same place |
 | Domain | `vicunav.com` on Cloudflare DNS; `www` redirects to the apex | One canonical URL for SEO |
-| Analytics | Cloudflare Web Analytics, enabled in the Pages project (no code, no cookies) | No consent banner needed |
+| Analytics | Cloudflare Web Analytics, enabled for the site (no code, no cookies) | No consent banner needed |
 | CI | GitHub Actions: `astro check` → contrast → build → Lighthouse CI | Same gates on every PR |
 | Social card | 1200×630 `og.png` generated from the tokens by a script | Brand-consistent, reproducible |
 | Headers | `public/_headers`: security headers, long cache for hashed assets | Best practices without a server |
@@ -31,7 +31,7 @@ keep it fast and accessible as content grows.
 ## Scope
 
 **In scope**
-- GitHub repository, Cloudflare Pages project, custom domain with HTTPS
+- GitHub repository, Cloudflare Worker (static assets), custom domain with HTTPS
 - `.github/workflows/ci.yml`, `lighthouserc.json`
 - `wrangler.jsonc`, `public/robots.txt`, `public/_headers`, `public/og.png` + `tools/og.mjs`
 - Open Graph image tags on every page
