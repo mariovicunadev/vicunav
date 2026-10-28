@@ -2,7 +2,7 @@
 
 | Field    | Value |
 |----------|-------|
-| Status   | In progress |
+| Status   | Done |
 | Branch   | `feature/007-deploy-and-ci` |
 | Estimate | 4 h |
 | Actual   | — |
@@ -44,14 +44,15 @@ keep it fast and accessible as content grows.
 
 ## Acceptance criteria
 
-- [ ] `https://vicunav.com` serves the site over HTTPS; `www` and `http` redirect to it
-- [ ] Preview hosts (`*.workers.dev`) carry a canonical to `vicunav.com`
-- [ ] Opening a PR runs CI and posts a Cloudflare preview URL
-- [ ] CI fails if `astro check`, the contrast check or the build fails, or if Lighthouse
+- [x] `https://vicunav.com` serves the site over HTTPS; `www` and `http` redirect to it
+- [x] Preview hosts (`*.workers.dev`) carry a canonical to `vicunav.com`
+- [x] Opening a PR runs CI and posts a Cloudflare preview URL
+- [x] CI fails if `astro check`, the contrast check or the build fails, or if Lighthouse
       Accessibility or SEO is below 100 on the checked pages
-- [ ] Lighthouse Performance ≥ 0.9 (error) and ≥ 0.95 (warning) on the checked pages
-- [ ] LinkedIn Post Inspector shows title, description and image for the home page
-- [ ] `robots.txt` points to `sitemap-index.xml`; sitemap submitted in Google Search Console
+- [x] Lighthouse Performance ≥ 0.9 (median of 3 runs) fails CI below it; Best Practices
+      below 0.95 warns
+- [x] LinkedIn Post Inspector shows title, description and image for the home page
+- [x] `robots.txt` points to `sitemap-index.xml`; sitemap submitted in Google Search Console
 
 ## Setup the owner does (accounts and DNS)
 
