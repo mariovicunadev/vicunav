@@ -27,6 +27,7 @@ keep it fast and accessible as content grows.
 | CI | GitHub Actions: `astro check` → contrast → build → Lighthouse CI | Same gates on every PR |
 | Social card | 1200×630 `og.png` generated from the tokens by a script | Brand-consistent, reproducible |
 | Headers | `public/_headers`: security headers, long cache for hashed assets | Best practices without a server |
+| URLs | No trailing slash (`/about`): Astro `trailingSlash: 'never'` + `build.format: 'file'`; assets `html_handling: auto-trailing-slash` | Links, canonical and sitemap use the URL that is served with a 200; no redirect hop per click |
 
 ## Scope
 

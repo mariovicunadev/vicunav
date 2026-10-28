@@ -5,6 +5,9 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://vicunav.com',
+  // URLs without a trailing slash (/about) served directly from about.html: no redirect hop.
+  trailingSlash: 'never',
+  build: { format: 'file' },
   integrations: [mdx(), sitemap()],
   markdown: {
     shikiConfig: {
