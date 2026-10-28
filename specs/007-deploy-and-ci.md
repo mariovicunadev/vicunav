@@ -21,9 +21,9 @@ keep it fast and accessible as content grows.
 
 | Topic | Decision | Why |
 |---|---|---|
-| Host | **Cloudflare Pages**, connected to the GitHub repo | Free, unlimited bandwidth, preview deploy per PR, DNS and analytics in the same place |
+| Host | **Cloudflare Workers static assets** (`wrangler.jsonc`, no Worker script), connected to the GitHub repo | Cloudflare's current Git flow; free, preview build per PR, DNS and analytics in the same place |
 | Domain | `vicunav.com` on Cloudflare DNS; `www` redirects to the apex | One canonical URL for SEO |
-| Analytics | Cloudflare Web Analytics, enabled in the Pages project (no code, no cookies) | No consent banner needed |
+| Analytics | Cloudflare Web Analytics, enabled for the site (no code, no cookies) | No consent banner needed |
 | CI | GitHub Actions: `astro check` → contrast → build → Lighthouse CI | Same gates on every PR |
 | Social card | 1200×630 `og.png` generated from the tokens by a script | Brand-consistent, reproducible |
 | Headers | `public/_headers`: security headers, long cache for hashed assets | Best practices without a server |
@@ -31,9 +31,9 @@ keep it fast and accessible as content grows.
 ## Scope
 
 **In scope**
-- GitHub repository, Cloudflare Pages project, custom domain with HTTPS
+- GitHub repository, Cloudflare Worker (static assets), custom domain with HTTPS
 - `.github/workflows/ci.yml`, `lighthouserc.json`
-- `public/robots.txt`, `public/_headers`, `public/og.png` + `tools/og.mjs`
+- `wrangler.jsonc`, `public/robots.txt`, `public/_headers`, `public/og.png` + `tools/og.mjs`
 - Open Graph image tags on every page
 
 **Out of scope**
@@ -43,7 +43,8 @@ keep it fast and accessible as content grows.
 
 ## Acceptance criteria
 
-- [ ] `https://vicunav.com` serves the site over HTTPS; `www` and `*.pages.dev` redirect or are not indexed
+- [ ] `https://vicunav.com` serves the site over HTTPS; `www` and `http` redirect to it
+- [ ] Preview hosts (`*.workers.dev`) carry a canonical to `vicunav.com`
 - [ ] Opening a PR runs CI and posts a Cloudflare preview URL
 - [ ] CI fails if `astro check`, the contrast check or the build fails, or if Lighthouse
       Accessibility or SEO is below 100 on the checked pages
@@ -54,11 +55,11 @@ keep it fast and accessible as content grows.
 ## Setup the owner does (accounts and DNS)
 
 1. Create the GitHub repo or approve its creation.
-2. Cloudflare: Workers & Pages → Create → Pages → Connect to Git → pick the repo.
-   Build command `npm run build`, output `dist`, env var `NODE_VERSION=24`.
-3. Pages project → Custom domains → add `vicunav.com` and `www.vicunav.com`.
-   If the domain is registered elsewhere, change its nameservers to the two Cloudflare gives.
-4. Pages project → Metrics → enable Web Analytics.
+2. Cloudflare: Workers & Pages → Create → Import a repository → `vicunav`.
+   Build command `npm run build`, deploy command `npx wrangler deploy`, env var `NODE_VERSION=24`.
+3. Worker → Settings → Domains & Routes → add `vicunav.com` and `www.vicunav.com` as custom
+   domains. Existing DNS records for those names (e.g. a previous host) must be removed first.
+4. Enable Web Analytics for the site.
 5. Google Search Console → add domain property → verify by DNS TXT → submit
    `https://vicunav.com/sitemap-index.xml`.
 
