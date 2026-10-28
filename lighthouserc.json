@@ -5,10 +5,10 @@
       "numberOfRuns": 3,
       "url": [
         "http://localhost/index.html",
-        "http://localhost/work/vicubites/index.html",
-        "http://localhost/work/vicubites/feeding-calculator/index.html",
-        "http://localhost/services/index.html",
-        "http://localhost/about/index.html"
+        "http://localhost/work/vicubites.html",
+        "http://localhost/work/vicubites/feeding-calculator.html",
+        "http://localhost/services.html",
+        "http://localhost/about.html"
       ]
     },
     "assert": {

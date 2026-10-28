@@ -1,6 +1,10 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
-export const formatDate = (d: Date) =>
+/** Public path for a page: build.format 'file' reports `/about.html` and `/index.html`. */
+export const cleanPath = (pathname: string) =>
+  pathname.replace(/(^|\/)index\.html$/, '$1').replace(/\.html$/, '') || '/';
+
+export const formatDate =(d: Date) =>
   d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
 
 /** Drafts show in `astro dev` and never reach the production build (spec 004). */
