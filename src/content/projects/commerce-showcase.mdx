@@ -1,0 +1,43 @@
+---
+title: Commerce Showcase
+summary: Five concept stores (skincare, outdoor, furniture, tea, audio) built from one repo of brand tokens, data and scripts, each on a different Horizon-family theme.
+kind: concept
+role: Lead developer
+year: 2026
+status: in-progress
+surfaces: [theme, data, checkout]
+stack: [Node.js, Admin GraphQL API, Shopify CLI, opentype.js, sharp, resvg, GitHub Actions]
+repo:
+  visibility: on-request
+metrics:
+  - value: '5'
+    label: Plus development stores
+  - value: '43'
+    label: specs with acceptance criteria
+featured: true
+order: 2
+---
+
+## Context
+
+Agencies and in-house teams rarely ship one store. They ship many, with different brands, themes
+and markets, and they need the setup to be repeatable. This project builds five stores in five
+niches from a single repository: Saelle Care (skincare), Fjelder (technical outdoor, Canada
+with Markets), Ondo Studio (made-to-order furniture with B2B), Yuzora Tea House (tea and
+corporate gifting) and Kairon Audio (headphones and speakers).
+
+## Approach
+
+- **Design tokens as the single source of truth.** Each brand's colors, type, radius and motion
+  live in one `tokens.json`; theme settings, checkout branding and the brand book are generated
+  from it.
+- **Accessibility as a build step.** A contrast gate fails the build when any declared color pair
+  drops below WCAG 2.2 AA.
+- **Stores rebuilt from code.** Catalog, metaobjects, images, collections and publication load
+  from versioned files with idempotent Admin API scripts.
+- **Least privilege.** Each store requests only the Admin API scopes its scripts use.
+
+## Process
+
+One spec per feature, one branch and pull request per spec, tags per store release. Every base
+theme is committed untouched first, so each diff shows only custom work.

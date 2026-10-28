@@ -1,0 +1,23 @@
+---
+title: Ingredient pages from metaobjects
+project: vicubites
+problem: Pet owners compare recipes by ingredient, but ingredient information was repeated as text in every product description.
+decision: An Ingredient metaobject with web pages enabled, referenced from products through a list metafield; each ingredient page lists the recipes that use it.
+status: shipped
+surfaces: [theme, data]
+skills: [Metaobjects, Metafields, Liquid, Information architecture]
+quality:
+  - Merchant edits one ingredient entry; every product and page updates
+  - Reverse lookup trade-off documented in the spec
+  - Spec, PR with self review, Theme Check with 0 errors
+order: 3
+---
+
+Each ingredient is a metaobject entry with a name, origin, role in the recipe and an
+illustration. Products reference ingredients in a list metafield, and the product page renders
+them as chips linking to the ingredient's own page.
+
+The interesting part is the reverse direction: Liquid can't query "products that reference this
+metaobject". The ingredient page iterates a collection and checks each product's
+`custom.ingredients` list. That is cheap for a 20-product catalog; the spec records the cost
+curve and the switch to a search-based lookup if the catalog grows.

@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page not found">
+  <section class="container nf">
+    <p class="mono muted">404</p>
+    <h1>This page isn’t in the catalog.</h1>
+    <div class="button-row">
+      <a class="button button--primary" href="/">Home</a>
+      <a class="button button--ghost" href="/work">See the work</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-10);
+  }
+
+  h1 {
+    font-size: var(--step-4);
+    max-width: 16ch;
+  }
+</style>

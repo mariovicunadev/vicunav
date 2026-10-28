@@ -1,0 +1,26 @@
+---
+title: Brand tokens to theme settings in one command
+project: commerce-showcase
+problem: Hand-copying brand colors and fonts into five themes and checkout drifts within days and nobody notices until a launch review.
+decision: One tokens.json per brand; a script maps it into each theme's settings_data.json through a per-theme mapping and rejects any setting id or value the theme schema doesn't define.
+status: shipped
+surfaces: [theme, data]
+skills: [Design systems, Node.js, OS 2.0 settings schema, Automation]
+quality:
+  - Regenerating from unchanged tokens produces no diff
+  - Unknown setting ids or select values fail the script instead of writing silently
+  - Brand book (BRAND.md) generated from the same tokens
+order: 1
+---
+
+Themes in the Horizon family share a settings model but not the same ids. Each store keeps a
+small mapping from token roles (`background`, `text`, `accent`…) to its theme's settings, and
+the script validates every write against `settings_schema.json` before touching
+`settings_data.json`.
+
+```bash
+npm run theme:brand saelle
+```
+
+The same tokens feed checkout and customer account branding, the favicon set and the Open Graph
+images, so one change to a brand color reaches every surface.

@@ -1,0 +1,46 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import SectionLabel from '../../components/SectionLabel.astro';
+import { getFeatures, getProjects } from '../../lib/content';
+
+const projects = await getProjects();
+const features = await getFeatures();
+---
+
+<Base title="Work" description="Shopify case studies: themes, apps, checkout and headless storefronts, each feature with its problem, demo, decision and code.">
+  <section class="container page-head">
+    <SectionLabel label="Work" />
+    <h1>Case studies</h1>
+    <p class="lede">
+      Each project breaks down into features. Each feature shows the business problem, a demo,
+      the technical decision, the code and how it was verified.
+    </p>
+  </section>
+  <section class="container grid">
+    {
+      projects.map((p) => (
+        <ProjectCard project={p} featureCount={features.filter((f) => f.data.project.id === p.id).length} />
+      ))
+    }
+  </section>
+</Base>
+
+<style>
+  .page-head {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-9) var(--space-7);
+  }
+
+  h1 {
+    font-size: var(--step-4);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+    gap: var(--space-8) var(--space-6);
+    padding-bottom: var(--space-9);
+  }
+</style>

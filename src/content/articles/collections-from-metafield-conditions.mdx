@@ -1,0 +1,26 @@
+---
+title: Building Shopify collections from metafield conditions with the Admin API
+description: Automated collections driven by typed metafields, created with the collection sources input from API 2026-10 instead of the deprecated ruleSet.
+pubDate: 2026-11-04
+tags: [admin-api, metafields, collections]
+draft: true
+project: commerce-showcase
+---
+
+> Draft outline. Write from the seed script and its PR before publishing.
+
+## Why metafields beat tags for collections
+
+- Typed values, merchant-editable, filterable on the storefront.
+
+## The old way: `ruleSet`
+
+- What it did, why it is deprecated.
+
+## The new way: `sources`
+
+- Minimal mutation, conditions on list metafields, idempotent reruns.
+
+## Gotchas
+
+- Publication lookup, signature to avoid needless rewrites.

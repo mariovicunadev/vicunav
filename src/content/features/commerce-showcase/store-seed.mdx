@@ -1,0 +1,26 @@
+---
+title: Idempotent store seed
+project: commerce-showcase
+problem: Rebuilding a store's catalog, custom data and collections by hand takes days and can't be reviewed.
+decision: One command loads definitions, metaobjects, products, images, collections and publication from versioned files with the Admin GraphQL API; reruns change nothing.
+status: in-progress
+surfaces: [data]
+skills: [Admin GraphQL API, productSet, metaobjectUpsert, Idempotency, Node.js]
+quality:
+  - Second run reports identical counts and 0 files to upload
+  - --dry-run prints the plan without writing
+  - Built-in verify step compares the store with the source files
+order: 3
+---
+
+Products go through `productSet`, which takes the whole desired state of a product, so the
+script describes what the store should look like instead of how to change it. Images are
+uploaded once by content hash and attached by file id; collections are built from metafield
+conditions with the collection `sources` input from API version 2026-10.
+
+```bash
+npm run seed -- saelle saelle-care.myshopify.com
+```
+
+The result for Saelle Care: 18 products, 30 variants, ingredient metaobjects with INCI names and
+9 collections driven by metafields, rebuilt from the repository in one run.

@@ -1,0 +1,40 @@
+---
+title: Vicubites
+summary: A premium pet food brand on Shopify Plus, blending B2C and B2B, built on Horizon with custom theme blocks, autoship and a typed data model.
+kind: concept
+role: Lead developer
+year: 2026
+status: in-progress
+surfaces: [theme, data]
+stack: [Liquid, Horizon (OS 2.0), JavaScript, Metafields, Metaobjects, Shopify Subscriptions, Search & Discovery]
+repo:
+  visibility: on-request
+live:
+  url: https://vicubites.myshopify.com
+  note: Password-protected store, password on request
+featured: true
+order: 1
+---
+
+## Context
+
+Vicubites sells premium dog and cat food to two audiences on the same store: pet owners who buy
+once or on autoship, and vet clinics, pet shops and groomers who buy wholesale. The catalog is
+nutrition-heavy (proteins, life stages, ingredients), so most product information is data,
+not prose.
+
+## Approach
+
+- **Native first.** Horizon, Search & Discovery and Shopify Subscriptions cover most needs; custom
+  code goes only where they stop.
+- **Typed data instead of tags.** Nine `custom` product metafields and an `Ingredient` metaobject
+  drive filters, product page blocks and ingredient pages, all editable by the merchant.
+- **Reusable theme blocks.** Badge, Benefit, Ingredients and Purchase options work in any
+  section that accepts blocks.
+- **Progressive enhancement.** Every interactive piece (calculator, autoship picker, filters) has a
+  working no-JavaScript baseline.
+
+## Process
+
+Each feature starts as a spec with acceptance criteria and an estimate, ships through a pull
+request with a self review, and passes Theme Check with no errors before merge.

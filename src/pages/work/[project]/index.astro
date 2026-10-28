@@ -1,0 +1,252 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Chip from '../../../components/Chip.astro';
+import SectionLabel from '../../../components/SectionLabel.astro';
+import SpecTable from '../../../components/SpecTable.astro';
+import { featureSlug, getFeatures, getProjects } from '../../../lib/content';
+import { surfaces } from '../../../data/site';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project, i) => ({
+    params: { project: project.id },
+    props: { project, next: projects[(i + 1) % projects.length] },
+  }));
+}
+
+const { project, next } = Astro.props;
+const p = project.data;
+const { Content } = await render(project);
+const features = await getFeatures(project.id);
+
+const repoLabel = {
+  public: 'Public',
+  private: 'Private',
+  'on-request': 'Read access on request',
+}[p.repo.visibility];
+---
+
+<Base title={p.title} description={p.summary}>
+  <article>
+    <header class="container head">
+      <nav class="mono crumbs" aria-label="Breadcrumb">
+        <a href="/work">Work</a> / <span aria-current="page">{p.title}</span>
+      </nav>
+      <div class="head__meta">
+        <Chip status={p.status} />
+        {p.kind === 'concept' && <Chip label="Concept brand — not a client" />}
+      </div>
+      <h1>{p.title}</h1>
+      <p class="lede">{p.summary}</p>
+    </header>
+
+    <div class="container layout">
+      <aside class="layout__aside">
+        <SpecTable
+          rows={[
+            { key: 'Role', value: p.role },
+            { key: 'Year', value: String(p.year) },
+            { key: 'Surfaces', value: p.surfaces.map((s) => surfaces[s]).join(', ') },
+            { key: 'Stack', value: p.stack.join(', ') },
+            { key: 'Source', value: repoLabel },
+            { key: 'Live', value: p.live?.note },
+          ]}
+        />
+        {
+          p.metrics.length > 0 && (
+            <ul class="metrics">
+              {p.metrics.map((m) => (
+                <li>
+                  <span class="metrics__value">{m.value}</span>
+                  <span class="mono muted">{m.label}</span>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+        <div class="button-row aside__actions">
+          {p.live && <a class="button button--ghost" href={p.live.url}>View store</a>}
+          {p.repo.url && p.repo.visibility === 'public' && <a class="button button--ghost" href={p.repo.url}>Source</a>}
+          {p.repo.visibility !== 'public' && <a class="button button--ghost" href="/contact">Request access</a>}
+        </div>
+      </aside>
+
+      <div class="layout__main">
+        {p.cover && <Image class="cover" src={p.cover} alt={p.coverAlt ?? ''} widths={[800, 1400]} sizes="(min-width: 60rem) 48rem, 100vw" />}
+        <div class="prose">
+          <Content />
+        </div>
+      </div>
+    </div>
+
+    {
+      features.length > 0 && (
+        <section class="section container" aria-labelledby="features-title">
+          <SectionLabel label="Features" />
+          <h2 id="features-title" class="features__title">Feature breakdown</h2>
+          <ol class="features">
+            {features.map((f, i) => (
+              <li>
+                <span class="mono muted">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3>
+                    <a href={`/work/${project.id}/${featureSlug(f)}`}>{f.data.title}</a>
+                  </h3>
+                  <p class="muted">{f.data.problem}</p>
+                </div>
+                <Chip status={f.data.status} />
+              </li>
+            ))}
+          </ol>
+        </section>
+      )
+    }
+
+    {
+      next.id !== project.id && (
+        <nav class="container next" aria-label="Next project">
+          <span class="mono muted">Next project</span>
+          <a href={`/work/${next.id}`}>{next.data.title} →</a>
+        </nav>
+      )
+    }
+  </article>
+</Base>
+
+<style>
+  .head {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-8) var(--space-7);
+  }
+
+  .crumbs {
+    color: var(--color-muted);
+  }
+
+  .head__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  h1 {
+    font-size: var(--step-5);
+    letter-spacing: -0.035em;
+  }
+
+  .layout {
+    display: grid;
+    gap: var(--space-8);
+    padding-bottom: var(--space-8);
+  }
+
+  @media (min-width: 60rem) {
+    .layout {
+      grid-template-columns: 20rem 1fr;
+    }
+
+    .layout__aside {
+      position: sticky;
+      top: var(--space-5);
+      align-self: start;
+    }
+  }
+
+  .metrics {
+    display: grid;
+    gap: var(--space-4);
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .metrics li {
+    display: grid;
+  }
+
+  .metrics__value {
+    font-size: var(--step-3);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .aside__actions {
+    margin-top: var(--space-6);
+  }
+
+  .cover {
+    width: 100%;
+    margin-bottom: var(--space-7);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+  }
+
+  .features__title {
+    font-size: var(--step-3);
+    margin-bottom: var(--space-6);
+  }
+
+  .features {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-text);
+  }
+
+  .features li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    gap: var(--space-4);
+    align-items: start;
+    padding-block: var(--space-5);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .features h3 {
+    font-size: var(--step-1);
+    margin-bottom: var(--space-2);
+  }
+
+  .features a {
+    text-decoration: none;
+  }
+
+  .features a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .features li:hover h3 {
+    color: var(--color-accent-ink);
+  }
+
+  @media (max-width: 40rem) {
+    .features li {
+      grid-template-columns: 2.5rem 1fr;
+    }
+
+    .features li > :global(.chip) {
+      grid-column: 2;
+      justify-self: start;
+    }
+  }
+
+  .next {
+    display: grid;
+    gap: var(--space-2);
+    padding-block: var(--space-8);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .next a {
+    font-size: var(--step-3);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+</style>

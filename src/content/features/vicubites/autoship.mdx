@@ -1,0 +1,26 @@
+---
+title: Autoship with selling plans
+project: vicubites
+problem: Repeat customers want food to arrive on a schedule without leaving the product page or creating a separate subscription.
+decision: Shopify Subscriptions for billing and a custom selling plan picker in the theme, bound to the product form with the HTML form attribute so it works without JavaScript.
+status: shipped
+surfaces: [theme, app]
+skills: [Selling plans, Shopify Subscriptions, Liquid, Progressive enhancement, B2B]
+quality:
+  - Prices read from selling_plan_allocations, never recalculated in the theme
+  - Selected plan survives a variant (bag size) change
+  - Spec, PR with self review, Theme Check with 0 errors
+order: 2
+---
+
+Shopify Subscriptions owns the contracts and billing; the theme owns the experience. The picker
+lists each delivery frequency with its per-delivery price taken from the variant's
+`selling_plan_allocations`, so discounts configured in the app are always what the shopper sees.
+
+Inputs sit outside the product form in the markup but submit with it through the `form`
+attribute. No script is needed to send `selling_plan` with the cart request, and the same
+contract is what any subscription app (Recharge, Skio, Loop) reads.
+
+B2B buyers on the blended store get the standard buy box: Shopify doesn't allow subscription
+purchases in a B2B context, so the picker renders only when `customer.b2b?` is false and the
+product has selling plans.

@@ -1,0 +1,68 @@
+---
+// Skills matrix built from the `skills` field of every feature: publishing a feature
+// updates it, so the list never claims a skill without a page that shows it.
+import Chip from './Chip.astro';
+import { featureSlug, getFeatures } from '../lib/content';
+
+const features = (await getFeatures()).filter((f) => f.data.status !== 'planned');
+const bySkill = new Map<string, { href: string; title: string }[]>();
+for (const f of features) {
+  for (const skill of f.data.skills) {
+    const links = bySkill.get(skill) ?? [];
+    links.push({ href: `/work/${f.data.project.id}/${featureSlug(f)}`, title: f.data.title });
+    bySkill.set(skill, links);
+  }
+}
+const skills = [...bySkill].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+---
+
+<ul class="proof-skills">
+  {
+    skills.map(([skill, links]) => (
+      <li>
+        <Chip label={skill} />
+        <span class="proof-skills__links">
+          {links.map((l, i) => (
+            <>
+              {i > 0 && ', '}
+              <a href={l.href}>{l.title}</a>
+            </>
+          ))}
+        </span>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .proof-skills {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-text);
+  }
+
+  .proof-skills li {
+    display: grid;
+    grid-template-columns: minmax(12rem, 16rem) 1fr;
+    gap: var(--space-2) var(--space-5);
+    align-items: baseline;
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .proof-skills li > :global(.chip) {
+    justify-self: start;
+  }
+
+  .proof-skills__links {
+    color: var(--color-muted);
+    font-size: var(--step--1);
+  }
+
+  @media (max-width: 40rem) {
+    .proof-skills li {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

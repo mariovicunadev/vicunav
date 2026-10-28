@@ -1,0 +1,115 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import { site } from '../data/site';
+
+const subject = encodeURIComponent('Shopify project');
+const channels = [
+  { label: 'Email', value: site.email, href: `mailto:${site.email}?subject=${subject}` },
+  { label: 'LinkedIn', value: 'in/mario-vicuna', href: site.socials.linkedin },
+  { label: 'Upwork', value: 'Hire me on Upwork', href: site.socials.upwork },
+  { label: 'GitHub', value: 'mariovicunadev', href: site.socials.github },
+].filter((c) => c.href);
+---
+
+<Base title="Contact" description="Contact Mario Vicuña for Shopify projects or full-time roles.">
+  <section class="container page-head">
+    <SectionLabel label="Contact" />
+    <h1>Let’s talk about your store or your team.</h1>
+    <p class="lede">I reply within one business day. {site.availability}.</p>
+  </section>
+
+  <section class="container grid">
+    <ul class="channels">
+      {
+        channels.map((c) => (
+          <li>
+            <span class="mono muted">{c.label}</span>
+            <a href={c.href}>{c.value}</a>
+          </li>
+        ))
+      }
+    </ul>
+    <aside class="brief">
+      <h2 class="mono">For projects, a good first message includes</h2>
+      <ol>
+        <li>Your store URL and whether it is on Shopify Plus</li>
+        <li>What you want to change, and why now</li>
+        <li>Your timeline and budget range</li>
+        <li>Apps you rely on (subscriptions, reviews, upsells…)</li>
+      </ol>
+      <p class="muted">For roles: the job description and the team I would join is plenty.</p>
+    </aside>
+  </section>
+</Base>
+
+<style>
+  .page-head {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-9) var(--space-7);
+  }
+
+  h1 {
+    font-size: var(--step-4);
+    max-width: 18ch;
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--space-8);
+    padding-bottom: var(--space-9);
+  }
+
+  @media (min-width: 60rem) {
+    .grid {
+      grid-template-columns: 1.4fr 1fr;
+    }
+  }
+
+  .channels {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-text);
+  }
+
+  .channels li {
+    display: grid;
+    gap: var(--space-1);
+    padding-block: var(--space-5);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .channels a {
+    font-size: var(--step-2);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .brief {
+    display: grid;
+    align-content: start;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+  }
+
+  .brief h2 {
+    font-size: var(--step--1);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .brief ol {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding-left: 1.2em;
+  }
+</style>

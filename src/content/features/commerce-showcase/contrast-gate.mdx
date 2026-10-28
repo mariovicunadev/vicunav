@@ -1,0 +1,35 @@
+---
+title: Automated WCAG contrast gate
+project: commerce-showcase
+problem: Accessibility issues in brand colors are usually found after launch, when changing them means a redesign.
+decision: Every color pair a brand declares is checked against WCAG 2.2 (4.5:1 for text, 3:1 for large text and UI) in a script that fails the build.
+status: shipped
+surfaces: [data]
+skills: [Accessibility, WCAG 2.2, Node.js, CI]
+quality:
+  - Caught two border colors below 3:1 before any theme was styled
+  - Contrast table published in each brand's generated BRAND.md
+order: 2
+---
+
+The check is twelve lines of math from the WCAG definition of relative luminance, with no
+dependencies:
+
+```js title="tools/brand/contrast.mjs"
+export function luminance(hex) {
+  const [r, g, b] = hex
+    .replace('#', '')
+    .match(/.{2}/g)
+    .map((h) => parseInt(h, 16) / 255)
+    .map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+export function contrast(a, b) {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
+```
+
+Each brand declares the pairs it actually uses (text on background, button label on accent,
+border on surface), so the gate checks real combinations instead of every possible one.

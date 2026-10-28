@@ -1,0 +1,206 @@
+---
+import { Image } from 'astro:assets';
+import { getEntry, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Chip from '../../../components/Chip.astro';
+import SectionLabel from '../../../components/SectionLabel.astro';
+import { featureSlug, getFeatures } from '../../../lib/content';
+import { surfaces } from '../../../data/site';
+
+export async function getStaticPaths() {
+  const features = await getFeatures();
+  return features.map((feature) => {
+    const siblings = features.filter((f) => f.data.project.id === feature.data.project.id);
+    const i = siblings.indexOf(feature);
+    return {
+      params: { project: feature.data.project.id, feature: featureSlug(feature) },
+      props: { feature, prev: siblings[i - 1], next: siblings[i + 1] },
+    };
+  });
+}
+
+const { feature, prev, next } = Astro.props;
+const f = feature.data;
+const project = await getEntry(f.project);
+const { Content } = await render(feature);
+const base = `/work/${project.id}`;
+---
+
+<Base title={`${f.title} — ${project.data.title}`} description={f.problem}>
+  <article>
+    <header class="container head">
+      <nav class="mono crumbs" aria-label="Breadcrumb">
+        <a href="/work">Work</a> / <a href={base}>{project.data.title}</a> /
+        <span aria-current="page">{f.title}</span>
+      </nav>
+      <div class="head__meta">
+        <Chip status={f.status} />
+        {f.surfaces.map((s) => <Chip label={surfaces[s]} />)}
+      </div>
+      <h1>{f.title}</h1>
+    </header>
+
+    <div class="container blocks">
+      <section class="block" aria-labelledby="problem">
+        <SectionLabel index="01" label="Problem" />
+        <p id="problem" class="block__statement">{f.problem}</p>
+      </section>
+
+      {
+        (f.demo.length > 0 || f.video) && (
+          <section class="block" aria-label="Demo">
+            <SectionLabel index="02" label="Demo" />
+            {f.video && (
+              <video class="media" src={f.video} controls muted playsinline preload="metadata" />
+            )}
+            {f.demo.map((d) => (
+              <figure>
+                <Image class="media" src={d.src} alt={d.alt} widths={[800, 1400]} sizes="(min-width: 60rem) 60rem, 100vw" />
+                <figcaption class="mono muted">{d.alt}</figcaption>
+              </figure>
+            ))}
+          </section>
+        )
+      }
+
+      <section class="block" aria-labelledby="decision">
+        <SectionLabel index="03" label="Decision" />
+        <p id="decision" class="block__statement">{f.decision}</p>
+      </section>
+
+      <section class="block" aria-label="Build">
+        <SectionLabel index="04" label="Build" />
+        <div class="prose">
+          <Content />
+        </div>
+      </section>
+
+      {
+        f.quality.length > 0 && (
+          <section class="block" aria-label="Quality evidence">
+            <SectionLabel index="05" label="Quality" />
+            <ul class="quality">
+              {f.quality.map((q) => <li>{q}</li>)}
+            </ul>
+          </section>
+        )
+      }
+
+      {
+        f.skills.length > 0 && (
+          <ul class="skills" aria-label="Skills">
+            {f.skills.map((s) => <li><Chip label={s} /></li>)}
+          </ul>
+        )
+      }
+    </div>
+
+    <nav class="container pager" aria-label="More features">
+      {prev ? <a href={`${base}/${featureSlug(prev)}`}><span class="mono muted">← Previous</span>{prev.data.title}</a> : <span />}
+      {next ? <a class="pager__next" href={`${base}/${featureSlug(next)}`}><span class="mono muted">Next →</span>{next.data.title}</a> : <a class="pager__next" href={base}><span class="mono muted">Back to</span>{project.data.title}</a>}
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .head {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-8) var(--space-6);
+  }
+
+  .crumbs {
+    color: var(--color-muted);
+  }
+
+  .head__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  h1 {
+    font-size: var(--step-4);
+    letter-spacing: -0.03em;
+    max-width: 20ch;
+  }
+
+  .blocks {
+    display: grid;
+    gap: var(--space-8);
+    padding-bottom: var(--space-8);
+  }
+
+  .block__statement {
+    font-size: var(--step-2);
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    max-width: 34ch;
+  }
+
+  figure {
+    margin: 0 0 var(--space-6);
+  }
+
+  .media {
+    width: 100%;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+  }
+
+  figcaption {
+    margin-top: var(--space-2);
+  }
+
+  .quality {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: var(--prose-width);
+  }
+
+  .quality li {
+    padding-left: var(--space-6);
+    position: relative;
+  }
+
+  .quality li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-ok);
+    font-family: var(--font-mono);
+  }
+
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+    padding-block: var(--space-7);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .pager a {
+    display: grid;
+    gap: var(--space-1);
+    font-size: var(--step-1);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .pager__next {
+    text-align: right;
+  }
+</style>

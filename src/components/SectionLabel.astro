@@ -1,0 +1,36 @@
+---
+interface Props {
+  index?: string;
+  label: string;
+}
+
+const { index, label } = Astro.props;
+---
+
+<p class="section-label mono">
+  {index && <span class="section-label__index">{index}</span>}
+  <span>{label}</span>
+</p>
+
+<style>
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-line);
+  }
+
+  .section-label__index {
+    color: var(--color-accent-ink);
+  }
+</style>

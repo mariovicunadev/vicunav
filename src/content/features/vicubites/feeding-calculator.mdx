@@ -1,0 +1,48 @@
+---
+title: Feeding calculator
+project: vicubites
+problem: Shoppers hesitate on a premium bag of food when they can't tell how long it will last for their pet.
+decision: A web component following Horizon's own Component pattern, fed by a JSON data island from Liquid, with a static portion table as the no-JavaScript fallback.
+status: shipped
+surfaces: [theme]
+skills: [Web components, Liquid, Progressive enhancement, Accessibility, Unit testing]
+quality:
+  - Spec with acceptance criteria and estimate vs. actual
+  - Portion formula covered by unit tests
+  - Works without JavaScript (static table), keyboard and screen reader friendly
+  - Theme Check with 0 errors
+order: 1
+---
+
+The calculator lives in a theme section, so merchants can place it on any product or landing
+page from the theme editor. Liquid renders the configuration (calorie density, weight limits,
+activity factors, bag sizes) as a JSON data island; the component reads it once and recalculates
+on input.
+
+The formula is a pure function, exported separately so it can be tested without a DOM:
+
+```js title="assets/feeding-calculator.js"
+/**
+ * Daily portion estimate for adult maintenance.
+ * Resting energy: 70 × kg^0.75 (kcal/day); maintenance = resting × activity factor.
+ */
+export function dailyGrams({ weightKg, factor, kcalPerKg }) {
+  const kcalPerDay = 70 * weightKg ** 0.75 * factor;
+  return Math.round((kcalPerDay / kcalPerKg) * 1000);
+}
+
+export class FeedingCalculatorComponent extends Component {
+  requiredRefs = ['config', 'species', 'weight', 'activity', 'result', 'error'];
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.#config = JSON.parse(this.refs.config.textContent ?? '{}');
+    // The form is hidden until JavaScript runs; the static table remains as a fallback.
+    this.classList.add('is-interactive');
+    this.calculate();
+  }
+}
+```
+
+Invalid weights set `aria-invalid` on the input and reveal an error message tied to it, instead
+of silently showing a wrong number.

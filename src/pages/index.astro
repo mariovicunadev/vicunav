@@ -1,0 +1,282 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ArticleList from '../components/ArticleList.astro';
+import { site, proof } from '../data/site';
+import { services, process } from '../data/services';
+import { getArticles, getFeatures, getProjects } from '../lib/content';
+
+const projects = (await getProjects()).filter((p) => p.data.featured).slice(0, 3);
+const features = await getFeatures();
+const articles = (await getArticles()).slice(0, 3);
+
+const capabilities = [
+  { title: 'Themes', body: 'Online Store 2.0 sections and theme blocks, metafields and metaobjects, merchant-editable from the theme editor.' },
+  { title: 'Apps', body: 'Embedded apps, app blocks and embeds, webhooks and integrations with the app ecosystem.' },
+  { title: 'Checkout & Functions', body: 'Checkout UI extensions, discount and validation Functions, B2B and Markets on Shopify Plus.' },
+  { title: 'Headless', body: 'Hydrogen storefronts on the Storefront and Customer Account APIs.' },
+  { title: 'Data & automation', body: 'Catalogs, metafields and settings rebuilt from code with idempotent Admin API scripts.' },
+  { title: 'Performance', body: 'Core Web Vitals audits and fixes that move LCP, INP and CLS, measured before and after.' },
+];
+---
+
+<Base>
+  <section class="hero container">
+    <p class="hero__status mono">
+      <span class="dot" aria-hidden="true"></span>
+      {site.availability}
+    </p>
+    <h1 class="hero__title">
+      Shopify stores that load fast, sell more and are <em>easy to change</em>.
+    </h1>
+    <p class="lede">
+      I’m {site.name}, <strong>senior Shopify developer</strong>. Themes, apps, checkout and
+      Hydrogen, shipped for international DTC brands for 9+ years.
+    </p>
+    <div class="button-row">
+      <a class="button button--primary" href="/contact">Start a conversation</a>
+      <a class="button button--ghost" href="/work">See the work</a>
+    </div>
+  </section>
+
+  <section class="container" aria-label="Track record">
+    <ul class="proof">
+      {
+        proof.map((p) => (
+          <li>
+            <span class="proof__value">{p.value}</span>
+            <span class="proof__label mono muted">{p.label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="section container" aria-labelledby="work-title">
+    <SectionLabel index="01" label="Selected work" />
+    <div class="split-heading">
+      <h2 id="work-title" class="h2">Every feature documented: problem, demo, decision, code.</h2>
+      <a class="mono" href="/work">All projects →</a>
+    </div>
+    <div class="grid-2">
+      {
+        projects.map((p) => (
+          <ProjectCard project={p} featureCount={features.filter((f) => f.data.project.id === p.id).length} />
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section container" aria-labelledby="cap-title">
+    <SectionLabel index="02" label="Capabilities" />
+    <h2 id="cap-title" class="h2">The whole Shopify surface, not just the theme.</h2>
+    <ul class="caps">
+      {
+        capabilities.map((c, i) => (
+          <li>
+            <span class="mono muted">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{c.title}</h3>
+            <p class="muted">{c.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="section container" aria-labelledby="process-title">
+    <SectionLabel index="03" label="How I work" />
+    <h2 id="process-title" class="h2">Specs before code. Reviews before merge. Nothing touches live by surprise.</h2>
+    <ol class="process">
+      {
+        process.map((p, i) => (
+          <li>
+            <span class="mono process__step">{String(i + 1).padStart(2, '0')} {p.step}</span>
+            <p>{p.artifact}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="section container" aria-labelledby="services-title">
+    <SectionLabel index="04" label="Services" />
+    <div class="split-heading">
+      <h2 id="services-title" class="h2">Hire me for a project or for the team.</h2>
+      <a class="mono" href="/services">All services →</a>
+    </div>
+    <ul class="caps">
+      {
+        services.slice(0, 3).map((s) => (
+          <li>
+            <h3>{s.title}</h3>
+            <p class="muted">{s.outcome}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  {
+    articles.length > 0 && (
+      <section class="section container" aria-labelledby="articles-title">
+        <SectionLabel index="05" label="Articles" />
+        <div class="split-heading">
+          <h2 id="articles-title" class="h2">Notes from the work.</h2>
+          <a class="mono" href="/articles">All articles →</a>
+        </div>
+        <ArticleList articles={articles} />
+      </section>
+    )
+  }
+
+  <section class="section container closing">
+    <h2 class="h2">Have a Shopify project or an open role?</h2>
+    <p class="lede">Tell me what you’re building. I reply within one business day.</p>
+    <div class="button-row">
+      <a class="button button--primary" href="/contact">Get in touch</a>
+      <a class="button button--ghost" href={site.cv}>Download CV</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: var(--space-10) var(--space-8);
+  }
+
+  .hero__status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-muted);
+  }
+
+  .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-ok);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-ok) 20%, transparent);
+  }
+
+  .hero__title {
+    font-size: var(--step-5);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    max-width: 16ch;
+  }
+
+  /* Marker highlight (tokens --mark-*): the text always keeps full contrast. */
+  .hero__title em {
+    font-style: normal;
+    color: var(--mark-ink);
+    background-image: linear-gradient(
+      transparent 58%,
+      var(--mark-fill) 58%,
+      var(--mark-fill) 90%,
+      transparent 90%
+    );
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .proof {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-text);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .proof li {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-5) var(--space-5) var(--space-5) 0;
+  }
+
+  .proof__value {
+    font-size: var(--step-4);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .h2 {
+    font-size: var(--step-3);
+    max-width: 22ch;
+  }
+
+  .split-heading {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: end;
+    gap: var(--space-4);
+    margin-bottom: var(--space-7);
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+    gap: var(--space-8) var(--space-6);
+  }
+
+  .caps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: 0;
+    margin: var(--space-7) 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-text);
+  }
+
+  .caps li {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    padding: var(--space-5) var(--space-5) var(--space-6) 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .caps h3 {
+    font-size: var(--step-1);
+  }
+
+  .process {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    gap: var(--space-5);
+    margin: var(--space-7) 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: none;
+  }
+
+  .process li {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: 2px solid var(--color-text);
+  }
+
+  .process li:first-child {
+    border-top-color: var(--color-accent);
+  }
+
+  .process__step {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .closing {
+    display: grid;
+    gap: var(--space-5);
+  }
+</style>

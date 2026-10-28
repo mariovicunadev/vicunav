@@ -1,0 +1,67 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/content';
+
+interface Props {
+  articles: CollectionEntry<'articles'>[];
+}
+
+const { articles } = Astro.props;
+---
+
+<ul class="list">
+  {
+    articles.map((a) => (
+      <li class="list__item">
+        <time class="mono muted" datetime={a.data.pubDate.toISOString()}>
+          {formatDate(a.data.pubDate)}
+        </time>
+        <div>
+          <h3 class="list__title">
+            <a href={`/articles/${a.id}`}>{a.data.title}</a>
+            {a.data.draft && <span class="mono list__draft">Draft</span>}
+          </h3>
+          <p class="muted">{a.data.description}</p>
+        </div>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-text);
+  }
+
+  .list__item {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: var(--space-2) var(--space-6);
+    padding-block: var(--space-5);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .list__title {
+    font-size: var(--step-1);
+    margin-bottom: var(--space-2);
+  }
+
+  .list__title a {
+    text-decoration: none;
+  }
+
+  .list__draft {
+    margin-left: var(--space-2);
+    color: var(--color-accent-ink);
+    vertical-align: middle;
+  }
+
+  @media (max-width: 40rem) {
+    .list__item {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

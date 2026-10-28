@@ -1,0 +1,160 @@
+---
+import { nav, site } from '../data/site';
+
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
+---
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="/">
+      <span class="brand__mark" aria-hidden="true">MV</span>
+      <span class="brand__name">{site.name}</span>
+    </a>
+    <nav class="header__nav" aria-label="Main">
+      <ul class="nav">
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a class="button button--primary nav__cta" href="/contact">Contact</a>
+        </li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Toggle dark mode" data-theme-toggle>
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+        <path d="M12 7a5 5 0 0 1 0 10z" fill="currentColor"></path>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  button?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const current =
+      root.dataset.theme ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const next = current === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {}
+  });
+</script>
+
+<style>
+  .header {
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-bg);
+  }
+
+  .header__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-6);
+    padding-block: var(--space-4);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-right: auto;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .brand__mark {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    background: var(--color-text);
+    color: var(--color-bg);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: var(--radius);
+  }
+
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+  }
+
+  .nav a:not(.button) {
+    display: inline-block;
+    padding-block: var(--space-2);
+    text-decoration: none;
+  }
+
+  .nav a[aria-current='page'] {
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: 2px;
+  }
+
+  .theme-toggle {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--color-text);
+  }
+
+  @media (max-width: 45rem) {
+    /* Hidden visually only, so the link keeps its accessible name. */
+    .brand__name {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .header__inner {
+      gap: var(--space-3);
+    }
+
+    .header__nav {
+      order: 3;
+      width: 100%;
+    }
+
+    .nav {
+      justify-content: space-between;
+      gap: var(--space-2) var(--space-3);
+    }
+
+    .nav__cta {
+      padding-inline: var(--space-3);
+    }
+  }
+</style>

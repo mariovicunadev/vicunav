@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Types and content schemas
+        run: npm run check
+      - name: WCAG contrast of color tokens
+        run: npm run contrast
+      - name: Build
+        run: npm run build
+      - name: Lighthouse
+        run: npx --yes @lhci/cli@0.15.1 autorun

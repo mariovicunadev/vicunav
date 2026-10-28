@@ -1,0 +1,57 @@
+---
+import Base from '../../layouts/Base.astro';
+import SectionLabel from '../../components/SectionLabel.astro';
+import ArticleList from '../../components/ArticleList.astro';
+import { getArticles } from '../../lib/content';
+
+const articles = await getArticles();
+const tags = [...new Set(articles.flatMap((a) => a.data.tags))].sort();
+---
+
+<Base title="Articles" description="Practical write-ups on Shopify themes, the Admin and Storefront APIs, performance and delivery.">
+  <section class="container page-head">
+    <SectionLabel label="Articles" />
+    <h1>Notes from the work</h1>
+    <p class="lede">Practical write-ups from shipped features: what the docs say, what broke, and what I’d do again.</p>
+    {
+      tags.length > 0 && (
+        <ul class="tags mono" aria-label="Tags">
+          {tags.map((t) => <li><a href={`/articles/tags/${t}`}>#{t}</a></li>)}
+        </ul>
+      )
+    }
+  </section>
+  <section class="container list">
+    {articles.length > 0 ? <ArticleList articles={articles} /> : <p class="muted">First articles coming soon.</p>}
+  </section>
+</Base>
+
+<style>
+  .page-head {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-9) var(--space-7);
+  }
+
+  h1 {
+    font-size: var(--step-4);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tags a {
+    display: inline-block;
+    padding-block: var(--space-1);
+  }
+
+  .list {
+    padding-bottom: var(--space-9);
+  }
+</style>

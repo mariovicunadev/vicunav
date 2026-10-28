@@ -1,0 +1,139 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { formatDate, getArticles } from '../../lib/content';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const articles = await getArticles();
+  return articles.map((article) => ({ params: { slug: article.id }, props: { article } }));
+}
+
+const { article } = Astro.props;
+const a = article.data;
+const { Content, headings } = await render(article);
+const project = a.project ? await getEntry(a.project) : undefined;
+const toc = headings.filter((h) => h.depth === 2);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: a.title,
+  description: a.description,
+  datePublished: a.pubDate.toISOString(),
+  dateModified: (a.updatedDate ?? a.pubDate).toISOString(),
+  author: { '@type': 'Person', name: site.name, url: Astro.site?.href },
+};
+---
+
+<Base title={a.title} description={a.description} type="article" jsonLd={jsonLd}>
+  <article class="container">
+    <header class="head">
+      <nav class="mono crumbs" aria-label="Breadcrumb">
+        <a href="/articles">Articles</a> / <span aria-current="page">{a.title}</span>
+      </nav>
+      {a.draft && <p class="mono draft">Draft — not published</p>}
+      <h1>{a.title}</h1>
+      <p class="lede">{a.description}</p>
+      <p class="mono muted meta">
+        <time datetime={a.pubDate.toISOString()}>{formatDate(a.pubDate)}</time>
+        {a.updatedDate && <span>· Updated {formatDate(a.updatedDate)}</span>}
+        {a.tags.map((t) => <a href={`/articles/tags/${t}`}>#{t}</a>)}
+      </p>
+    </header>
+
+    <div class="layout">
+      {
+        toc.length > 1 && (
+          <nav class="toc mono" aria-label="On this page">
+            <p class="muted">On this page</p>
+            <ol>
+              {toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
+            </ol>
+          </nav>
+        )
+      }
+      <div class="prose">
+        <Content />
+        {
+          project && (
+            <aside class="related">
+              <p class="mono muted">Related work</p>
+              <a href={`/work/${project.id}`}>{project.data.title} →</a>
+            </aside>
+          )
+        }
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .head {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-8) var(--space-7);
+    max-width: 52rem;
+  }
+
+  .crumbs,
+  .meta {
+    color: var(--color-muted);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .draft {
+    color: var(--color-accent-ink);
+  }
+
+  h1 {
+    font-size: var(--step-4);
+    letter-spacing: -0.03em;
+  }
+
+  .layout {
+    display: grid;
+    gap: var(--space-7);
+    padding-bottom: var(--space-9);
+  }
+
+  @media (min-width: 64rem) {
+    .layout {
+      grid-template-columns: 1fr 14rem;
+    }
+
+    .toc {
+      order: 2;
+      position: sticky;
+      top: var(--space-5);
+      align-self: start;
+    }
+  }
+
+  .toc ol {
+    display: grid;
+    gap: var(--space-2);
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .related {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-8);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .related a {
+    font-size: var(--step-1);
+    font-weight: 600;
+    text-decoration: none;
+  }
+</style>

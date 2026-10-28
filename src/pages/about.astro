@@ -1,0 +1,175 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import SpecTable from '../components/SpecTable.astro';
+import SkillsProof from '../components/SkillsProof.astro';
+import { site } from '../data/site';
+import { experience, skills } from '../data/experience';
+---
+
+<Base title="About" description="Mario Vicuña: senior Shopify developer with 9+ years in ecommerce, formerly at Trafilea Group and Redstage.">
+  <section class="container page-head">
+    <SectionLabel label="About" />
+    <h1>I build Shopify stores that teams can keep changing.</h1>
+    <div class="intro">
+      <div class="prose">
+        <p>
+          I’m a systems engineer and Shopify developer with more than nine years in ecommerce. I
+          spent the last six building high-conversion stores for international DTC brands at
+          Trafilea Group, and before that led Magento to Shopify migrations at Redstage.
+        </p>
+        <p>
+          Today I work across the whole Shopify surface: Online Store 2.0 themes, embedded apps,
+          checkout extensions and Shopify Functions, and Hydrogen storefronts. I care about the
+          parts merchants feel: speed, a theme editor that makes sense, and features that keep
+          working after the next app install.
+        </p>
+        <p>
+          I write a short spec before I write code, ship through reviewed pull requests, and use
+          Claude Code and Codex every day to move faster without lowering the bar.
+        </p>
+      </div>
+      <SpecTable
+        rows={[
+          { key: 'Based in', value: site.location },
+          { key: 'Languages', value: 'Spanish (native), English (C1)' },
+          { key: 'Education', value: 'Systems Engineering, Universidad de los Andes' },
+          { key: 'Status', value: site.availability },
+        ]}
+      />
+    </div>
+    <div class="button-row">
+      <a class="button button--primary" href={site.cv}>Download CV</a>
+      <a class="button button--ghost" href={site.socials.linkedin}>LinkedIn</a>
+    </div>
+  </section>
+
+  <section class="section container" aria-labelledby="exp-title">
+    <SectionLabel label="Experience" />
+    <h2 id="exp-title" class="visually-hidden">Experience</h2>
+    <ol class="timeline">
+      {
+        experience.map((e) => (
+          <li>
+            <p class="mono muted">{e.period}</p>
+            <div>
+              <h3>{e.role} · {e.company}</h3>
+              <ul>
+                {e.highlights.map((h) => <li>{h}</li>)}
+              </ul>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="section container" aria-labelledby="proof-title">
+    <SectionLabel label="Skills, with proof" />
+    <h2 id="proof-title" class="proof-title">Every skill links to the work that shows it.</h2>
+    <SkillsProof />
+  </section>
+
+  <section class="section container" aria-labelledby="skills-title">
+    <SectionLabel label="Toolbox" />
+    <h2 id="skills-title" class="visually-hidden">Toolbox</h2>
+    <div class="skills">
+      {
+        skills.map((g) => (
+          <div>
+            <h3 class="mono">{g.group}</h3>
+            <ul>
+              {g.items.map((i) => <li>{i}</li>)}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-head {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: var(--space-9) var(--space-7);
+  }
+
+  h1 {
+    font-size: var(--step-4);
+    max-width: 20ch;
+  }
+
+  .intro {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  @media (min-width: 60rem) {
+    .intro {
+      grid-template-columns: 1fr 22rem;
+    }
+  }
+
+  .proof-title {
+    font-size: var(--step-3);
+    max-width: 22ch;
+    margin-bottom: var(--space-6);
+  }
+
+  .timeline {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-text);
+  }
+
+  .timeline > li {
+    display: grid;
+    grid-template-columns: 12rem 1fr;
+    gap: var(--space-3) var(--space-6);
+    padding-block: var(--space-6);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .timeline h3 {
+    font-size: var(--step-1);
+    margin-bottom: var(--space-3);
+  }
+
+  .timeline ul {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding-left: 1.1em;
+  }
+
+  @media (max-width: 40rem) {
+    .timeline > li {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: var(--space-6);
+  }
+
+  .skills h3 {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-accent-ink);
+    padding-bottom: var(--space-3);
+    margin-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-text);
+  }
+
+  .skills ul {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>
