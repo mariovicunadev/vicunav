@@ -8,7 +8,7 @@ const { index, label } = Astro.props;
 ---
 
 <p class="section-label mono">
-  {index && <span class="section-label__index">{index}</span>}
+  {index && <span class="section-label__index">{index}<span aria-hidden="true"> ·</span></span>}
   <span>{label}</span>
 </p>
 
@@ -20,7 +20,7 @@ const { index, label } = Astro.props;
     margin-bottom: var(--space-6);
     color: var(--color-muted);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.12em;
   }
 
   .section-label::after {

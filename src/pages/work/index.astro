@@ -17,7 +17,7 @@ const features = await getFeatures();
       the technical decision, the code and how it was verified.
     </p>
   </section>
-  <section class="container grid">
+  <section class="container grid" data-reveal-stagger>
     {
       projects.map((p) => (
         <ProjectCard project={p} featureCount={features.filter((f) => f.data.project.id === p.id).length} />

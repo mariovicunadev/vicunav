@@ -86,7 +86,7 @@ const repoLabel = {
         <section class="section container" aria-labelledby="features-title">
           <SectionLabel label="Features" />
           <h2 id="features-title" class="features__title">Feature breakdown</h2>
-          <ol class="features">
+          <ol class="features" data-reveal-stagger>
             {features.map((f, i) => (
               <li>
                 <span class="mono muted">{String(i + 1).padStart(2, '0')}</span>
@@ -108,7 +108,7 @@ const repoLabel = {
       next.id !== project.id && (
         <nav class="container next" aria-label="Next project">
           <span class="mono muted">Next project</span>
-          <a href={`/work/${next.id}`}>{next.data.title} →</a>
+          <a class="link" href={`/work/${next.id}`}>{next.data.title} →</a>
         </nav>
       )
     }

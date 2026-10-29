@@ -17,7 +17,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
         {
           nav.map((item) => (
             <li>
-              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+              <a class="link" href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
                 {item.label}
               </a>
             </li>
@@ -55,6 +55,26 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
   .header {
     border-bottom: 1px solid var(--color-line);
     background: var(--color-bg);
+    transition: border-color var(--dur) var(--ease-standard);
+  }
+
+  /* Desktop: sticky, translucent and blurred; the hairline shows once the page scrolls. */
+  @media (min-width: 45.01rem) {
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: color-mix(in oklab, var(--color-bg) 85%, transparent);
+      backdrop-filter: blur(12px);
+    }
+
+    :global(html.js) .header:not([data-scrolled]) {
+      border-bottom-color: transparent;
+    }
+
+    :global([id]) {
+      scroll-margin-top: 6rem;
+    }
   }
 
   .header__inner {
@@ -103,13 +123,12 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
   .nav a:not(.button) {
     display: inline-block;
     padding-block: var(--space-2);
-    text-decoration: none;
   }
 
   .nav a[aria-current='page'] {
-    text-decoration: underline;
-    text-decoration-color: var(--color-accent);
-    text-decoration-thickness: 2px;
+    background-image: linear-gradient(var(--color-accent), var(--color-accent));
+    background-position-x: 0;
+    background-size: 100% 2px;
   }
 
   .theme-toggle {
@@ -125,7 +144,8 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     cursor: pointer;
   }
 
-  .theme-toggle:hover {
+  .theme-toggle:hover,
+  .theme-toggle:focus-visible {
     border-color: var(--color-text);
   }
 

@@ -51,6 +51,7 @@ const person = {
     <meta name="theme-color" content="#f5f2ec" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
     <script is:inline>
+      document.documentElement.classList.add('js');
       try {
         const t = localStorage.getItem('theme');
         if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
@@ -65,6 +66,32 @@ const person = {
       <slot />
     </main>
     <Footer />
+    <script is:inline>
+      // Spec 008: reveal on scroll (once per element) and the header hairline after scrolling.
+      (() => {
+        const els = document.querySelectorAll('[data-reveal],[data-reveal-stagger],[data-reveal-words]');
+        const show = (el) => el.classList.add('is-in');
+        if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          els.forEach(show);
+        } else {
+          const io = new IntersectionObserver(
+            (entries) =>
+              entries.forEach((e) => {
+                if (e.isIntersecting) {
+                  show(e.target);
+                  io.unobserve(e.target);
+                }
+              }),
+            { rootMargin: '0px 0px -8% 0px' },
+          );
+          els.forEach((el) => io.observe(el));
+        }
+        const header = document.querySelector('.header');
+        const onScroll = () => header?.toggleAttribute('data-scrolled', scrollY > 8);
+        onScroll();
+        addEventListener('scroll', onScroll, { passive: true });
+      })();
+    </script>
   </body>
 </html>
 

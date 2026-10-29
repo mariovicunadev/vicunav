@@ -1,0 +1,74 @@
+/* Motion and detail — spec 008.
+   Hidden start states apply only with JavaScript (html.js) and without reduced motion,
+   so content is always visible in its final state otherwise. Only opacity, transform and
+   filter animate. */
+
+/* Scroll reveal: [data-reveal] fades up; children of [data-reveal-stagger] follow in turn. */
+[data-reveal],
+[data-reveal-stagger] > * {
+  transition:
+    opacity var(--dur-slow) var(--ease-standard),
+    transform var(--dur-slow) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+
+[data-reveal-stagger] > :nth-child(2) { --i: 1; }
+[data-reveal-stagger] > :nth-child(3) { --i: 2; }
+[data-reveal-stagger] > :nth-child(4) { --i: 3; }
+[data-reveal-stagger] > :nth-child(5) { --i: 4; }
+[data-reveal-stagger] > :nth-child(n + 6) { --i: 5; }
+
+/* Heading reveal: each word sharpens from blurred and muted, one after another. */
+.heading__word {
+  transition:
+    filter var(--dur-slow) var(--ease-out),
+    color var(--dur-slow) var(--ease-standard);
+  transition-delay: calc(var(--w, 0) * 40ms);
+}
+
+.heading__lead {
+  color: var(--color-muted);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal]:not(.is-in),
+  html.js [data-reveal-stagger]:not(.is-in) > * {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  html.js [data-reveal-words]:not(.is-in) .heading__word {
+    filter: blur(6px);
+    color: var(--color-muted);
+  }
+
+  /* Status dots breathe three times (under 5 s, WCAG 2.2.2), then rest. */
+  .breathe {
+    animation: breathe 1.4s var(--ease-standard) 3;
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* Underline that grows from the left on hover and leaves to the right. */
+.link {
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) no-repeat 100% 100% / 0 1px;
+  transition:
+    background-size var(--dur) var(--ease-out),
+    color var(--dur-fast) var(--ease-standard);
+}
+
+.link:hover,
+.link:focus-visible {
+  background-position-x: 0;
+  background-size: 100% 1px;
+}
