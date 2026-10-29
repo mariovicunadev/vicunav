@@ -9,6 +9,8 @@ export const site = {
   availability: 'Open to full-time remote roles and select freelance projects',
   available: true,
   cv: '/mario-vicuna-cv.pdf',
+  // Public on purpose: every concept store shares it so visitors can preview without asking.
+  storePassword: 'mariovic',
   socials: {
     linkedin: 'https://www.linkedin.com/in/mario-vicuna/',
     github: 'https://github.com/mariovicunadev',
@@ -42,9 +44,3 @@ export const surfaces = {
 } as const;
 
 export type Surface = keyof typeof surfaces;
-
-export const statusLabels = {
-  shipped: 'Shipped',
-  'in-progress': 'In progress',
-  planned: 'Planned',
-} as const;

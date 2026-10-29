@@ -2,10 +2,10 @@
 import Base from '../../layouts/Base.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import SectionLabel from '../../components/SectionLabel.astro';
-import { getFeatures, getProjects, isBuilt } from '../../lib/content';
+import { getProjects } from '../../lib/content';
+import { site } from '../../data/site';
 
 const projects = await getProjects();
-const features = await getFeatures();
 ---
 
 <Base title="Work" description="Shopify case studies: themes, apps, checkout and headless storefronts, each feature with its problem, demo, decision and code.">
@@ -13,14 +13,17 @@ const features = await getFeatures();
     <SectionLabel label="Work" />
     <h1>Case studies</h1>
     <p class="lede">
-      Each project breaks down into features. Each feature shows the business problem, a demo,
-      the technical decision, the code and how it was verified.
+      Each project breaks down into features. Each feature shows the business problem, the
+      technical decision, how it was built and how it was verified.
+    </p>
+    <p class="access mono">
+      Every store is open to preview. Password: <code>{site.storePassword}</code>
     </p>
   </section>
   <section class="container grid" data-reveal-stagger>
     {
       projects.map((p) => (
-        <ProjectCard project={p} counts={{ built: features.filter((f) => f.data.project.id === p.id && isBuilt(f)).length, defined: features.filter((f) => f.data.project.id === p.id && !isBuilt(f)).length }} />
+        <ProjectCard project={p} />
       ))
     }
   </section>
@@ -35,6 +38,14 @@ const features = await getFeatures();
 
   h1 {
     font-size: var(--step-4);
+  }
+
+  .access code {
+    padding: 0.05em 0.35em;
+    font-weight: 600;
+    background: var(--mark-fill);
+    color: var(--mark-ink);
+    border-radius: var(--radius);
   }
 
   .grid {

@@ -3,7 +3,6 @@ title: Brand tokens to theme settings in one command
 project: saelle-care
 problem: Hand-copying brand colors and fonts into a theme and checkout drifts within days, and nobody notices until a launch review.
 decision: One tokens.json per brand; a script maps it into each theme's settings_data.json through a per-theme mapping and rejects any setting id or value the theme schema doesn't define.
-status: shipped
 surfaces: [theme, data]
 skills: [Design systems, Node.js, OS 2.0 settings schema, Automation]
 quality:

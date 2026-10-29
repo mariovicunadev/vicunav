@@ -1,5 +1,5 @@
-# Spec 009: Commerce Showcase split into five stores; its pages now live under Saelle Care.
+# Commerce Showcase was split into five stores (spec 009); its pages live under Saelle Care.
 /work/commerce-showcase /work/saelle-care 301
-/work/commerce-showcase/design-tokens /work/saelle-care/design-tokens 301
-/work/commerce-showcase/contrast-gate /work/saelle-care/contrast-gate 301
-/work/commerce-showcase/store-seed /work/saelle-care/store-seed 301
+/work/commerce-showcase/:feature /work/saelle-care#:feature 301
+# Features are rows on the project page (spec 010).
+/work/:project/:feature /work/:project#:feature 301

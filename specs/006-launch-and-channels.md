@@ -46,5 +46,5 @@ Two articles per month, each tied to a shipped feature:
 ## Acceptance criteria
 
 - [ ] Site URL on CV, LinkedIn, Upwork and GitHub
-- [ ] 3 feature pages pinned on LinkedIn Featured and Upwork portfolio
-- [ ] Analytics running; inquiries tracked by source
+- [ ] 3 works pinned on LinkedIn Featured and Upwork portfolio
+- [ ] Analytics running (Cloudflare Web Analytics is on); inquiries tracked by source

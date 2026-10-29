@@ -2,7 +2,7 @@
 
 | Field    | Value |
 |----------|-------|
-| Status   | Approved |
+| Status   | Done |
 | Branch   | `feature/005-tech-foundation` |
 | Estimate | 5 h |
 | Actual   | — |
@@ -37,8 +37,8 @@ A static, very fast Astro site that is cheap to host, easy to write for and safe
 - [x] Project scaffolded, dev server runs
 - [x] `npm run check` (astro check) passes with 0 errors
 - [x] `npm run build` produces static output with sitemap and RSS
-- [ ] GitHub Actions: check + build + Lighthouse CI on every PR
-- [ ] Deployed with a custom domain and HTTPS
+- [x] GitHub Actions: check + build + Lighthouse CI on every PR
+- [x] Deployed with a custom domain and HTTPS
 
 ## Decisions log
 

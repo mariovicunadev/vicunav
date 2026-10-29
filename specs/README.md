@@ -5,23 +5,24 @@ Every change to this site starts as a spec. One spec = one branch = one PR.
 | #   | Spec | Status |
 |-----|------|--------|
 | 000 | [Template](000-template.md) | — |
-| 001 | [Positioning, audiences and goals](001-positioning.md) | Approved |
-| 002 | [Information architecture](002-information-architecture.md) | Approved |
-| 003 | [Visual system](003-visual-system.md) | In progress |
-| 004 | [Content model](004-content-model.md) | Approved |
-| 005 | [Technical foundation](005-tech-foundation.md) | Approved |
-| 006 | [Launch and channels](006-launch-and-channels.md) | Approved |
+| 001 | [Positioning, audiences and goals](001-positioning.md) | Done |
+| 002 | [Information architecture](002-information-architecture.md) | Done |
+| 003 | [Visual system](003-visual-system.md) | Done |
+| 004 | [Content model](004-content-model.md) | Done |
+| 005 | [Technical foundation](005-tech-foundation.md) | Done |
+| 006 | [Launch and channels](006-launch-and-channels.md) | Approved, at launch |
 | 007 | [Deploy, CI and search basics](007-deploy-and-ci.md) | Done |
-| 008 | [Motion and detail](008-motion-and-detail.md) | In progress |
-| 009 | [Work: six showcases](009-work-six-showcases.md) | In progress |
+| 008 | [Motion and detail](008-motion-and-detail.md) | Phase 1 done; phase 2 later |
+| 009 | [Work: six showcases](009-work-six-showcases.md) | Done |
+| 010 | [Features inline, no status, open stores](010-inline-features-no-status.md) | In progress |
 
 ## Roadmap
 
-1. **009 — Work: six showcases.** Vicubites plus the five Commerce Showcase stores.
-2. **010 — Content review.** Page by page, section by section: human voice and site strategy.
-3. **Articles.** Topics proposed from the shipped features; written by the owner.
+1. **010 — Features inline, no status, open stores.**
+2. **011 — Content review.** Page by page, section by section: human voice and site strategy.
+3. **Articles.** Topics proposed from the features; written by the owner.
 4. **Services and About.** Restructure and iterate.
-5. **Then:** demos as the first stores finish, motion phase 2 (spec 008), launch channels.
+5. **At launch:** demos as the first stores finish, motion phase 2 (spec 008), channels (spec 006).
 
 ## Workflow
 

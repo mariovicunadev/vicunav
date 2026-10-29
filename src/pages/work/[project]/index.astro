@@ -5,8 +5,9 @@ import Base from '../../../layouts/Base.astro';
 import Chip from '../../../components/Chip.astro';
 import SectionLabel from '../../../components/SectionLabel.astro';
 import SpecTable from '../../../components/SpecTable.astro';
-import { featureSlug, getFeatures, getProjects, isBuilt } from '../../../lib/content';
-import { surfaces } from '../../../data/site';
+import Window from '../../../components/Window.astro';
+import { featureSlug, getFeatures, getProjects } from '../../../lib/content';
+import { site, surfaces } from '../../../data/site';
 
 export async function getStaticPaths() {
   const projects = await getProjects();
@@ -19,15 +20,16 @@ export async function getStaticPaths() {
 const { project, next } = Astro.props;
 const p = project.data;
 const { Content } = await render(project);
-const all = await getFeatures(project.id);
-const features = all.filter(isBuilt);
-const defined = all.filter((f) => !isBuilt(f));
+const features = await Promise.all(
+  (await getFeatures(project.id)).map(async (f) => ({ f, slug: featureSlug(f), Body: (await render(f)).Content })),
+);
 
 const repoLabel = {
   public: 'Public',
   private: 'Private',
   'on-request': 'Read access on request',
 }[p.repo.visibility];
+const storeHost = new URL(p.live.url).host;
 ---
 
 <Base title={p.title} description={p.summary}>
@@ -36,10 +38,7 @@ const repoLabel = {
       <nav class="mono crumbs" aria-label="Breadcrumb">
         <a href="/work">Work</a> / <span aria-current="page">{p.title}</span>
       </nav>
-      <div class="head__meta">
-        <Chip status={p.status} />
-        {p.kind === 'concept' && <Chip label="Concept brand — not a client" />}
-      </div>
+      {p.kind === 'concept' && <div class="head__meta"><Chip label="Concept brand — not a client" /></div>}
       <h1>{p.title}</h1>
       <p class="lede">{p.summary}</p>
     </header>
@@ -55,7 +54,6 @@ const repoLabel = {
             { key: 'Surfaces', value: p.surfaces.map((s) => surfaces[s]).join(', ') },
             { key: 'Stack', value: p.stack.join(', ') },
             { key: 'Source', value: repoLabel },
-            { key: 'Live', value: p.live?.note },
           ]}
         />
         {
@@ -70,11 +68,19 @@ const repoLabel = {
             </ul>
           )
         }
-        <div class="button-row aside__actions">
-          {p.live && <a class="button button--ghost" href={p.live.url}>View store</a>}
-          {p.repo.url && p.repo.visibility === 'public' && <a class="button button--ghost" href={p.repo.url}>Source</a>}
-          {p.repo.visibility !== 'public' && <a class="button button--ghost" href="/contact">Request access</a>}
+        <div class="store">
+          <p class="store__label mono">Live store · {storeHost}</p>
+          <p class="store__password">Password: <code>{site.storePassword}</code></p>
+          <p class="muted">Public password, no need to ask for access.</p>
+          <a class="button button--primary" href={p.live.url}>View the store</a>
         </div>
+        {
+          p.repo.url && p.repo.visibility === 'public' && (
+            <div class="button-row aside__actions">
+              <a class="button button--ghost" href={p.repo.url}>Source</a>
+            </div>
+          )
+        }
       </aside>
 
       <div class="layout__main">
@@ -91,55 +97,55 @@ const repoLabel = {
           <SectionLabel index="01" label="Features" />
           <h2 id="features-title" class="features__title">Feature breakdown</h2>
           <ol class="features" data-reveal-stagger>
-            {features.map((f, i) => (
+            {features.map(({ f, slug, Body }, i) => (
               <li>
-                <span class="mono muted">{String(i + 1).padStart(2, '0')}</span>
-                <div>
-                  <h3>
-                    <a href={`/work/${project.id}/${featureSlug(f)}`}>{f.data.title}</a>
-                  </h3>
-                  <p class="muted">{f.data.problem}</p>
-                </div>
-                <Chip status={f.data.status} />
-              </li>
-            ))}
-          </ol>
-        </section>
-      )
-    }
-
-    {
-      defined.length > 0 && (
-        <section class="section container" aria-labelledby="scope-title">
-          <SectionLabel index={features.length > 0 ? '02' : '01'} label="Defined scope" />
-          <div class="scope__head">
-            <h2 id="scope-title" class="features__title">Specified, not built yet</h2>
-            <p class="mono muted">
-              {all.length} features · {features.length} built · {defined.length} defined
-            </p>
-          </div>
-          <p class="lede scope__lede">
-            Each feature below has a written spec with its goal, scope and acceptance criteria. It gets
-            its own page when work on it starts.
-          </p>
-          <ol class="scope" data-reveal-stagger>
-            {defined.map((f, i) => (
-              <li>
-                <details>
+                <details class="feature" id={slug} open={i === 0}>
                   <summary>
-                    <span class="mono muted">{String(features.length + i + 1).padStart(2, '0')}</span>
-                    <span class="scope__title">{f.data.title}</span>
-                    <span class="scope__chips">
-                      {f.data.surfaces.map((s) => <Chip label={surfaces[s]} />)}
-                      <Chip status="planned" label="Defined" />
-                    </span>
+                    <span class="mono muted">{String(i + 1).padStart(2, '0')}</span>
+                    <h3 class="feature__title">{f.data.title}</h3>
+                    <span class="feature__toggle" aria-hidden="true" />
+                    <span class="feature__problem">{f.data.problem}</span>
                   </summary>
-                  <dl class="scope__body">
-                    <dt class="mono">Problem</dt>
-                    <dd>{f.data.problem}</dd>
-                    <dt class="mono">Planned approach</dt>
-                    <dd>{f.data.decision}</dd>
-                  </dl>
+                  <div class="feature__body">
+                    <div>
+                      {(f.data.demo.length > 0 || f.data.video) && (
+                        <div class="feature__media">
+                          {f.data.video && (
+                            <Window title={`${p.title} · ${f.data.title}`}>
+                              <video src={f.data.video} controls muted playsinline preload="metadata" />
+                            </Window>
+                          )}
+                          {f.data.demo.map((d) => (
+                            <Window title={`${p.title} · ${f.data.title}`}>
+                              <Image src={d.src} alt={d.alt} widths={[800, 1400]} sizes="(min-width: 64rem) 48rem, 100vw" />
+                            </Window>
+                          ))}
+                        </div>
+                      )}
+                      <p class="feature__label mono">Decision</p>
+                      <p class="feature__decision">{f.data.decision}</p>
+                      <div class="prose">
+                        <Body />
+                      </div>
+                    </div>
+                    <div class="feature__side">
+                      {f.data.quality.length > 0 && (
+                        <div>
+                          <p class="feature__label mono">Quality</p>
+                          <ul class="quality">
+                            {f.data.quality.map((q) => <li>{q}</li>)}
+                          </ul>
+                        </div>
+                      )}
+                      <div>
+                        <p class="feature__label mono">Surfaces and skills</p>
+                        <ul class="chips">
+                          {f.data.surfaces.map((s) => <li><Chip label={surfaces[s]} /></li>)}
+                          {f.data.skills.map((s) => <li><Chip label={s} /></li>)}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </details>
               </li>
             ))}
@@ -157,6 +163,21 @@ const repoLabel = {
       )
     }
   </article>
+
+  <script is:inline>
+    // Old feature URLs redirect to /work/<project>#<feature>: open that row and bring it into view.
+    (() => {
+      const open = () => {
+        const el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+        if (el instanceof HTMLDetailsElement) {
+          el.open = true;
+          el.scrollIntoView();
+        }
+      };
+      open();
+      addEventListener('hashchange', open);
+    })();
+  </script>
 </Base>
 
 <style>
@@ -217,8 +238,42 @@ const repoLabel = {
     letter-spacing: -0.03em;
   }
 
-  .aside__actions {
+  .store {
+    display: grid;
+    gap: var(--space-2);
     margin-top: var(--space-6);
+    padding: var(--space-5);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-window);
+    background: var(--color-surface);
+  }
+
+  .store__label {
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .store__password {
+    font-size: var(--step-1);
+    font-weight: 600;
+  }
+
+  .store__password code {
+    padding: 0.05em 0.35em;
+    font-family: var(--font-mono);
+    background: var(--mark-fill);
+    color: var(--mark-ink);
+    border-radius: var(--radius);
+  }
+
+  .store .button {
+    justify-self: start;
+    margin-top: var(--space-3);
+  }
+
+  .aside__actions {
+    margin-top: var(--space-5);
   }
 
   .cover {
@@ -226,99 +281,6 @@ const repoLabel = {
     margin-bottom: var(--space-7);
     border: 1px solid var(--color-line);
     border-radius: var(--radius);
-  }
-
-  .scope__head {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: var(--space-3);
-  }
-
-  .scope__lede {
-    margin-bottom: var(--space-7);
-  }
-
-  .scope {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    border-top: 1px solid var(--color-text);
-  }
-
-  .scope li {
-    border-bottom: 1px solid var(--color-line);
-  }
-
-  .scope summary {
-    display: grid;
-    grid-template-columns: 2.5rem 1fr;
-    gap: var(--space-2) var(--space-4);
-    align-items: center;
-    padding-block: var(--space-4);
-    cursor: pointer;
-    list-style: none;
-  }
-
-  .scope summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .scope__title {
-    font-size: var(--step-1);
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-
-  .scope__title::after {
-    content: ' +';
-    color: var(--color-muted);
-    font-family: var(--font-mono);
-    font-weight: 400;
-  }
-
-  .scope details[open] .scope__title::after {
-    content: ' −';
-  }
-
-  .scope summary:hover .scope__title {
-    color: var(--color-accent-ink);
-  }
-
-  .scope__chips {
-    grid-column: 2;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-
-  @media (min-width: 48rem) {
-    .scope summary {
-      grid-template-columns: 2.5rem 1fr auto;
-    }
-
-    .scope__chips {
-      grid-column: auto;
-    }
-  }
-
-  .scope__body {
-    display: grid;
-    gap: var(--space-2) var(--space-5);
-    margin: 0;
-    padding: 0 0 var(--space-5) calc(2.5rem + var(--space-4));
-    max-width: calc(var(--prose-width) + 4rem);
-  }
-
-  .scope__body dt {
-    color: var(--color-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .scope__body dd {
-    margin: 0 0 var(--space-3);
   }
 
   .features__title {
@@ -333,44 +295,128 @@ const repoLabel = {
     border-top: 1px solid var(--color-text);
   }
 
-  .features li {
-    position: relative;
-    display: grid;
-    grid-template-columns: 3rem 1fr auto;
-    gap: var(--space-4);
-    align-items: start;
-    padding-block: var(--space-5);
+  .features > li {
     border-bottom: 1px solid var(--color-line);
   }
 
-  .features h3 {
+  .feature summary {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    gap: var(--space-1) var(--space-4);
+    align-items: baseline;
+    padding-block: var(--space-5);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .feature summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .feature__title {
     font-size: var(--step-1);
-    margin-bottom: var(--space-2);
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
 
-  .features a {
-    text-decoration: none;
+  .feature__toggle {
+    font-family: var(--font-mono);
+    color: var(--color-muted);
   }
 
-  .features a::after {
-    content: '';
-    position: absolute;
-    inset: 0;
+  .feature__toggle::before {
+    content: '+';
   }
 
-  .features li:hover h3 {
+  .feature[open] .feature__toggle::before {
+    content: '−';
+  }
+
+  .feature__problem {
+    grid-column: 2;
+    color: var(--color-muted);
+    max-width: var(--prose-width);
+  }
+
+  .feature summary:hover .feature__title,
+  .feature summary:focus-visible .feature__title {
     color: var(--color-accent-ink);
   }
 
-  @media (max-width: 40rem) {
-    .features li {
-      grid-template-columns: 2.5rem 1fr;
-    }
+  .feature__body {
+    display: grid;
+    gap: var(--space-6);
+    padding: 0 0 var(--space-7) calc(2.5rem + var(--space-4));
+  }
 
-    .features li > :global(.chip) {
-      grid-column: 2;
-      justify-self: start;
+  @media (max-width: 40rem) {
+    .feature__body {
+      padding-left: 0;
     }
+  }
+
+  @media (min-width: 64rem) {
+    .feature__body {
+      grid-template-columns: minmax(0, 1fr) 18rem;
+      align-items: start;
+    }
+  }
+
+  .feature__label {
+    margin-bottom: var(--space-2);
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .feature__decision {
+    margin-bottom: var(--space-5);
+    font-size: var(--step-1);
+    line-height: 1.4;
+    max-width: var(--prose-width);
+  }
+
+  .feature__media {
+    display: grid;
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+  }
+
+  .feature__side {
+    display: grid;
+    gap: var(--space-5);
+    align-content: start;
+  }
+
+  .quality {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--step--1);
+  }
+
+  .quality li {
+    position: relative;
+    padding-left: var(--space-5);
+  }
+
+  .quality li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-ok);
+    font-family: var(--font-mono);
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
   .next {

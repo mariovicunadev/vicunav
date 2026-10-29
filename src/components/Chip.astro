@@ -1,18 +1,12 @@
 ---
-import { statusLabels } from '../data/site';
-
 interface Props {
-  status?: keyof typeof statusLabels;
-  label?: string;
+  label: string;
 }
 
-const { status, label } = Astro.props;
+const { label } = Astro.props;
 ---
 
-<span class:list={['chip', status && `chip--${status}`]}>
-  {status && <span class:list={['chip__dot', status === 'in-progress' && 'breathe']} aria-hidden="true" />}
-  {label ?? (status && statusLabels[status])}
-</span>
+<span class="chip">{label}</span>
 
 <style>
   .chip {
@@ -26,20 +20,5 @@ const { status, label } = Astro.props;
     font-size: 0.78rem;
     line-height: 1.6;
     white-space: nowrap;
-  }
-
-  .chip__dot {
-    width: 0.45rem;
-    height: 0.45rem;
-    border-radius: 50%;
-    background: var(--color-muted);
-  }
-
-  .chip--shipped .chip__dot {
-    background: var(--color-ok);
-  }
-
-  .chip--in-progress .chip__dot {
-    background: var(--color-warn);
   }
 </style>

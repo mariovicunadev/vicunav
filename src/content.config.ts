@@ -2,7 +2,6 @@ import { defineCollection, reference } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-const status = z.enum(['shipped', 'in-progress', 'planned']);
 const surface = z.enum(['theme', 'app', 'checkout', 'functions', 'headless', 'data', 'performance']);
 
 const projects = defineCollection({
@@ -16,7 +15,6 @@ const projects = defineCollection({
       kind: z.enum(['concept', 'client', 'employer']),
       role: z.string(),
       year: z.number().int(),
-      status,
       surfaces: z.array(surface).min(1),
       stack: z.array(z.string()),
       cover: image().optional(),
@@ -25,7 +23,7 @@ const projects = defineCollection({
         url: z.url().optional(),
         visibility: z.enum(['public', 'private', 'on-request']),
       }),
-      live: z.object({ url: z.url(), note: z.string().optional() }).optional(),
+      live: z.object({ url: z.url() }),
       metrics: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
       featured: z.boolean().default(false),
       order: z.number().default(100),
@@ -39,9 +37,7 @@ const features = defineCollection({
       title: z.string(),
       project: reference('projects'),
       problem: z.string(),
-      // For planned features: the intended approach, shown in the project's Defined scope block.
       decision: z.string(),
-      status,
       surfaces: z.array(surface).min(1),
       skills: z.array(z.string()).default([]),
       demo: z.array(z.object({ src: image(), alt: z.string() })).default([]),
