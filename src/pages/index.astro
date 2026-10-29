@@ -5,6 +5,7 @@ import Heading from '../components/Heading.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import ArticleList from '../components/ArticleList.astro';
 import { site, proof } from '../data/site';
+import { experience } from '../data/experience';
 import { services, process } from '../data/services';
 import { getArticles, getProjects } from '../lib/content';
 
@@ -12,12 +13,12 @@ const projects = await getProjects();
 const articles = (await getArticles()).slice(0, 3);
 
 const capabilities = [
-  { title: 'Themes', body: 'Online Store 2.0 sections and theme blocks, metafields and metaobjects, merchant-editable from the theme editor.' },
-  { title: 'Apps', body: 'Embedded apps, app blocks and embeds, webhooks and integrations with the app ecosystem.' },
+  { title: 'Themes', body: 'Online Store 2.0 sections and theme blocks, built on metafields and metaobjects, editable by the merchant.' },
+  { title: 'Apps & integrations', body: 'Embedded apps, app blocks and webhooks, plus the review, subscription and analytics apps a store already runs.' },
   { title: 'Checkout & Functions', body: 'Checkout UI extensions, discount and validation Functions, B2B and Markets on Shopify Plus.' },
   { title: 'Headless', body: 'Hydrogen storefronts on the Storefront and Customer Account APIs.' },
-  { title: 'Data & automation', body: 'Catalogs, metafields and settings rebuilt from code with idempotent Admin API scripts.' },
-  { title: 'Performance', body: 'Core Web Vitals audits and fixes that move LCP, INP and CLS, measured before and after.' },
+  { title: 'Catalog data & AI', body: 'Catalogs and custom data rebuilt from code with the Admin API, and AI on top of that data: product recommendations, semantic search, LLM features.' },
+  { title: 'Performance', body: 'Core Web Vitals audits and fixes for LCP, INP and CLS, measured before and after.' },
 ];
 ---
 
@@ -37,12 +38,14 @@ const capabilities = [
       ]}
     />
     <p class="lede">
-      I’m {site.name}, <strong>senior Shopify developer</strong>. Themes, apps, checkout and
-      Hydrogen, shipped for international DTC brands for 9+ years.
+      I’m {site.name}, a <strong>senior Shopify developer</strong>. For more than nine years I’ve
+      built and run stores for international DTC brands: custom themes, app integrations, Core Web
+      Vitals work, A/B tests and Magento to Shopify migrations. Today I work across themes, apps,
+      checkout, Hydrogen and the Shopify APIs.
     </p>
     <div class="button-row">
-      <a class="button button--primary" href="/contact">Start a conversation</a>
-      <a class="button button--ghost" href="/work">See the work</a>
+      <a class="button button--primary" href="/work">See the work</a>
+      <a class="button button--ghost" href={site.cv}>Download CV</a>
     </div>
   </section>
 
@@ -57,14 +60,23 @@ const capabilities = [
         ))
       }
     </ul>
+    <p class="employers mono muted">
+      {experience.map((e, i) => (
+        <>
+          {i > 0 && <span aria-hidden="true"> · </span>}
+          <span><span class="employers__name">{e.company}</span>, {e.period.replace(/^\w+ /, '').replace(/ — \w+ /, '–')}</span>
+        </>
+      ))}
+    </p>
   </section>
 
   <section class="section container" aria-labelledby="work-title">
     <SectionLabel index="01" label="Selected work" />
     <div class="split-heading">
-      <Heading id="work-title" class="h2" parts={[{ text: 'Every feature documented: ', tone: 'lead' }, { text: 'problem, demo, decision, code.' }]} />
+      <Heading id="work-title" class="h2" parts={[{ text: 'Six concept stores. ', tone: 'lead' }, { text: 'Each one solves a different selling problem.' }]} />
       <a class="mono link" href="/work">All projects →</a>
     </div>
+    <p class="access mono muted">Every store is open to browse. Password: <code>{site.storePassword}</code></p>
     <div class="grid-2" data-reveal-stagger>
       {
         projects.map((p) => (
@@ -90,25 +102,10 @@ const capabilities = [
     </ul>
   </section>
 
-  <section class="section container" aria-labelledby="process-title">
-    <SectionLabel index="03" label="How I work" />
-    <Heading id="process-title" class="h2" parts={[{ text: 'Specs before code. Reviews before merge. ', tone: 'lead' }, { text: 'Nothing touches live by surprise.' }]} />
-    <ol class="process" data-reveal-stagger>
-      {
-        process.map((p, i) => (
-          <li>
-            <span class="mono process__step">{String(i + 1).padStart(2, '0')} {p.step}</span>
-            <p>{p.artifact}</p>
-          </li>
-        ))
-      }
-    </ol>
-  </section>
-
   <section class="section container" aria-labelledby="services-title">
-    <SectionLabel index="04" label="Services" />
+    <SectionLabel index="03" label="Services" />
     <div class="split-heading">
-      <Heading id="services-title" class="h2" parts={[{ text: 'Hire me for a project ', tone: 'lead' }, { text: 'or for the team.' }]} />
+      <Heading id="services-title" class="h2" parts={[{ text: 'Need it built? ', tone: 'lead' }, { text: 'Hire me for a project, or for your team.' }]} />
       <a class="mono link" href="/services">All services →</a>
     </div>
     <ul class="caps" data-reveal-stagger>
@@ -121,6 +118,21 @@ const capabilities = [
         ))
       }
     </ul>
+  </section>
+
+  <section class="section container" aria-labelledby="process-title">
+    <SectionLabel index="04" label="How I work" />
+    <Heading id="process-title" class="h2" parts={[{ text: 'Specs before code. Reviews before merge. ', tone: 'lead' }, { text: 'Nothing touches live by surprise.' }]} />
+    <ol class="process" data-reveal-stagger>
+      {
+        process.map((p, i) => (
+          <li>
+            <span class="mono process__step">{String(i + 1).padStart(2, '0')} {p.step}</span>
+            <p>{p.artifact}</p>
+          </li>
+        ))
+      }
+    </ol>
   </section>
 
   {
@@ -197,6 +209,26 @@ const capabilities = [
     list-style: none;
     border-top: 1px solid var(--color-text);
     border-bottom: 1px solid var(--color-line);
+  }
+
+  .employers {
+    margin-top: var(--space-4);
+  }
+
+  .employers__name {
+    color: var(--color-text);
+  }
+
+  .access {
+    margin: calc(-1 * var(--space-5)) 0 var(--space-7);
+  }
+
+  .access code {
+    padding: 0.05em 0.35em;
+    font-weight: 600;
+    background: var(--mark-fill);
+    color: var(--mark-ink);
+    border-radius: var(--radius);
   }
 
   .proof li {

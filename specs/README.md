@@ -15,6 +15,7 @@ Every change to this site starts as a spec. One spec = one branch = one PR.
 | 008 | [Motion and detail](008-motion-and-detail.md) | Phase 1 done; phase 2 later |
 | 009 | [Work: six showcases](009-work-six-showcases.md) | Done |
 | 010 | [Features inline, no status, open stores](010-inline-features-no-status.md) | Done |
+| 011 | [Content review](011-content-review.md) | In progress |
 
 ## Roadmap
 
