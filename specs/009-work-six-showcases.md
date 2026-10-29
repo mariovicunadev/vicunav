@@ -2,10 +2,13 @@
 
 | Field    | Value |
 |----------|-------|
-| Status   | In progress |
+| Status   | Done |
 | Branch   | `feature/009-work-six-showcases` |
 | Estimate | 6 h |
 | Actual   | — |
+
+> Parts of this spec (Defined scope block, status on cards, feature pages) are superseded by
+> spec 010.
 
 ## Goal
 
@@ -16,17 +19,16 @@ expertise, so a recruiter or client can judge any store on its own.
 ## Context
 
 Today "Commerce Showcase" is one project card with three tooling features. In the source it is five
-stores, each with its own niche, base theme and feature set. Work runs one store at a time: Saelle
-Care is in progress, the other four are defined and on hold. Specs 002 and 004 still apply.
+stores, each with its own niche, base theme and feature set. Specs 002 and 004 still apply.
 
-| Showcase | Niche | Base theme | Status | Features defined |
-|---|---|---|---|---|
-| Vicubites | Pet food, DTC + B2B | Horizon | In progress | 13 |
-| Saelle Care | Minimal skincare | Ritual | In progress | 7 + reviews |
-| Fjelder | Technical outdoor, CAD base | Pitch | Planned | 8 |
-| Ondo Studio | Made-to-order furniture | Dwell | Planned | 7 |
-| Yuzora Tea House | Japanese tea and gifts | Savor | Planned | 7 |
-| Kairon Audio | Headphones and speakers | Tinker | Planned | 7 |
+| Showcase | Niche | Base theme |
+| --- | --- | --- |
+| Vicubites | Pet food, DTC + B2B | Horizon |
+| Saelle Care | Minimal skincare | Ritual |
+| Fjelder | Technical outdoor, CAD base | Pitch |
+| Ondo Studio | Made-to-order furniture | Dwell |
+| Yuzora Tea House | Japanese tea and gifts | Savor |
+| Kairon Audio | Headphones and speakers | Tinker |
 
 ## Decisions
 
@@ -75,7 +77,7 @@ first), which is something a lead or client wants to see, instead of an empty pa
 
 - [x] `/work` and the home list six individual showcases, ordered by progress
 - [x] Each store page shows niche, base theme, status, built features and Defined scope
-- [ ] Old `/work/commerce-showcase` URLs redirect with 301 to Saelle Care
+- [x] Old `/work/commerce-showcase` URLs redirect with 301 to Saelle Care
 - [x] No planned feature has its own page or adds skills to the About matrix; skills missing from
       the About toolbox were added there, unlinked
 - [x] Defined scope works without JavaScript (`<details>`), and with keyboard and screen reader

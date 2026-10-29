@@ -2,7 +2,7 @@
 
 | Field    | Value |
 |----------|-------|
-| Status   | Approved |
+| Status   | Done |
 | Branch   | `feature/002-information-architecture` |
 | Estimate | 4 h |
 | Actual   | — |
@@ -72,7 +72,7 @@ lead can go deep:
 
 ## Acceptance criteria
 
-- [ ] Every page in the sitemap exists and is linked from navigation or its parent
-- [ ] Each page has a unique `<title>` and meta description
-- [ ] Breadcrumbs on case study, feature and article pages
-- [ ] Prev/next navigation between features of the same project
+- [x] Every page in the sitemap exists and is linked from navigation or its parent
+- [x] Each page has a unique `<title>` and meta description
+- [x] Breadcrumbs on case study and article pages (feature pages removed in spec 010)
+- [x] ~~Prev/next navigation between features~~ superseded by spec 010: features are rows on the project page

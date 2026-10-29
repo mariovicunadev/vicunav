@@ -6,10 +6,9 @@ import ProjectCard from '../components/ProjectCard.astro';
 import ArticleList from '../components/ArticleList.astro';
 import { site, proof } from '../data/site';
 import { services, process } from '../data/services';
-import { getArticles, getFeatures, getProjects, isBuilt } from '../lib/content';
+import { getArticles, getProjects } from '../lib/content';
 
 const projects = await getProjects();
-const features = await getFeatures();
 const articles = (await getArticles()).slice(0, 3);
 
 const capabilities = [
@@ -69,7 +68,7 @@ const capabilities = [
     <div class="grid-2" data-reveal-stagger>
       {
         projects.map((p) => (
-          <ProjectCard project={p} counts={{ built: features.filter((f) => f.data.project.id === p.id && isBuilt(f)).length, defined: features.filter((f) => f.data.project.id === p.id && !isBuilt(f)).length }} />
+          <ProjectCard project={p} />
         ))
       }
     </div>

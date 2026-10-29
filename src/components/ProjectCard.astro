@@ -6,10 +6,9 @@ import { surfaces } from '../data/site';
 
 interface Props {
   project: CollectionEntry<'projects'>;
-  counts?: { built: number; defined: number };
 }
 
-const { project, counts } = Astro.props;
+const { project } = Astro.props;
 const p = project.data;
 ---
 
@@ -29,7 +28,6 @@ const p = project.data;
     <div class="card__meta mono muted">
       <span>{p.niche}</span>
       <span>{p.baseTheme}</span>
-      <Chip status={p.status} />
     </div>
     <h3 class="card__title">
       <a href={`/work/${project.id}`}>{p.title}</a>
@@ -38,13 +36,7 @@ const p = project.data;
     <ul class="card__tags" aria-label="Shopify surfaces">
       {p.surfaces.map((s) => <li><Chip label={surfaces[s]} /></li>)}
     </ul>
-    {
-      counts && (
-        <p class="mono muted">
-          {counts.built} built · {counts.defined} defined →
-        </p>
-      )
-    }
+    <p class="mono muted">Case study →</p>
   </div>
 </article>
 

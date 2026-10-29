@@ -2,7 +2,7 @@
 
 | Field    | Value |
 |----------|-------|
-| Status   | Approved |
+| Status   | Done |
 | Branch   | `feature/001-positioning` |
 | Estimate | 3 h |
 | Actual   | — |
@@ -89,8 +89,8 @@ they are. Concept brands are labelled as such ("Concept brand — not a client")
 ## Acceptance criteria
 
 - [x] Owner picks a headline and approves the proof points
-- [ ] Each audience has one clear primary CTA reachable from the home page in one click
-- [ ] Every number on the site traces back to the CV or a measured result
+- [x] Each audience has one clear primary CTA reachable from the home page in one click
+- [x] Every number on the site traces back to the CV or a measured result
 
 ## Risks and open questions
 

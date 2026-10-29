@@ -2,7 +2,7 @@
 
 | Field    | Value |
 |----------|-------|
-| Status   | In progress |
+| Status   | Done |
 | Branch   | `feature/003-visual-system` |
 | Estimate | 6 h |
 | Actual   | — |
@@ -85,6 +85,7 @@ All text pairs ≥ 4.5:1 and UI pairs ≥ 3:1 (checked with the contrast script,
 ## Acceptance criteria
 
 - [x] Owner approves the concept and the accent color (`#14E099`, 2026-10-28)
-- [ ] Tokens drive every component; no raw hex values outside `tokens.css`
+- [x] Tokens drive every component; no raw hex values outside `tokens.css` (except the
+      `theme-color` meta tags, which cannot read CSS variables)
 - [x] Light and dark themes pass AA on every text pair (`npm run contrast`)
 - [x] Lighthouse Accessibility 100 on all templates (CI, 2026-10-28)

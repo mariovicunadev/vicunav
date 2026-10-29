@@ -2,7 +2,7 @@
 
 | Field    | Value |
 |----------|-------|
-| Status   | Approved |
+| Status   | Done |
 | Branch   | `feature/004-content-model` |
 | Estimate | 4 h |
 | Actual   | — |
@@ -66,7 +66,8 @@ project (optional reference).
 
 ## Acceptance criteria
 
-- [ ] A missing required field fails `astro build` with a readable error
-- [ ] Draft articles render in `npm run dev` and are excluded from the production build, RSS and sitemap
-- [ ] Feature URLs are `/work/<project>/<feature>`
-- [ ] Seed content: 2 projects, 3+ features, 3 article drafts
+- [x] A missing required field fails `astro build` with a readable error
+- [x] Draft articles render in `npm run dev` and are excluded from the production build, RSS and sitemap
+- [x] ~~Feature URLs are `/work/<project>/<feature>`~~ superseded by spec 010: features are
+      anchors on the project page (`/work/<project>#<feature>`)
+- [x] Seed content: 6 projects, 3+ features each, 3 article drafts

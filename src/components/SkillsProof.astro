@@ -4,12 +4,12 @@
 import Chip from './Chip.astro';
 import { featureSlug, getFeatures } from '../lib/content';
 
-const features = (await getFeatures()).filter((f) => f.data.status !== 'planned');
+const features = await getFeatures();
 const bySkill = new Map<string, { href: string; title: string }[]>();
 for (const f of features) {
   for (const skill of f.data.skills) {
     const links = bySkill.get(skill) ?? [];
-    links.push({ href: `/work/${f.data.project.id}/${featureSlug(f)}`, title: f.data.title });
+    links.push({ href: `/work/${f.data.project.id}#${featureSlug(f)}`, title: f.data.title });
     bySkill.set(skill, links);
   }
 }

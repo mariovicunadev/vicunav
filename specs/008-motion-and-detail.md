@@ -61,7 +61,7 @@ spec translates them into our tokens and rules.
 7. **Sticky header**: translucent (`color-mix(in oklab, var(--color-bg) 85%, transparent)`),
    `backdrop-filter: blur(12px)`, hairline appears after 8 px of scroll; `scroll-margin-top` on
    anchors.
-8. **Live status**: the in-progress chip dot breathes (opacity 0.35↔1, 1.4 s).
+8. ~~**Live status**: the in-progress chip dot breathes~~ removed in spec 010 (no status on the site).
 9. **Window chrome** around code excerpts and demo images on feature pages: three dots, file
    name in mono on the right, hairline border, `--radius-window` 12 px.
 10. **Numbered eyebrows**: section labels gain an index (`01 · Work`), feature pages
@@ -69,15 +69,11 @@ spec translates them into our tokens and rules.
 11. **Type polish**: tighter tracking on `--step-4`/`--step-5` (−0.03 em), h2 line-height 1.08,
     `-webkit-font-smoothing: antialiased`, `text-wrap: balance` on headings, `pretty` on prose.
 
-Status dots breathe three times (4.2 s) and stop, which keeps them under the 5 s limit
-without a pause control.
-
 **In scope — phase 2 (signature pieces)**
 12. **Hero spec-sheet demo**: a window on the home page that types one feature as a spec
     (`problem → decision → quality`), with a blinking caret, cycling through 3 real features,
     pause button with progress ring. Stops after one cycle.
-13. **Feature tabs** on project pages: one tab per feature with the accent underline, autoplay
-    with progress ring and pause, the panel shows problem, decision and chips.
+13. ~~**Feature tabs**~~ dropped in spec 010: features are rows on the project page.
 14. **CTA sheen** on the primary button, on hover/focus only (never looping).
 
 **Out of scope**
