@@ -1,0 +1,21 @@
+---
+title: Filters, search and recommendations
+project: vicubites
+problem: Shoppers need to narrow by pet, life stage, protein and size, and find products with everyday words like "kibble".
+decision: Shopify Search & Discovery on top of the typed metafields, using the theme's existing Section Rendering filters; keyword tags replace the retired synonyms.
+status: shipped
+surfaces: [theme, data]
+skills: [Search & Discovery, Section Rendering API, Metafields, Product recommendations]
+quality:
+  - Filters update without a full reload and the URL is shareable
+  - Dry recipes show complementary products
+  - Predictive search returns products for "salmon" and "puppy"
+order: 8
+---
+The native app was chosen over a custom filter: Horizon already renders storefront filters with the
+Section Rendering API and ships predictive search, so the work was configuration on top of the data
+model. Complementary products ("Pairs well with") are written by script into the metafield the app
+reads.
+
+When search synonyms were retired, keyword tags took their place, so a search for "kibble" or
+"pup" still finds the right products.

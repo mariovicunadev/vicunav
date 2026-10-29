@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import SectionLabel from '../../components/SectionLabel.astro';
-import { getFeatures, getProjects } from '../../lib/content';
+import { getFeatures, getProjects, isBuilt } from '../../lib/content';
 
 const projects = await getProjects();
 const features = await getFeatures();
@@ -20,7 +20,7 @@ const features = await getFeatures();
   <section class="container grid" data-reveal-stagger>
     {
       projects.map((p) => (
-        <ProjectCard project={p} featureCount={features.filter((f) => f.data.project.id === p.id).length} />
+        <ProjectCard project={p} counts={{ built: features.filter((f) => f.data.project.id === p.id && isBuilt(f)).length, defined: features.filter((f) => f.data.project.id === p.id && !isBuilt(f)).length }} />
       ))
     }
   </section>

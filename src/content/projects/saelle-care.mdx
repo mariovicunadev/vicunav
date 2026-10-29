@@ -1,0 +1,46 @@
+---
+title: Saelle Care
+niche: Minimal skincare
+baseTheme: Ritual
+summary: A minimal skincare brand on Shopify Plus, rebuilt from code (brand, catalog, packshots, content) on the Ritual theme, with routines at the center.
+kind: concept
+role: Lead developer
+year: 2026
+status: in-progress
+surfaces: [theme, data, checkout]
+stack: [Liquid, Ritual (Horizon family), Admin GraphQL API, Metaobjects, Node.js, sharp, resvg, Shopify CLI]
+repo:
+  visibility: on-request
+live:
+  url: https://saelle-care.myshopify.com
+  note: Password-protected store, password on request
+metrics:
+  - value: '18'
+    label: products seeded from code
+  - value: '48'
+    label: code-generated packshots
+featured: true
+order: 2
+---
+
+## Context
+
+Saelle Care sells a short skincare routine: cleanse, tone, treat, moisturize, plus refills. Shoppers
+choose by skin type and by step, and they research ingredients, so the store is driven by typed
+data rather than product copy.
+
+## Approach
+
+- **Brand as data.** Colors, type, radius and motion live in one tokens file that writes the theme
+  settings, the brand book and the social images, behind a WCAG contrast gate.
+- **A store rebuilt from the repository.** Catalog, size variants, ingredient metaobjects,
+  collections, pages, journal, policies and menus load with one idempotent command.
+- **Product pages built from data.** Skin type, key ingredients and how-to-use come from metafields
+  and metaobjects the merchant edits in the admin.
+- **Native first.** Shopify Bundles, Subscriptions and automatic discounts before any custom app.
+
+## Process
+
+Each feature starts as a spec with acceptance criteria and an estimate, ships through a pull
+request with a self review, and passes Theme Check before merge. Every Admin GraphQL operation is
+validated against the schema before it runs.

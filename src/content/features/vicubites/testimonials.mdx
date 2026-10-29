@@ -1,0 +1,20 @@
+---
+title: Testimonials section
+project: vicubites
+problem: Social proof from pet owners and wholesale customers had no home in the theme.
+decision: A section with a private _testimonial block for the quotes and public theme blocks for the heading area; a grid on desktop and a CSS scroll-snap carousel on mobile.
+status: shipped
+surfaces: [theme]
+skills: [Theme blocks, Liquid, CSS, Accessibility, Progressive enhancement]
+quality:
+  - Works without JavaScript
+  - Rating announced to screen readers ("Rated 5 out of 5")
+  - Theme Check passes with no new errors
+order: 5
+---
+The section mixes two kinds of blocks: `_testimonial` is private, so it only appears inside this
+section, while the heading area accepts any public theme block (text, badge). The schema declares
+both with `"blocks": [{ "type": "@theme" }, { "type": "_testimonial" }]`.
+
+On mobile the list scrolls horizontally with snap points. No carousel script is involved, so it
+works before JavaScript loads and respects the shopper's own scrolling.

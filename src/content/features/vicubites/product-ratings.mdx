@@ -1,0 +1,20 @@
+---
+title: Ratings from standard review metafields
+project: vicubites
+problem: Product cards showed no ratings, and wiring the theme to one review app would lock the merchant in.
+decision: Read Shopify's standard reviews.rating and reviews.rating_count metafields, which review apps write, so any app works without theme changes.
+status: shipped
+surfaces: [theme, data]
+skills: [Metafields, Liquid, Accessibility, Structured data]
+quality:
+  - Cards show stars and count only for rated products
+  - Rating exposed to screen readers as text; stars are decorative
+  - No aggregateRating emitted while ratings are sample data
+order: 9
+---
+The standard definitions were enabled with `standardMetafieldDefinitionEnable` and filled with
+sample values by an idempotent script. Because Judge.me, Okendo and Yotpo write to the same
+contract, switching apps needs no theme work.
+
+The sample ratings are not real reviews, so the theme deliberately emits no `aggregateRating`
+structured data while they are in place.

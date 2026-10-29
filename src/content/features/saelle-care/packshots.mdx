@@ -1,0 +1,21 @@
+---
+title: Code-generated packshots
+project: saelle-care
+problem: A skincare catalog needs studio-style images for every size variant, without a photo budget.
+decision: 48 packshots rendered from SVG templates and the catalog file (six container types, per-size scale, texture swatches), with label contrast checked at render time.
+status: shipped
+surfaces: [data]
+skills: [Node.js, sharp, resvg, Accessibility, Admin GraphQL API]
+quality:
+  - Label contrast checked while rendering
+  - 'Per-variant media: switching Rich Cream from 50 to 100 ml changes the image'
+  - Contact sheet generated with every run
+order: 4
+---
+Each product's container type, size and texture come from the catalog, so the images can't drift
+from the data. Files are uploaded by content hash and attached to variants by file id, so rerunning
+the pipeline never duplicates media.
+
+```bash
+npm run images -- saelle
+```

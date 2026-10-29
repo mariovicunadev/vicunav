@@ -5,7 +5,7 @@ import Base from '../../../layouts/Base.astro';
 import Chip from '../../../components/Chip.astro';
 import SectionLabel from '../../../components/SectionLabel.astro';
 import SpecTable from '../../../components/SpecTable.astro';
-import { featureSlug, getFeatures, getProjects } from '../../../lib/content';
+import { featureSlug, getFeatures, getProjects, isBuilt } from '../../../lib/content';
 import { surfaces } from '../../../data/site';
 
 export async function getStaticPaths() {
@@ -19,7 +19,9 @@ export async function getStaticPaths() {
 const { project, next } = Astro.props;
 const p = project.data;
 const { Content } = await render(project);
-const features = await getFeatures(project.id);
+const all = await getFeatures(project.id);
+const features = all.filter(isBuilt);
+const defined = all.filter((f) => !isBuilt(f));
 
 const repoLabel = {
   public: 'Public',
@@ -46,6 +48,8 @@ const repoLabel = {
       <aside class="layout__aside">
         <SpecTable
           rows={[
+            { key: 'Niche', value: p.niche },
+            { key: 'Base theme', value: p.baseTheme },
             { key: 'Role', value: p.role },
             { key: 'Year', value: String(p.year) },
             { key: 'Surfaces', value: p.surfaces.map((s) => surfaces[s]).join(', ') },
@@ -84,7 +88,7 @@ const repoLabel = {
     {
       features.length > 0 && (
         <section class="section container" aria-labelledby="features-title">
-          <SectionLabel label="Features" />
+          <SectionLabel index="01" label="Features" />
           <h2 id="features-title" class="features__title">Feature breakdown</h2>
           <ol class="features" data-reveal-stagger>
             {features.map((f, i) => (
@@ -97,6 +101,46 @@ const repoLabel = {
                   <p class="muted">{f.data.problem}</p>
                 </div>
                 <Chip status={f.data.status} />
+              </li>
+            ))}
+          </ol>
+        </section>
+      )
+    }
+
+    {
+      defined.length > 0 && (
+        <section class="section container" aria-labelledby="scope-title">
+          <SectionLabel index={features.length > 0 ? '02' : '01'} label="Defined scope" />
+          <div class="scope__head">
+            <h2 id="scope-title" class="features__title">Specified, not built yet</h2>
+            <p class="mono muted">
+              {all.length} features · {features.length} built · {defined.length} defined
+            </p>
+          </div>
+          <p class="lede scope__lede">
+            Each feature below has a written spec with its goal, scope and acceptance criteria. It gets
+            its own page when work on it starts.
+          </p>
+          <ol class="scope" data-reveal-stagger>
+            {defined.map((f, i) => (
+              <li>
+                <details>
+                  <summary>
+                    <span class="mono muted">{String(features.length + i + 1).padStart(2, '0')}</span>
+                    <span class="scope__title">{f.data.title}</span>
+                    <span class="scope__chips">
+                      {f.data.surfaces.map((s) => <Chip label={surfaces[s]} />)}
+                      <Chip status="planned" label="Defined" />
+                    </span>
+                  </summary>
+                  <dl class="scope__body">
+                    <dt class="mono">Problem</dt>
+                    <dd>{f.data.problem}</dd>
+                    <dt class="mono">Planned approach</dt>
+                    <dd>{f.data.decision}</dd>
+                  </dl>
+                </details>
               </li>
             ))}
           </ol>
@@ -150,7 +194,7 @@ const repoLabel = {
 
     .layout__aside {
       position: sticky;
-      top: var(--space-5);
+      top: 6rem; /* clears the sticky header */
       align-self: start;
     }
   }
@@ -182,6 +226,99 @@ const repoLabel = {
     margin-bottom: var(--space-7);
     border: 1px solid var(--color-line);
     border-radius: var(--radius);
+  }
+
+  .scope__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-3);
+  }
+
+  .scope__lede {
+    margin-bottom: var(--space-7);
+  }
+
+  .scope {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-text);
+  }
+
+  .scope li {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .scope summary {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: var(--space-2) var(--space-4);
+    align-items: center;
+    padding-block: var(--space-4);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .scope summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .scope__title {
+    font-size: var(--step-1);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .scope__title::after {
+    content: ' +';
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-weight: 400;
+  }
+
+  .scope details[open] .scope__title::after {
+    content: ' −';
+  }
+
+  .scope summary:hover .scope__title {
+    color: var(--color-accent-ink);
+  }
+
+  .scope__chips {
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  @media (min-width: 48rem) {
+    .scope summary {
+      grid-template-columns: 2.5rem 1fr auto;
+    }
+
+    .scope__chips {
+      grid-column: auto;
+    }
+  }
+
+  .scope__body {
+    display: grid;
+    gap: var(--space-2) var(--space-5);
+    margin: 0;
+    padding: 0 0 var(--space-5) calc(2.5rem + var(--space-4));
+    max-width: calc(var(--prose-width) + 4rem);
+  }
+
+  .scope__body dt {
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .scope__body dd {
+    margin: 0 0 var(--space-3);
   }
 
   .features__title {
