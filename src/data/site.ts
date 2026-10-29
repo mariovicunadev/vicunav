@@ -6,7 +6,7 @@ export const site = {
     'Senior Shopify developer with 9+ years shipping themes, apps, checkout extensions and Hydrogen storefronts for international brands.',
   email: 'mariovicunaula@gmail.com',
   location: 'Venezuela · UTC−4',
-  availability: 'Open to full-time remote roles and select freelance projects',
+  availability: 'Open to full-time and part-time remote roles, and freelance projects',
   available: true,
   cv: '/mario-vicuna-cv.pdf',
   // Public on purpose: every concept store shares it so visitors can preview without asking.
@@ -27,10 +27,10 @@ export const nav = [
 
 // Every figure here comes from the CV (spec 001: no invented numbers).
 export const proof = [
-  { value: '9+', label: 'years in ecommerce' },
-  { value: '50+', label: 'Shopify and WordPress stores shipped' },
-  { value: '−35%', label: 'average load time after Core Web Vitals work' },
-  { value: '+15%', label: 'ad ROAS from mobile-first A/B tests' },
+  { value: '9+', label: 'years building ecommerce' },
+  { value: '50+', label: 'Shopify and WordPress stores built' },
+  { value: '−35%', label: 'average load time, Core Web Vitals work at Trafilea' },
+  { value: '+15%', label: 'Facebook ad ROAS from mobile-first A/B tests at Trafilea' },
 ];
 
 export const surfaces = {
