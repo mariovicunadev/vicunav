@@ -13,6 +13,15 @@ Every change to this site starts as a spec. One spec = one branch = one PR.
 | 006 | [Launch and channels](006-launch-and-channels.md) | Approved |
 | 007 | [Deploy, CI and search basics](007-deploy-and-ci.md) | Done |
 | 008 | [Motion and detail](008-motion-and-detail.md) | In progress |
+| 009 | [Work: six showcases](009-work-six-showcases.md) | In progress |
+
+## Roadmap
+
+1. **009 — Work: six showcases.** Vicubites plus the five Commerce Showcase stores.
+2. **010 — Content review.** Page by page, section by section: human voice and site strategy.
+3. **Articles.** Topics proposed from the shipped features; written by the owner.
+4. **Services and About.** Restructure and iterate.
+5. **Then:** demos as the first stores finish, motion phase 2 (spec 008), launch channels.
 
 ## Workflow
 

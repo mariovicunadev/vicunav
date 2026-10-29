@@ -21,6 +21,9 @@ export async function getProjects() {
 /** Feature ids look like `<project>/<feature>`; the URL uses the last segment. */
 export const featureSlug = (f: CollectionEntry<'features'>) => f.id.split('/').pop()!;
 
+/** Planned features have no page; they appear in their project's Defined scope block. */
+export const isBuilt = (f: CollectionEntry<'features'>) => f.data.status !== 'planned';
+
 export async function getFeatures(projectId?: string) {
   const all = await getCollection('features', (f) => !projectId || f.data.project.id === projectId);
   return all.sort((a, b) => a.data.order - b.data.order);

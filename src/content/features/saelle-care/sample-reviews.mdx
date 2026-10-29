@@ -1,0 +1,17 @@
+---
+title: Sample reviews, done honestly
+project: saelle-care
+problem: A demo store needs reviews to show the design, but fake reviews mislead shoppers and search engines.
+decision: Review metaobjects linked to products, a star summary and highlights, an always-visible "written with AI" note, and no review structured data.
+status: shipped
+surfaces: [theme, data]
+skills: [Metaobjects, Structured data, Liquid, Accessibility]
+quality:
+  - No aggregateRating or review in JSON-LD, no microdata, data-nosnippet on the block
+  - Reviews editable from the product's Reviews metafield
+  - Stars fill exactly, including the fraction of the last star
+order: 7
+---
+Reviews live in the `custom` namespace on purpose: `reviews.rating` is the contract that real review
+apps write and other surfaces trust, so sample data stays out of it. A rich results test of a
+product page shows only the product, with no rating.

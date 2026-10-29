@@ -1,0 +1,36 @@
+---
+title: Ondo Studio
+niche: Made-to-order furniture
+baseTheme: Dwell
+summary: A made-to-order furniture brand selling to homes and to the trade, on the Dwell theme with a B2B program, a material configurator and lead times.
+kind: concept
+role: Lead developer
+year: 2026
+status: planned
+surfaces: [theme, data]
+stack: [Liquid, Dwell (Horizon family), Admin GraphQL API, Shopify B2B, Metaobjects, Cart API]
+repo:
+  visibility: on-request
+order: 4
+---
+
+## Context
+
+Ondo Studio builds furniture to order. Two audiences buy on the same store: home shoppers who
+choose a wood finish and a fabric, and interior designers and hospitality buyers who order at
+trade prices with payment terms.
+
+## Approach
+
+- **B2B on the same store.** Companies, catalogs, price lists, quantity rules and net terms, with
+  the theme showing trade prices and price breaks.
+- **Materials as data.** Finish and fabric metaobjects with swatches feed a configurator that sends
+  the choice to cart and order.
+- **De-risking a large purchase.** Free fabric swatches and clear lead times on product and cart.
+- **Rooms that sell.** Room pages list their pieces and add the set to the cart.
+
+## Process
+
+Each feature starts as a spec with acceptance criteria and an estimate, ships through a pull
+request with a self review, and passes Theme Check before merge. Every Admin GraphQL operation is
+validated against the schema before it runs.

@@ -1,0 +1,20 @@
+---
+title: Catalog and packshots from code
+project: vicubites
+problem: Building and demoing a theme needs a realistic catalog with images that match every variant, and photo shoots aren't an option for a new brand.
+decision: A 20-product catalog imported from a versioned CSV and packshots rendered from the same catalog data (SVG to WebP), uploaded by an idempotent script.
+status: shipped
+surfaces: [data]
+skills: [Node.js, sharp, resvg, Admin GraphQL API, Idempotency]
+quality:
+  - Re-importing produces no duplicates
+  - Uploading twice leaves exactly one set of packshots
+  - 2048 × 2048 WebP under 300 KB, descriptive alt text
+order: 11
+---
+Packshots are SVG templates for bags, cans and pouches filled from the catalog table, so the text on
+every image matches the product title and variant exactly. Choosing a bag size on the product page
+switches to that size's image.
+
+Fonts are bundled with the renderer, so images come out the same on any machine, and every license
+(fonts, icons, photos) is recorded in the repository.

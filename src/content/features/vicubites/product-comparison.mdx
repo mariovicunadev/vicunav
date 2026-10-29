@@ -1,0 +1,17 @@
+---
+title: Product comparison section
+project: vicubites
+problem: Shoppers choosing between similar recipes had to open each product and compare protein, life stage and price per kg in their head.
+decision: A section where the merchant picks 2–4 products; a semantic table compares attributes, sizes and price per kg, reading attributes through one snippet.
+status: shipped
+surfaces: [theme]
+skills: [Liquid, Semantic HTML, Accessibility, Metafields]
+quality:
+  - Semantic table with th scope, readable at 360 px
+  - Fewer than 2 products shows an editor-only notice
+  - Theme Check passes with no new errors
+order: 6
+---
+Price per kg is computed in Liquid from each variant's price and weight, so it updates when a price
+changes. Attributes are read through a single snippet documented with LiquidDoc: when the catalog
+moved from tags to typed metafields, only that snippet changed and the section kept working.

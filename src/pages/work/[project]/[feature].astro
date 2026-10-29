@@ -5,11 +5,11 @@ import Base from '../../../layouts/Base.astro';
 import Chip from '../../../components/Chip.astro';
 import SectionLabel from '../../../components/SectionLabel.astro';
 import Window from '../../../components/Window.astro';
-import { featureSlug, getFeatures } from '../../../lib/content';
+import { featureSlug, getFeatures, isBuilt } from '../../../lib/content';
 import { surfaces } from '../../../data/site';
 
 export async function getStaticPaths() {
-  const features = await getFeatures();
+  const features = (await getFeatures()).filter(isBuilt);
   return features.map((feature) => {
     const siblings = features.filter((f) => f.data.project.id === feature.data.project.id);
     const i = siblings.indexOf(feature);

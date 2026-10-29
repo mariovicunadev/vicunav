@@ -1,0 +1,21 @@
+---
+title: Typed product data with metafields
+project: vicubites
+problem: "Catalog attributes lived in tags: untyped, easy to misspell and unable to drive good filters."
+decision: Nine merchant-owned metafield definitions in the custom namespace, with choices and storefront access, seeded by an idempotent Admin API script and pinned in the product admin.
+status: shipped
+surfaces: [data, theme]
+skills: [Metafields, Admin GraphQL API, Idempotency, Information architecture]
+quality:
+  - Seed runs twice without duplicates or errors
+  - Editing a value in the admin changes the storefront without code
+  - GraphQL operations validated against the Admin schema
+order: 7
+---
+Species, life stage, main protein, food type, calorie density and the guaranteed analysis became
+typed fields. The theme reads structured values instead of parsing tags, the comparison table and
+feeding calculator show the same numbers as before, and the same fields power the storefront
+filters.
+
+Definitions are created with `metafieldDefinitionCreate` and values written with `metafieldsSet`
+in batches of 25, so the whole data model can be rebuilt from the repository.

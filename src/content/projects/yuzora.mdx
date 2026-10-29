@@ -1,0 +1,34 @@
+---
+title: Yuzora Tea House
+niche: Japanese tea and gifts
+baseTheme: Savor
+summary: A Japanese tea brand built for gifting, on the Savor theme with a gift box builder, delivery dates, corporate tiers and brewing guides.
+kind: concept
+role: Lead developer
+year: 2026
+status: planned
+surfaces: [theme, data]
+stack: [Liquid, Savor (Horizon family), Admin GraphQL API, Discounts, Metaobjects, Cart API, Shopify Forms]
+repo:
+  visibility: on-request
+order: 5
+---
+
+## Context
+
+Yuzora Tea House sells tea that is often a gift. Gift buyers need guidance, a finished-looking box,
+a delivery date and a note; companies buy in volume for clients and teams.
+
+## Approach
+
+- **Gifting as the main flow.** A three-tea box builder with an automatic discount, delivery date
+  and gift note in the cart, and a branded gift card.
+- **Corporate tiers without B2B.** Native volume pricing is B2B-only, so three automatic discounts
+  and a quote form cover bulk orders.
+- **Content that sells the product.** Brewing guides as metaobject pages attached to each tea.
+
+## Process
+
+Each feature starts as a spec with acceptance criteria and an estimate, ships through a pull
+request with a self review, and passes Theme Check before merge. Every Admin GraphQL operation is
+validated against the schema before it runs.

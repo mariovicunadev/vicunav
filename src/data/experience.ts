@@ -26,7 +26,8 @@ export const experience = [
 
 export const skills = [
   { group: 'Shopify', items: ['Shopify Plus', 'Online Store 2.0', 'Liquid', 'Theme blocks', 'Metafields & metaobjects', 'Checkout extensibility', 'Shopify Functions', 'Hydrogen'] },
-  { group: 'APIs', items: ['Admin GraphQL API', 'Storefront API', 'Customer Account API', 'Section Rendering API', 'Cart API', 'Webhooks'] },
-  { group: 'Front end', items: ['JavaScript', 'TypeScript', 'React', 'Web components', 'CSS', 'Accessibility (WCAG 2.2)'] },
-  { group: 'Delivery', items: ['Core Web Vitals', 'A/B testing', 'Migrations', 'Git & PR review', 'CI', 'Claude Code & Codex'] },
+  { group: 'Commerce features', items: ['Shopify Markets', 'Shopify B2B', 'Selling plans & subscriptions', 'Shopify Bundles', 'Discounts', 'Combined listings', 'Search & Discovery', 'Shopify Flow', 'Shopify Forms'] },
+  { group: 'APIs', items: ['Admin GraphQL API', 'Storefront API', 'Customer Account API', 'Section Rendering API', 'Cart API', 'Product Recommendations API', 'Translations API', 'Webhooks'] },
+  { group: 'Front end', items: ['JavaScript', 'TypeScript', 'React', 'Web components', 'CSS', 'Accessibility (WCAG 2.2)', 'Design systems'] },
+  { group: 'Delivery', items: ['Core Web Vitals', 'Structured data & SEO', 'A/B testing', 'Migrations', 'Node.js tooling', 'Git & PR review', 'CI', 'Claude Code & Codex'] },
 ];

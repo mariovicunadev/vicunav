@@ -11,6 +11,8 @@ const projects = defineCollection({
     z.object({
       title: z.string(),
       summary: z.string().max(160),
+      niche: z.string(),
+      baseTheme: z.string(),
       kind: z.enum(['concept', 'client', 'employer']),
       role: z.string(),
       year: z.number().int(),
@@ -37,6 +39,7 @@ const features = defineCollection({
       title: z.string(),
       project: reference('projects'),
       problem: z.string(),
+      // For planned features: the intended approach, shown in the project's Defined scope block.
       decision: z.string(),
       status,
       surfaces: z.array(surface).min(1),
