@@ -4,6 +4,7 @@ import { getEntry, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import Chip from '../../../components/Chip.astro';
 import SectionLabel from '../../../components/SectionLabel.astro';
+import Window from '../../../components/Window.astro';
 import { featureSlug, getFeatures } from '../../../lib/content';
 import { surfaces } from '../../../data/site';
 
@@ -14,12 +15,12 @@ export async function getStaticPaths() {
     const i = siblings.indexOf(feature);
     return {
       params: { project: feature.data.project.id, feature: featureSlug(feature) },
-      props: { feature, prev: siblings[i - 1], next: siblings[i + 1] },
+      props: { feature, index: i + 1, prev: siblings[i - 1], next: siblings[i + 1] },
     };
   });
 }
 
-const { feature, prev, next } = Astro.props;
+const { feature, index, prev, next } = Astro.props;
 const f = feature.data;
 const project = await getEntry(f.project);
 const { Content } = await render(feature);
@@ -37,25 +38,30 @@ const base = `/work/${project.id}`;
         <Chip status={f.status} />
         {f.surfaces.map((s) => <Chip label={surfaces[s]} />)}
       </div>
+      <p class="eyebrow mono">Feature {String(index).padStart(2, '0')} · /{featureSlug(feature)}</p>
       <h1>{f.title}</h1>
     </header>
 
     <div class="container blocks">
-      <section class="block" aria-labelledby="problem">
+      <section class="block" data-reveal aria-labelledby="problem">
         <SectionLabel index="01" label="Problem" />
         <p id="problem" class="block__statement">{f.problem}</p>
       </section>
 
       {
         (f.demo.length > 0 || f.video) && (
-          <section class="block" aria-label="Demo">
+          <section class="block" data-reveal aria-label="Demo">
             <SectionLabel index="02" label="Demo" />
             {f.video && (
-              <video class="media" src={f.video} controls muted playsinline preload="metadata" />
+              <Window title={`${project.data.title} · ${f.title}`}>
+                <video class="media" src={f.video} controls muted playsinline preload="metadata" />
+              </Window>
             )}
             {f.demo.map((d) => (
               <figure>
-                <Image class="media" src={d.src} alt={d.alt} widths={[800, 1400]} sizes="(min-width: 60rem) 60rem, 100vw" />
+                <Window title={`${project.data.title} · ${f.title}`}>
+                  <Image class="media" src={d.src} alt={d.alt} widths={[800, 1400]} sizes="(min-width: 60rem) 60rem, 100vw" />
+                </Window>
                 <figcaption class="mono muted">{d.alt}</figcaption>
               </figure>
             ))}
@@ -63,12 +69,12 @@ const base = `/work/${project.id}`;
         )
       }
 
-      <section class="block" aria-labelledby="decision">
+      <section class="block" data-reveal aria-labelledby="decision">
         <SectionLabel index="03" label="Decision" />
         <p id="decision" class="block__statement">{f.decision}</p>
       </section>
 
-      <section class="block" aria-label="Build">
+      <section class="block" data-reveal aria-label="Build">
         <SectionLabel index="04" label="Build" />
         <div class="prose">
           <Content />
@@ -77,7 +83,7 @@ const base = `/work/${project.id}`;
 
       {
         f.quality.length > 0 && (
-          <section class="block" aria-label="Quality evidence">
+          <section class="block" data-reveal aria-label="Quality evidence">
             <SectionLabel index="05" label="Quality" />
             <ul class="quality">
               {f.quality.map((q) => <li>{q}</li>)}
@@ -117,6 +123,12 @@ const base = `/work/${project.id}`;
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
+  }
+
+  .eyebrow {
+    color: var(--color-accent-ink);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
   }
 
   h1 {

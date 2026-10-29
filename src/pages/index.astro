@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import SectionLabel from '../components/SectionLabel.astro';
+import Heading from '../components/Heading.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import ArticleList from '../components/ArticleList.astro';
 import { site, proof } from '../data/site';
@@ -24,12 +25,18 @@ const capabilities = [
 <Base>
   <section class="hero container">
     <p class="hero__status mono">
-      <span class="dot" aria-hidden="true"></span>
+      <span class="dot breathe" aria-hidden="true"></span>
       {site.availability}
     </p>
-    <h1 class="hero__title">
-      Shopify stores that load fast, sell more and are <em>easy to change</em>.
-    </h1>
+    <Heading
+      as="h1"
+      class="hero__title"
+      parts={[
+        { text: 'Shopify stores that load fast, sell more and are ' },
+        { text: 'easy to change', tone: 'mark' },
+        { text: '.' },
+      ]}
+    />
     <p class="lede">
       I’m {site.name}, <strong>senior Shopify developer</strong>. Themes, apps, checkout and
       Hydrogen, shipped for international DTC brands for 9+ years.
@@ -41,7 +48,7 @@ const capabilities = [
   </section>
 
   <section class="container" aria-label="Track record">
-    <ul class="proof">
+    <ul class="proof" data-reveal-stagger>
       {
         proof.map((p) => (
           <li>
@@ -56,10 +63,10 @@ const capabilities = [
   <section class="section container" aria-labelledby="work-title">
     <SectionLabel index="01" label="Selected work" />
     <div class="split-heading">
-      <h2 id="work-title" class="h2">Every feature documented: problem, demo, decision, code.</h2>
-      <a class="mono" href="/work">All projects →</a>
+      <Heading id="work-title" class="h2" parts={[{ text: 'Every feature documented: ', tone: 'lead' }, { text: 'problem, demo, decision, code.' }]} />
+      <a class="mono link" href="/work">All projects →</a>
     </div>
-    <div class="grid-2">
+    <div class="grid-2" data-reveal-stagger>
       {
         projects.map((p) => (
           <ProjectCard project={p} featureCount={features.filter((f) => f.data.project.id === p.id).length} />
@@ -70,8 +77,8 @@ const capabilities = [
 
   <section class="section container" aria-labelledby="cap-title">
     <SectionLabel index="02" label="Capabilities" />
-    <h2 id="cap-title" class="h2">The whole Shopify surface, not just the theme.</h2>
-    <ul class="caps">
+    <Heading id="cap-title" class="h2" parts={[{ text: 'The whole Shopify surface, ', tone: 'lead' }, { text: 'not just the theme.' }]} />
+    <ul class="caps" data-reveal-stagger>
       {
         capabilities.map((c, i) => (
           <li>
@@ -86,8 +93,8 @@ const capabilities = [
 
   <section class="section container" aria-labelledby="process-title">
     <SectionLabel index="03" label="How I work" />
-    <h2 id="process-title" class="h2">Specs before code. Reviews before merge. Nothing touches live by surprise.</h2>
-    <ol class="process">
+    <Heading id="process-title" class="h2" parts={[{ text: 'Specs before code. Reviews before merge. ', tone: 'lead' }, { text: 'Nothing touches live by surprise.' }]} />
+    <ol class="process" data-reveal-stagger>
       {
         process.map((p, i) => (
           <li>
@@ -102,10 +109,10 @@ const capabilities = [
   <section class="section container" aria-labelledby="services-title">
     <SectionLabel index="04" label="Services" />
     <div class="split-heading">
-      <h2 id="services-title" class="h2">Hire me for a project or for the team.</h2>
-      <a class="mono" href="/services">All services →</a>
+      <Heading id="services-title" class="h2" parts={[{ text: 'Hire me for a project ', tone: 'lead' }, { text: 'or for the team.' }]} />
+      <a class="mono link" href="/services">All services →</a>
     </div>
-    <ul class="caps">
+    <ul class="caps" data-reveal-stagger>
       {
         services.slice(0, 3).map((s) => (
           <li>
@@ -122,18 +129,18 @@ const capabilities = [
       <section class="section container" aria-labelledby="articles-title">
         <SectionLabel index="05" label="Articles" />
         <div class="split-heading">
-          <h2 id="articles-title" class="h2">Notes from the work.</h2>
-          <a class="mono" href="/articles">All articles →</a>
+          <Heading id="articles-title" class="h2" parts={[{ text: 'Notes ', tone: 'lead' }, { text: 'from the work.' }]} />
+          <a class="mono link" href="/articles">All articles →</a>
         </div>
-        <ArticleList articles={articles} />
+        <div data-reveal><ArticleList articles={articles} /></div>
       </section>
     )
   }
 
   <section class="section container closing">
-    <h2 class="h2">Have a Shopify project or an open role?</h2>
-    <p class="lede">Tell me what you’re building. I reply within one business day.</p>
-    <div class="button-row">
+    <Heading class="h2" parts={[{ text: 'Have a Shopify project ', tone: 'lead' }, { text: 'or an open role?' }]} />
+    <p class="lede" data-reveal>Tell me what you’re building. I reply within one business day.</p>
+    <div class="button-row" data-reveal>
       <a class="button button--primary" href="/contact">Get in touch</a>
       <a class="button button--ghost" href={site.cv}>Download CV</a>
     </div>
@@ -170,7 +177,7 @@ const capabilities = [
   }
 
   /* Marker highlight (tokens --mark-*): the text always keeps full contrast. */
-  .hero__title em {
+  .hero__title :global(em) {
     font-style: normal;
     color: var(--mark-ink);
     background-image: linear-gradient(
@@ -208,6 +215,8 @@ const capabilities = [
 
   .h2 {
     font-size: var(--step-3);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
     max-width: 22ch;
   }
 

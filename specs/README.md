@@ -12,6 +12,7 @@ Every change to this site starts as a spec. One spec = one branch = one PR.
 | 005 | [Technical foundation](005-tech-foundation.md) | Approved |
 | 006 | [Launch and channels](006-launch-and-channels.md) | Approved |
 | 007 | [Deploy, CI and search basics](007-deploy-and-ci.md) | Done |
+| 008 | [Motion and detail](008-motion-and-detail.md) | In progress |
 
 ## Workflow
 

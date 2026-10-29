@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import SpecTable from '../components/SpecTable.astro';
 import SkillsProof from '../components/SkillsProof.astro';
+import Heading from '../components/Heading.astro';
 import { site } from '../data/site';
 import { experience, skills } from '../data/experience';
 ---
@@ -45,7 +46,7 @@ import { experience, skills } from '../data/experience';
   </section>
 
   <section class="section container" aria-labelledby="exp-title">
-    <SectionLabel label="Experience" />
+    <SectionLabel index="01" label="Experience" />
     <h2 id="exp-title" class="visually-hidden">Experience</h2>
     <ol class="timeline">
       {
@@ -65,13 +66,13 @@ import { experience, skills } from '../data/experience';
   </section>
 
   <section class="section container" aria-labelledby="proof-title">
-    <SectionLabel label="Skills, with proof" />
-    <h2 id="proof-title" class="proof-title">Every skill links to the work that shows it.</h2>
+    <SectionLabel index="02" label="Skills, with proof" />
+    <Heading id="proof-title" class="proof-title" parts={[{ text: 'Every skill links ', tone: 'lead' }, { text: 'to the work that shows it.' }]} />
     <SkillsProof />
   </section>
 
   <section class="section container" aria-labelledby="skills-title">
-    <SectionLabel label="Toolbox" />
+    <SectionLabel index="03" label="Toolbox" />
     <h2 id="skills-title" class="visually-hidden">Toolbox</h2>
     <div class="skills">
       {

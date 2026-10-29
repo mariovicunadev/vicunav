@@ -10,7 +10,7 @@ const { status, label } = Astro.props;
 ---
 
 <span class:list={['chip', status && `chip--${status}`]}>
-  {status && <span class="chip__dot" aria-hidden="true" />}
+  {status && <span class:list={['chip__dot', status === 'in-progress' && 'breathe']} aria-hidden="true" />}
   {label ?? (status && statusLabels[status])}
 </span>
 

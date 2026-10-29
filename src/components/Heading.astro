@@ -1,0 +1,39 @@
+---
+/**
+ * Heading split into word spans at build time (spec 008). Parts set the tone:
+ * `lead` is muted, `text` (default) is full contrast, `mark` gets the marker highlight.
+ * Spans are inline, so screen readers read the heading as one sentence.
+ */
+type Tone = 'lead' | 'text' | 'mark';
+
+interface Props {
+  as?: 'h1' | 'h2';
+  parts: { text: string; tone?: Tone }[];
+  id?: string;
+  class?: string;
+}
+
+const { as: Tag = 'h2', parts, class: className, ...rest } = Astro.props;
+
+let w = 0;
+const segments = parts.map((part) => ({
+  tone: part.tone ?? 'text',
+  tokens: part.text
+    .split(/(\s+)/)
+    .filter(Boolean)
+    .map((t) => (/^\s+$/.test(t) ? { space: t } : { word: t, w: w++ })),
+}));
+---
+
+<Tag class:list={['heading', className]} data-reveal-words {...rest}>
+  {
+    segments.map((s) => {
+      const words = s.tokens.map((t) =>
+        'space' in t ? t.space : <span class="heading__word" style={`--w:${t.w}`}>{t.word}</span>,
+      );
+      if (s.tone === 'mark') return <em>{words}</em>;
+      if (s.tone === 'lead') return <span class="heading__lead">{words}</span>;
+      return words;
+    })
+  }
+</Tag>
