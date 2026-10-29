@@ -2,7 +2,7 @@
 
 | Field    | Value |
 |----------|-------|
-| Status   | In progress |
+| Status   | Done |
 | Branch   | `feature/010-inline-features-no-status` |
 | Estimate | 4 h |
 | Actual   | — |
@@ -43,7 +43,7 @@ supersedes parts of specs 002, 004, 008 and 009 (listed below).
 - [x] `/work` and the home list all six works
 - [x] Each project page lists its features as rows; opening one shows problem, decision, build
       notes, quality and skills; the first row is open by default
-- [ ] `/work/<project>/<feature>` redirects with 301 to the anchor, and the matching row opens
+- [x] `/work/<project>/<feature>` redirects with 301 to the anchor, and the matching row opens
 - [x] Each project page shows the store link and the public password `mariovic`
 - [x] Works without JavaScript (`<details>`), keyboard and screen reader accessible
 - [x] Lighthouse stays at 100; `npm run check` and `npm run build` pass

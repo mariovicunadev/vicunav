@@ -14,15 +14,14 @@ Every change to this site starts as a spec. One spec = one branch = one PR.
 | 007 | [Deploy, CI and search basics](007-deploy-and-ci.md) | Done |
 | 008 | [Motion and detail](008-motion-and-detail.md) | Phase 1 done; phase 2 later |
 | 009 | [Work: six showcases](009-work-six-showcases.md) | Done |
-| 010 | [Features inline, no status, open stores](010-inline-features-no-status.md) | In progress |
+| 010 | [Features inline, no status, open stores](010-inline-features-no-status.md) | Done |
 
 ## Roadmap
 
-1. **010 — Features inline, no status, open stores.**
-2. **011 — Content review.** Page by page, section by section: human voice and site strategy.
-3. **Articles.** Topics proposed from the features; written by the owner.
-4. **Services and About.** Restructure and iterate.
-5. **At launch:** demos as the first stores finish, motion phase 2 (spec 008), channels (spec 006).
+1. **011 — Content review.** Page by page, section by section: human voice and site strategy.
+2. **Articles.** Topics proposed from the features; written by the owner.
+3. **Services and About.** Restructure and iterate.
+4. **At launch:** demos as the first stores finish, motion phase 2 (spec 008), channels (spec 006).
 
 ## Workflow
 
