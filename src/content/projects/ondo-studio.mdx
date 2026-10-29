@@ -2,9 +2,9 @@
 title: Ondo Studio
 niche: Made-to-order furniture
 baseTheme: Dwell
-summary: A made-to-order furniture brand selling to homes and to the trade, on the Dwell theme with a B2B program, a material configurator and lead times.
+summary: "Made-to-order furniture sold to homeowners and to the trade, on the same store."
 kind: concept
-role: Lead developer
+role: Design and development
 year: 2026
 surfaces: [theme, data]
 stack: [Liquid, Dwell (Horizon family), Admin GraphQL API, Shopify B2B, Metaobjects, Cart API]
@@ -15,23 +15,16 @@ repo:
 order: 4
 ---
 
-## Context
+## The brief
 
-Ondo Studio builds furniture to order. Two audiences buy on the same store: home shoppers who
-choose a wood finish and a fabric, and interior designers and hospitality buyers who order at
-trade prices with payment terms.
+Ondo Studio builds furniture to order. Homeowners pick a wood and a fabric; interior designers and
+hotels order at trade prices with payment terms. Both buy on the same store.
 
-## Approach
+## How it's built
 
-- **B2B on the same store.** Companies, catalogs, price lists, quantity rules and net terms, with
-  the theme showing trade prices and price breaks.
-- **Materials as data.** Finish and fabric metaobjects with swatches feed a configurator that sends
-  the choice to cart and order.
-- **De-risking a large purchase.** Free fabric swatches and clear lead times on product and cart.
-- **Rooms that sell.** Room pages list their pieces and add the set to the cart.
-
-## Process
-
-Each feature starts as a spec with acceptance criteria and an estimate, ships through a pull
-request with a self review, and passes Theme Check before merge. Every Admin GraphQL operation is
-validated against the schema before it runs.
+- B2B companies, trade price lists, quantity rules and net 30 terms, with trade prices and price
+  breaks shown in the theme.
+- Finishes and fabrics are metaobjects with swatches; the choice travels to the cart and the
+  order.
+- Free fabric swatches and a lead time on every product make a big purchase less risky.
+- Room pages list their pieces and add the whole room to the cart.

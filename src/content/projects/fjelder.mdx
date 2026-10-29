@@ -2,9 +2,9 @@
 title: Fjelder
 niche: Technical outdoor apparel, CAD base
 baseTheme: Pitch
-summary: A technical outdoor apparel brand selling in Canada, the US and the EU, on the Pitch theme with combined listings, spec filters and Markets.
+summary: "Technical outerwear sold in Canada, the US and the EU, to shoppers who compare specs before they buy."
 kind: concept
-role: Lead developer
+role: Design and development
 year: 2026
 surfaces: [theme, data]
 stack: [Liquid, Pitch (Horizon family), Admin GraphQL API, Shopify Markets, Search & Discovery, Shopify Flow, Shopify Forms]
@@ -15,23 +15,16 @@ repo:
 order: 3
 ---
 
-## Context
+## The brief
 
-Fjelder sells technical layers to shoppers who compare specs: waterproof rating, weight, fill.
-The store's base currency is the Canadian dollar and it sells across three markets in three
-languages, so cross-border and catalog structure matter as much as the look.
+Fjelder sells technical layers to people who compare waterproof ratings, weight and fill. It
+prices in Canadian dollars and sells to three markets in three languages, so catalog structure
+and cross-border work matter as much as the look.
 
-## Approach
+## How it's built
 
-- **One listing, many colors.** Each color is its own product for media, SEO and inventory, combined
-  under one listing with swatches.
-- **Specs as filters.** Typed metafields drive Search & Discovery filters by activity, waterproof
-  rating, weight and color.
-- **Cross-border from day one.** Markets for the US, Canada and the EU with EN, ES and FR content.
-- **Demand capture without an app.** Back-in-stock requests with Shopify Forms and Flow.
-
-## Process
-
-Each feature starts as a spec with acceptance criteria and an estimate, ships through a pull
-request with a self review, and passes Theme Check before merge. Every Admin GraphQL operation is
-validated against the schema before it runs.
+- Each color is its own product, with its own photos, SEO and stock, grouped under one listing
+  with swatches.
+- Waterproof rating, weight and activity are typed fields that drive the filters.
+- Markets for the US, Canada and the EU, in English, Spanish and French.
+- Sold-out sizes take "notify me" requests through Shopify Forms and Flow, with no app.
