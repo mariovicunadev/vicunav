@@ -2,9 +2,9 @@
 title: Yuzora Tea House
 niche: Japanese tea and gifts
 baseTheme: Savor
-summary: A Japanese tea brand built for gifting, on the Savor theme with a gift box builder, delivery dates, corporate tiers and brewing guides.
+summary: "Japanese tea, bought mostly as a gift, by people and by companies."
 kind: concept
-role: Lead developer
+role: Design and development
 year: 2026
 surfaces: [theme, data]
 stack: [Liquid, Savor (Horizon family), Admin GraphQL API, Discounts, Metaobjects, Cart API, Shopify Forms]
@@ -15,21 +15,15 @@ repo:
 order: 5
 ---
 
-## Context
+## The brief
 
-Yuzora Tea House sells tea that is often a gift. Gift buyers need guidance, a finished-looking box,
-a delivery date and a note; companies buy in volume for clients and teams.
+Most Yuzora orders are gifts. A gift buyer needs help choosing, a box that looks finished, a
+delivery date and a note. Companies order the same gifts by the dozen for clients and teams.
 
-## Approach
+## How it's built
 
-- **Gifting as the main flow.** A three-tea box builder with an automatic discount, delivery date
-  and gift note in the cart, and a branded gift card.
-- **Corporate tiers without B2B.** Native volume pricing is B2B-only, so three automatic discounts
-  and a quote form cover bulk orders.
-- **Content that sells the product.** Brewing guides as metaobject pages attached to each tea.
-
-## Process
-
-Each feature starts as a spec with acceptance criteria and an estimate, ships through a pull
-request with a self review, and passes Theme Check before merge. Every Admin GraphQL operation is
-validated against the schema before it runs.
+- A box builder: pick three teas, see the box, and get the set price automatically.
+- Delivery date and gift note in the cart, and a gift card designed for the brand.
+- Volume pricing in Shopify is B2B-only, so three automatic discount tiers and a quote form
+  handle corporate orders.
+- Each tea links to its own brewing guide page.

@@ -2,9 +2,9 @@
 title: Vicubites
 niche: Pet food, DTC and B2B
 baseTheme: Horizon
-summary: A premium pet food brand on Shopify Plus, blending B2C and B2B, built on Horizon with custom theme blocks, autoship and a typed data model.
+summary: "Pet food for two kinds of buyer on one store: pet owners on autoship and clinics buying wholesale."
 kind: concept
-role: Lead developer
+role: Design and development
 year: 2026
 surfaces: [theme, data]
 stack: [Liquid, Horizon (OS 2.0), JavaScript, Metafields, Metaobjects, Shopify Subscriptions, Search & Discovery]
@@ -16,25 +16,18 @@ featured: true
 order: 1
 ---
 
-## Context
+## The brief
 
-Vicubites sells premium dog and cat food to two audiences on the same store: pet owners who buy
-once or on autoship, and vet clinics, pet shops and groomers who buy wholesale. The catalog is
-nutrition-heavy (proteins, life stages, ingredients), so most product information is data,
-not prose.
+Vicubites sells premium dog and cat food to pet owners, who buy once or on autoship, and to vet
+clinics, pet shops and groomers, who buy wholesale on the same store. Every bag is defined by its
+nutrition, so most of what a shopper needs is data: protein, life stage, kcal, ingredients.
 
-## Approach
+## How it's built
 
-- **Native first.** Horizon, Search & Discovery and Shopify Subscriptions cover most needs; custom
-  code goes only where they stop.
-- **Typed data instead of tags.** Nine `custom` product metafields and an `Ingredient` metaobject
-  drive filters, product page blocks and ingredient pages, all editable by the merchant.
-- **Reusable theme blocks.** Badge, Benefit, Ingredients and Purchase options work in any
-  section that accepts blocks.
-- **Progressive enhancement.** Every interactive piece (calculator, autoship picker, filters) has a
-  working no-JavaScript baseline.
+I kept Horizon and Shopify's own apps wherever they were enough, and wrote code only where they
+stopped.
 
-## Process
-
-Each feature starts as a spec with acceptance criteria and an estimate, ships through a pull
-request with a self review, and passes Theme Check with no errors before merge.
+- Nine typed metafields and an ingredient metaobject replace tags, so filters, product blocks and
+  ingredient pages read the same data the merchant edits.
+- Badge, Benefit, Ingredients and Purchase options are theme blocks that drop into any section.
+- The feeding calculator, the autoship picker and the filters work before JavaScript loads.

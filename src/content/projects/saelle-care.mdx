@@ -2,9 +2,9 @@
 title: Saelle Care
 niche: Minimal skincare
 baseTheme: Ritual
-summary: A minimal skincare brand on Shopify Plus, rebuilt from code (brand, catalog, packshots, content) on the Ritual theme, with routines at the center.
+summary: "A short skincare routine, sold by skin type and step, on a store rebuilt entirely from code."
 kind: concept
-role: Lead developer
+role: Design and development
 year: 2026
 surfaces: [theme, data, checkout]
 stack: [Liquid, Ritual (Horizon family), Admin GraphQL API, Metaobjects, Node.js, sharp, resvg, Shopify CLI]
@@ -21,24 +21,18 @@ featured: true
 order: 2
 ---
 
-## Context
+## The brief
 
-Saelle Care sells a short skincare routine: cleanse, tone, treat, moisturize, plus refills. Shoppers
-choose by skin type and by step, and they research ingredients, so the store is driven by typed
-data rather than product copy.
+Saelle Care sells a four-step routine (cleanse, tone, treat, moisturize) plus refills. Shoppers
+choose by skin type and step and read the ingredients before they buy, so the store runs on typed
+data, not product copy.
 
-## Approach
+## How it's built
 
-- **Brand as data.** Colors, type, radius and motion live in one tokens file that writes the theme
-  settings, the brand book and the social images, behind a WCAG contrast gate.
-- **A store rebuilt from the repository.** Catalog, size variants, ingredient metaobjects,
-  collections, pages, journal, policies and menus load with one idempotent command.
-- **Product pages built from data.** Skin type, key ingredients and how-to-use come from metafields
-  and metaobjects the merchant edits in the admin.
-- **Native first.** Shopify Bundles, Subscriptions and automatic discounts before any custom app.
+Everything that defines the store lives in the repository.
 
-## Process
-
-Each feature starts as a spec with acceptance criteria and an estimate, ships through a pull
-request with a self review, and passes Theme Check before merge. Every Admin GraphQL operation is
-validated against the schema before it runs.
+- One tokens file sets the theme, the brand book and the social images, and a contrast check
+  blocks any color pair below WCAG AA.
+- One command loads the catalog, size variants, ingredients, collections, pages, journal,
+  policies and menus. Running it twice changes nothing.
+- Skin type, key ingredients and how to use come from fields the merchant edits in the admin.

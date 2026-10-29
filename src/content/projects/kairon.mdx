@@ -2,9 +2,9 @@
 title: Kairon Audio
 niche: Headphones and speakers
 baseTheme: Tinker
-summary: An audio brand for spec-driven shoppers, on the Tinker theme with product comparison, range filters, a warranty add-on and rich media.
+summary: "Headphones and speakers for shoppers who decide on battery life, weight and codecs."
 kind: concept
-role: Lead developer
+role: Design and development
 year: 2026
 surfaces: [theme, data]
 stack: [Liquid, Tinker (Horizon family), Section Rendering API, Cart API, Search & Discovery, Product Recommendations API]
@@ -15,22 +15,15 @@ repo:
 order: 6
 ---
 
-## Context
+## The brief
 
-Kairon Audio sells headphones and speakers to shoppers who decide on specs: battery life, driver
-size, weight, codecs. The store has to make comparing easy and sell protection and accessories
-without getting in the way.
+Kairon Audio's customers read spec sheets. The store has to make comparing easy, then offer
+protection and accessories without getting in the way.
 
-## Approach
+## How it's built
 
-- **Compare before buying.** Up to three products side by side, rendered with the Section
-  Rendering API from spec metafields.
-- **Filters that match how people think.** Range filters for battery life, weight and driver size.
-- **Attach rate.** A two-year warranty add-on on the product form and complementary accessories.
-- **Media that shows build quality.** Video and 3D models in the gallery where assets exist.
-
-## Process
-
-Each feature starts as a spec with acceptance criteria and an estimate, ships through a pull
-request with a self review, and passes Theme Check before merge. Every Admin GraphQL operation is
-validated against the schema before it runs.
+- Compare up to three products side by side, from the same spec fields as the product page.
+- Range filters for battery life, weight and driver size.
+- A two-year warranty that goes into the cart with the product, plus accessories that pair with
+  it.
+- Video and 3D models in the gallery where they exist.
