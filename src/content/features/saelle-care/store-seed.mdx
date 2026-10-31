@@ -1,5 +1,5 @@
 ---
-title: Idempotent store seed
+title: The whole store, rebuilt with one command
 project: saelle-care
 problem: Rebuilding a store's catalog, custom data and collections by hand takes days and can't be reviewed.
 decision: One command loads definitions, metaobjects, products, images, collections and publication from versioned files with the Admin GraphQL API; reruns change nothing.
@@ -9,7 +9,7 @@ quality:
   - Second run reports identical counts and 0 files to upload
   - --dry-run prints the plan without writing
   - Built-in verify step compares the store with the source files
-order: 3
+order: 7
 ---
 
 Products go through `productSet`, which takes the whole desired state of a product, so the
