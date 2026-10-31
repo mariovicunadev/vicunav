@@ -1,5 +1,5 @@
 ---
-title: Brand tokens to theme settings in one command
+title: Brand colors and fonts from one file
 project: saelle-care
 problem: Hand-copying brand colors and fonts into a theme and checkout drifts within days, and nobody notices until a launch review.
 decision: One tokens.json per brand; a script maps it into each theme's settings_data.json through a per-theme mapping and rejects any setting id or value the theme schema doesn't define.
@@ -9,7 +9,7 @@ quality:
   - Regenerating from unchanged tokens produces no diff
   - Unknown setting ids or select values fail the script instead of writing silently
   - Brand book (BRAND.md) generated from the same tokens
-order: 1
+order: 5
 ---
 
 Themes in the Horizon family share a settings model but not the same ids. Each store keeps a

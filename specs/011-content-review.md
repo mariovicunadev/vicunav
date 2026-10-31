@@ -36,7 +36,7 @@ For each section:
 ## Acceptance criteria
 
 - [x] Home reviewed and approved
-- [ ] Work index and the six project pages reviewed and approved
+- [x] Work index and the six project pages reviewed and approved
 - [ ] Services reviewed and approved
 - [ ] About reviewed and approved
 - [ ] Contact, Articles index and 404 reviewed and approved

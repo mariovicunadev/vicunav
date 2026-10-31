@@ -1,7 +1,7 @@
 ---
-title: Typed product data with metafields
+title: Product data the merchant can edit
 project: vicubites
-problem: "Catalog attributes lived in tags: untyped, easy to misspell and unable to drive good filters."
+problem: "Product attributes stored as tags are easy to misspell and can't drive good filters."
 decision: Nine merchant-owned metafield definitions in the custom namespace, with choices and storefront access, seeded by an idempotent Admin API script and pinned in the product admin.
 surfaces: [data, theme]
 skills: [Metafields, Admin GraphQL API, Idempotency, Information architecture]
@@ -9,7 +9,7 @@ quality:
   - Seed runs twice without duplicates or errors
   - Editing a value in the admin changes the storefront without code
   - GraphQL operations validated against the Admin schema
-order: 7
+order: 10
 ---
 Species, life stage, main protein, food type, calorie density and the guaranteed analysis became
 typed fields. The theme reads structured values instead of parsing tags, the comparison table and

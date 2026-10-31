@@ -1,5 +1,5 @@
 ---
-title: Automated WCAG contrast gate
+title: "Brand colors that can't fail accessibility"
 project: saelle-care
 problem: Accessibility issues in brand colors are usually found after launch, when changing them means a redesign.
 decision: Every color pair a brand declares is checked against WCAG 2.2 (4.5:1 for text, 3:1 for large text and UI) in a script that fails the build.
@@ -8,7 +8,7 @@ skills: [Accessibility, WCAG 2.2, Node.js, CI]
 quality:
   - Caught two border colors below 3:1 before any theme was styled
   - Contrast table published in each brand's generated BRAND.md
-order: 2
+order: 6
 ---
 
 The check is twelve lines of math from the WCAG definition of relative luminance, with no

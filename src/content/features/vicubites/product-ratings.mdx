@@ -1,5 +1,5 @@
 ---
-title: Ratings from standard review metafields
+title: Star ratings that work with any review app
 project: vicubites
 problem: Product cards showed no ratings, and wiring the theme to one review app would lock the merchant in.
 decision: Read Shopify's standard reviews.rating and reviews.rating_count metafields, which review apps write, so any app works without theme changes.
@@ -9,7 +9,7 @@ quality:
   - Cards show stars and count only for rated products
   - Rating exposed to screen readers as text; stars are decorative
   - No aggregateRating emitted while ratings are sample data
-order: 9
+order: 7
 ---
 The standard definitions were enabled with `standardMetafieldDefinitionEnable` and filled with
 sample values by an idempotent script. Because Judge.me, Okendo and Yotpo write to the same

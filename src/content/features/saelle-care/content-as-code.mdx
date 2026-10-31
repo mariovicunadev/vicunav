@@ -1,5 +1,5 @@
 ---
-title: Content as code
+title: Pages, journal and menus from the repository
 project: saelle-care
 problem: Pages, journal articles, policies and menus are usually built by hand in the admin and can't be reviewed or rebuilt.
 decision: "Seed them from JSON like the catalog: menus link by handle and only change when their structure differs; article images are composed from the packshots."
@@ -8,7 +8,7 @@ skills: [Admin GraphQL API, Idempotency, Node.js]
 quality:
   - Rerunning the seed reports menus and policies as unchanged
   - Resources without upsert use lookup, compare, then write
-order: 6
+order: 8
 ---
 Not every Shopify resource has an upsert mutation. For pages, articles, policies and menus the seed
 looks the resource up, compares it with the source file and writes only when something changed, so
