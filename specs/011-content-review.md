@@ -33,6 +33,14 @@ For each section:
 - Every number and employer claim traces to the CV; concept brands stay labelled.
 - No progress or status language (spec 010).
 
+## Log
+
+| Page | PR |
+|---|---|
+| Home | #8 |
+| Work index and projects | #9 |
+| Feature rows | #10 |
+
 ## Acceptance criteria
 
 - [x] Home reviewed and approved
