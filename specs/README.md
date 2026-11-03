@@ -16,12 +16,17 @@ Every change to this site starts as a spec. One spec = one branch = one PR.
 | 009 | [Work: six showcases](009-work-six-showcases.md) | Done |
 | 010 | [Features inline, no status, open stores](010-inline-features-no-status.md) | Done |
 | 011 | [Content review](011-content-review.md) | In progress |
+| 012 | [Dual profile: Shopify and WordPress](012-dual-profile.md) | Done |
+| 013 | Content model: platform | Next |
+| 014 | WordPress landing and case studies | Next |
 
 ## Roadmap
 
-1. **011 — Content review.** Page by page, section by section: human voice and site strategy.
-2. **Articles.** Topics proposed from the features; written by the owner.
-3. **Services and About.** Restructure and iterate.
+1. **012–014 — WordPress profile.** Positioning and IA, content model, then the `/wordpress`
+   page and three client case studies.
+2. **011 — Content review.** Services and About, now with their WordPress groups; then Contact,
+   Articles index and 404.
+3. **Articles.** Topics proposed from the features; written by the owner.
 4. **At launch:** demos as the first stores finish, motion phase 2 (spec 008), channels (spec 006).
 
 ## Workflow

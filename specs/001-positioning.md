@@ -7,6 +7,9 @@
 | Estimate | 3 h |
 | Actual   | — |
 
+> Amended by [spec 012](012-dual-profile.md): the site adds a WordPress profile and the general
+> title becomes "Senior Shopify & WordPress Developer". The headlines below stay on the home page.
+
 ## Goal
 
 Define who the site is for, what each visitor must believe after 30 seconds, and what action

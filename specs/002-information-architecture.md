@@ -7,6 +7,9 @@
 | Estimate | 4 h |
 | Actual   | — |
 
+> Amended by [spec 012](012-dual-profile.md): adds `/wordpress` and `/shopify` (redirect to `/`),
+> platform groups on `/work`, and profile links in the footer.
+
 ## Goal
 
 A small site with three content engines (work, services, articles) where every page has one
