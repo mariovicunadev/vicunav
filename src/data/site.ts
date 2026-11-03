@@ -41,6 +41,10 @@ export const surfaces = {
   headless: 'Headless',
   data: 'Data',
   performance: 'Performance',
+  builder: 'Page builder',
+  plugin: 'Custom plugin',
+  seo: 'SEO',
+  hosting: 'Hosting',
 } as const;
 
 export type Surface = keyof typeof surfaces;

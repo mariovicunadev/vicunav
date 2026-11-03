@@ -13,8 +13,8 @@ export async function getArticles() {
   return all.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 
-export async function getProjects() {
-  const all = await getCollection('projects');
+export async function getProjects(platform?: CollectionEntry<'projects'>['data']['platform']) {
+  const all = await getCollection('projects', (p) => !platform || p.data.platform === platform);
   return all.sort((a, b) => a.data.order - b.data.order);
 }
 

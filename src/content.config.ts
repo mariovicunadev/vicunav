@@ -2,7 +2,11 @@ import { defineCollection, reference } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-const surface = z.enum(['theme', 'app', 'checkout', 'functions', 'headless', 'data', 'performance']);
+const surface = z.enum([
+  'theme', 'app', 'checkout', 'functions', 'headless', 'data', 'performance',
+  // WordPress work (spec 013); theme, data and performance are shared.
+  'builder', 'plugin', 'seo', 'hosting',
+]);
 
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
@@ -10,6 +14,7 @@ const projects = defineCollection({
     z.object({
       title: z.string(),
       summary: z.string().max(160),
+      platform: z.enum(['shopify', 'wordpress']).default('shopify'),
       niche: z.string(),
       baseTheme: z.string(),
       kind: z.enum(['concept', 'client', 'employer']),

@@ -9,7 +9,7 @@ import { experience } from '../data/experience';
 import { services, process } from '../data/services';
 import { getArticles, getProjects } from '../lib/content';
 
-const projects = await getProjects();
+const projects = await getProjects('shopify');
 const articles = (await getArticles()).slice(0, 3);
 
 const capabilities = [

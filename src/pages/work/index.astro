@@ -5,7 +5,7 @@ import SectionLabel from '../../components/SectionLabel.astro';
 import { getProjects } from '../../lib/content';
 import { site } from '../../data/site';
 
-const projects = await getProjects();
+const projects = await getProjects('shopify');
 ---
 
 <Base title="Work" description="Six concept stores on Shopify Plus, each on a different Horizon-family theme, broken down into features: the problem, the decision, how it was built and checked.">
