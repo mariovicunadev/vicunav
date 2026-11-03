@@ -360,6 +360,8 @@ const isConcept = p.kind === 'concept';
 
   .feature__body {
     display: grid;
+    /* minmax(0, …) lets code blocks scroll inside the column instead of widening the page. */
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-6);
     padding: 0 0 var(--space-7) calc(2.5rem + var(--space-4));
   }
