@@ -1,0 +1,17 @@
+---
+title: The studio, run from wp-admin
+project: tati-pilates
+problem: Schedules, attendance, absences, makeup sessions and monthly payments are the instructor's daily admin work.
+decision: One admin area with a screen for each job and a weekly agenda that can be copied as a WhatsApp message; WP-Cron creates class, makeup and payment reminders as in-app notifications.
+surfaces: [plugin]
+skills: [PHP, WordPress admin UI, WP-Cron]
+quality:
+  - Studio roles run the studio screens without WordPress admin rights
+  - Backups of the studio data are validated before a restore
+order: 4
+---
+
+Attendance marks a booking as attended or missed, and a reported absence creates a makeup credit
+the student can spend later. Payments are recorded per month without amounts, which is all the
+studio needs to decide who can book. Birthdays, personal milestones and start dates live on each
+student's profile.

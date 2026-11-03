@@ -1,0 +1,42 @@
+---
+title: A student portal for booking from the phone
+project: tati-pilates
+problem: Students want to see their plan and book a class, a week or a whole month without messaging the studio.
+decision: A front-end portal at /mi-pilates on native WordPress accounts with a student role, where every form posts with a nonce and goes through the same booking rules as the admin; it installs as a lightweight PWA.
+surfaces: [plugin]
+skills: [PHP, WordPress roles and capabilities, Nonces, PWA]
+quality:
+  - Every portal form checks a nonce and a logged-in student
+  - Input sanitized before it reaches the booking rules; output escaped in the views
+order: 2
+---
+
+Students never see wp-admin. They log in on the portal, see the week with free spots, their plan
+and their makeup credits, and book, cancel or report an absence. The handler stays thin: it
+checks who is asking and the nonce, cleans the input and lets the booking rules decide.
+
+```php title="public/class-portal.php"
+public function reservar() {
+    $estudiante = $this->require_student();
+    check_admin_referer('tp_portal_reservar');
+
+    $horario_id = isset($_POST['horario_id']) ? absint($_POST['horario_id']) : 0;
+    $fecha      = isset($_POST['fecha']) ? sanitize_text_field(wp_unslash($_POST['fecha'])) : '';
+    $resultado  = TP_Reservas::intentar_reserva((int) $estudiante->id, $horario_id, $fecha, 'alumna');
+    $args       = array('semana' => TP_Reservas::rango_semana($fecha)['inicio']);
+
+    if (is_wp_error($resultado)) {
+        $args['tp_error']      = rawurlencode($resultado->get_error_message());
+        $args['tp_error_code'] = $resultado->get_error_code();
+    } else {
+        $args['tp_mensaje'] = rawurlencode($resultado['mensaje'] ?? 'Reserva creada correctamente.');
+        // … plus a booking confirmation notification
+    }
+
+    wp_safe_redirect(add_query_arg($args, TP_Roles::portal_url()));
+    exit;
+}
+```
+
+The portal ships a web app manifest and a service worker, so students can add it to their home
+screen and open it like an app.

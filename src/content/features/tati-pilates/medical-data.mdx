@@ -1,0 +1,42 @@
+---
+title: Medical notes only the instructor can read
+project: tati-pilates
+problem: The instructor needs each student's injuries and allergies before class, and nobody else should read them, not even from a database backup.
+decision: Medical fields are encrypted at rest with libsodium, with a random nonce per value and the key kept out of the database; a dedicated role gets the capability to read them without WordPress admin rights.
+surfaces: [plugin, data]
+skills: [PHP, libsodium, WordPress roles and capabilities, Data privacy]
+quality:
+  - Encryption and access to medical data covered by their own regression tests
+  - Saving fails with a clear message when the key is missing, instead of storing plain text
+order: 3
+---
+
+Three roles split the work: students, a studio admin who runs classes and payments, and the
+instructor, the only one who also reads medical data. The admin role has that capability removed
+explicitly, so a later change can't grant it by accident.
+
+```php title="includes/class-data-encryption.php"
+public static function encrypt($plaintext) {
+    $plaintext = null === $plaintext ? '' : (string) $plaintext;
+
+    if ('' === $plaintext) {
+        return $plaintext;
+    }
+
+    $key = self::key();
+
+    if (!self::sodium_available() || !is_string($key)) {
+        return new WP_Error('tp_encryption_unavailable', 'Configura TP_DATA_ENCRYPTION_KEY para guardar datos medicos.');
+    }
+
+    // … already-encrypted values are verified and returned as they are
+
+    $nonce      = random_bytes(self::NONCE_BYTES);
+    $ciphertext = sodium_crypto_secretbox($plaintext, $nonce, $key); // … in a try/catch that logs and returns a WP_Error
+
+    return self::PREFIX . base64_encode($nonce . $ciphertext);
+}
+```
+
+Older plain-text values are read as they are and encrypted the next time they are saved, so the
+change rolled out without a migration window.

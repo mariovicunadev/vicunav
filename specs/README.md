@@ -18,7 +18,7 @@ Every change to this site starts as a spec. One spec = one branch = one PR.
 | 011 | [Content review](011-content-review.md) | In progress |
 | 012 | [Dual profile: Shopify and WordPress](012-dual-profile.md) | Done |
 | 013 | [Content model: platform](013-content-model-platform.md) | Done |
-| 014 | WordPress landing and case studies | Next |
+| 014 | [WordPress landing and case studies](014-wordpress-profile.md) | Done |
 
 ## Roadmap
 

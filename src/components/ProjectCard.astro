@@ -33,7 +33,7 @@ const p = project.data;
       <a href={`/work/${project.id}`}>{p.title}</a>
     </h3>
     <p class="muted">{p.summary}</p>
-    <ul class="card__tags" aria-label="Shopify surfaces">
+    <ul class="card__tags" aria-label="Surfaces">
       {p.surfaces.map((s) => <li><Chip label={surfaces[s]} /></li>)}
     </ul>
     <p class="mono muted">Case study →</p>

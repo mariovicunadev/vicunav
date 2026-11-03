@@ -2,6 +2,9 @@
 import { site } from '../data/site';
 
 const links = [
+  // `/shopify` is for external links; on the site the Shopify profile is the home page.
+  { href: '/', label: 'Shopify profile' },
+  { href: '/wordpress', label: 'WordPress profile' },
   { href: `mailto:${site.email}`, label: 'Email' },
   { href: site.socials.linkedin, label: 'LinkedIn' },
   { href: site.socials.github, label: 'GitHub' },
@@ -14,7 +17,7 @@ const links = [
 <footer class="footer">
   <div class="container footer__inner">
     <div>
-      <p class="footer__cta">Have a Shopify project or a role in mind?</p>
+      <p class="footer__cta">Have a Shopify or WordPress project, or a role in mind?</p>
       <a class="footer__email" href={`mailto:${site.email}`}>{site.email}</a>
     </div>
     <ul class="footer__links mono">

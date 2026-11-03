@@ -1,0 +1,17 @@
+---
+title: Updates from wp-admin, not FTP
+project: tati-pilates
+problem: A private plugin can't update from the WordPress directory, and copying files to a live server by hand is how sites break.
+decision: GitHub Actions builds the plugin ZIP and publishes a staging or stable release; a private updater hooks into WordPress's own update check, so the live site shows the new version in wp-admin like any other plugin.
+surfaces: [plugin]
+skills: [GitHub Actions, PHP, Release management]
+quality:
+  - "Pre-release check before every release: PHP lint, byte-order marks, leftover debug code, version"
+  - Regression tests for booking rules, pricing, backups, medical data and the portal
+  - Changelog generated from a JSON log and checked before release
+order: 6
+---
+
+The repository holds only the plugin; credentials, local data and generated ZIPs stay out of it.
+A release is one command; the workflow writes the manifest the updater reads, and the site
+installs the update from wp-admin.

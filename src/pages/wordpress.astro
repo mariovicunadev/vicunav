@@ -1,0 +1,138 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import Heading from '../components/Heading.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { site, wordpressProof } from '../data/site';
+import { wordpressServices, process } from '../data/services';
+import { getProjects } from '../lib/content';
+import '../styles/profile.css';
+
+const projects = await getProjects('wordpress');
+
+const capabilities = [
+  { title: 'Page builders', body: 'Elementor Pro, Divi, WPBakery and BeTheme, set up with global styles so the owner edits text, prices and photos without breaking the layout.' },
+  { title: 'Custom plugins', body: 'PHP plugins with their own tables, roles and admin screens when no plugin fits: bookings, private portals, member data.' },
+  { title: 'Local SEO', body: 'Titles and descriptions per city, local business and FAQ structured data, Search Console and Analytics through Site Kit.' },
+  { title: 'Hosting', body: 'Servers on AWS with Nginx, PHP-FPM and MariaDB, one isolated user, pool and database per site, TLS and email set up.' },
+  { title: 'Performance', body: 'Page cache at the server, compression and long-lived static assets instead of a stack of optimization plugins.' },
+  { title: 'Maintenance', body: 'Updates, backups and uptime monitoring, plus content changes when the business changes.' },
+];
+---
+
+<Base
+  title="WordPress developer"
+  description="WordPress sites for local businesses, custom PHP plugins and AWS hosting: three live client sites designed, built, written and maintained by Mario Vicuña."
+>
+  <section class="hero container">
+    <p class="hero__status mono">
+      <span class="dot breathe" aria-hidden="true"></span>
+      {site.availability}
+    </p>
+    <Heading
+      as="h1"
+      class="hero__title"
+      parts={[
+        { text: 'WordPress sites for local businesses: built, hosted and ' },
+        { text: 'looked after', tone: 'mark' },
+        { text: '.' },
+      ]}
+    />
+    <p class="lede">
+      I’m {site.name}, a <strong>WordPress developer</strong>. I design, write, build and host sites
+      for small businesses with Elementor, custom plugins and local SEO, and I keep them running
+      after launch. The same habits come from nine years of ecommerce work on Shopify.
+    </p>
+    <div class="button-row">
+      <a class="button button--primary" href="/work#wordpress">See the work</a>
+      <a class="button button--ghost" href={site.cvWordpress}>Download CV</a>
+    </div>
+    <p class="mono muted">Looking for Shopify? <a class="link" href="/">See the Shopify work →</a></p>
+  </section>
+
+  <section class="container" aria-label="Track record">
+    <ul class="proof" data-reveal-stagger>
+      {
+        wordpressProof.map((p) => (
+          <li>
+            <span class="proof__value">{p.value}</span>
+            <span class="proof__label mono muted">{p.label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="section container" aria-labelledby="work-title">
+    <SectionLabel index="01" label="Selected work" />
+    <div class="split-heading">
+      <Heading id="work-title" class="h2" parts={[{ text: 'Three live client sites. ', tone: 'lead' }, { text: 'Designed, written, built and maintained by me.' }]} />
+      <a class="mono link" href="/work#wordpress">All projects →</a>
+    </div>
+    <div class="grid-2" data-reveal-stagger>
+      {
+        projects.map((p) => (
+          <ProjectCard project={p} />
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section container" aria-labelledby="cap-title">
+    <SectionLabel index="02" label="Capabilities" />
+    <Heading id="cap-title" class="h2" parts={[{ text: 'From the page builder ', tone: 'lead' }, { text: 'to the server it runs on.' }]} />
+    <ul class="caps" data-reveal-stagger>
+      {
+        capabilities.map((c, i) => (
+          <li>
+            <span class="mono muted">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{c.title}</h3>
+            <p class="muted">{c.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="section container" aria-labelledby="services-title">
+    <SectionLabel index="03" label="Services" />
+    <div class="split-heading">
+      <Heading id="services-title" class="h2" parts={[{ text: 'Need a site, a feature ', tone: 'lead' }, { text: 'or someone to look after it?' }]} />
+      <a class="mono link" href="/services">All services →</a>
+    </div>
+    <ul class="caps" data-reveal-stagger>
+      {
+        wordpressServices.map((s) => (
+          <li>
+            <h3>{s.title}</h3>
+            <p class="muted">{s.outcome}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="section container" aria-labelledby="process-title">
+    <SectionLabel index="04" label="How I work" />
+    <Heading id="process-title" class="h2" parts={[{ text: 'Specs before code. Reviews before merge. ', tone: 'lead' }, { text: 'Nothing touches live by surprise.' }]} />
+    <ol class="process" data-reveal-stagger>
+      {
+        process.map((p, i) => (
+          <li>
+            <span class="mono process__step">{String(i + 1).padStart(2, '0')} {p.step}</span>
+            <p>{p.artifact}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="section container closing">
+    <Heading class="h2" parts={[{ text: 'Have a WordPress project ', tone: 'lead' }, { text: 'or an open role?' }]} />
+    <p class="lede" data-reveal>Tell me what you’re building. I reply within one business day.</p>
+    <div class="button-row" data-reveal>
+      <a class="button button--primary" href="/contact">Get in touch</a>
+      <a class="button button--ghost" href={site.cvWordpress}>Download CV</a>
+    </div>
+  </section>
+</Base>

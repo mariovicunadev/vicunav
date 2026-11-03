@@ -5,29 +5,56 @@ import SectionLabel from '../../components/SectionLabel.astro';
 import { getProjects } from '../../lib/content';
 import { site } from '../../data/site';
 
-const projects = await getProjects('shopify');
+const shopify = await getProjects('shopify');
+const wordpress = await getProjects('wordpress');
 ---
 
-<Base title="Work" description="Six concept stores on Shopify Plus, each on a different Horizon-family theme, broken down into features: the problem, the decision, how it was built and checked.">
+<Base title="Work" description="Six concept stores on Shopify Plus and three live WordPress client sites, broken down into features: the problem, the decision, how it was built and checked.">
   <section class="container page-head">
     <SectionLabel label="Work" />
-    <h1>Six stores, six selling problems.</h1>
+    <h1>Shopify stores and WordPress sites.</h1>
+    <p class="lede">
+      Every project is broken down into features: the problem, the decision, how it was built and
+      how it was checked.
+    </p>
+  </section>
+
+  <section id="shopify" class="container group" aria-labelledby="shopify-title">
+    <SectionLabel label="Shopify" />
+    <h2 id="shopify-title">Six stores, six selling problems.</h2>
     <p class="lede">
       Each store is a concept brand I designed and built on Shopify Plus, each on a different theme
-      from the Horizon family. Open one to see its features: the problem, the decision, how it was
-      built and how it was checked.
+      from the Horizon family.
     </p>
     <p class="access mono">
       Every store is open to preview. Password: <code>{site.storePassword}</code>
     </p>
+    <div class="grid" data-reveal-stagger>
+      {
+        shopify.map((p) => (
+          <ProjectCard project={p} />
+        ))
+      }
+    </div>
   </section>
-  <section class="container grid" data-reveal-stagger>
-    {
-      projects.map((p) => (
-        <ProjectCard project={p} />
-      ))
-    }
-  </section>
+
+  {
+    wordpress.length > 0 && (
+      <section id="wordpress" class="container group" aria-labelledby="wordpress-title">
+        <SectionLabel label="WordPress" />
+        <h2 id="wordpress-title">Three live sites for local businesses.</h2>
+        <p class="lede">
+          Client work I designed, wrote, built and still maintain, from Elementor landing pages to a
+          custom plugin that runs a studio’s bookings. Every site is public.
+        </p>
+        <div class="grid" data-reveal-stagger>
+          {wordpress.map((p) => (
+            <ProjectCard project={p} />
+          ))}
+        </div>
+      </section>
+    )
+  }
 </Base>
 
 <style>
@@ -39,6 +66,17 @@ const projects = await getProjects('shopify');
 
   h1 {
     font-size: var(--step-4);
+  }
+
+  .group {
+    display: grid;
+    gap: var(--space-5);
+    padding-bottom: var(--space-9);
+    scroll-margin-top: 6rem; /* clears the sticky header */
+  }
+
+  h2 {
+    font-size: var(--step-3);
   }
 
   .access code {
@@ -53,6 +91,6 @@ const projects = await getProjects('shopify');
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
     gap: var(--space-8) var(--space-6);
-    padding-bottom: var(--space-9);
+    margin-top: var(--space-5);
   }
 </style>
