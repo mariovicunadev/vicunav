@@ -1,0 +1,35 @@
+---
+title: From shared hosting to a server I run
+project: tati-pilates
+problem: The site and its plugin depended on a shared host's caching and security plugins, with no control over the server.
+decision: Moved to an Amazon Lightsail server with Nginx, PHP-FPM and MariaDB, where each site has its own Linux user, PHP pool and database, and caching and security happen at the server.
+surfaces: [hosting, performance]
+skills: [AWS, Nginx, Linux, PHP-FPM, MariaDB]
+quality:
+  - Daily snapshots, with a restore tested on a fresh instance
+  - fail2ban on SSH and the login page; key-only SSH; automatic security updates
+  - Uptime monitoring and a budget alert on the AWS account
+order: 7
+---
+
+The host's cache, security and migration plugins are gone: Nginx caches pages and skips logged-in
+users, forms and the admin. Email goes out through Amazon SES with DKIM, and TLS certificates
+renew on their own.
+
+```nginx title="Nginx site configuration"
+location ~ \.php$ {
+    include snippets/fastcgi-php.conf;
+    fastcgi_pass unix:/run/php/<site>.sock;  # one PHP pool per site
+    fastcgi_cache WORDPRESS;
+    fastcgi_cache_valid 200 301 302 60m;
+    fastcgi_cache_bypass $skip_cache;
+    fastcgi_no_cache $skip_cache;
+    add_header X-Cache $upstream_cache_status;
+    include snippets/security-headers.conf;
+}
+location ~ /\.(?!well-known) { deny all; }
+location = /xmlrpc.php { deny all; }
+```
+
+Security headers are included again inside each location that adds its own header, because an
+`add_header` there replaces the ones inherited from the server block.

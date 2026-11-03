@@ -1,0 +1,35 @@
+---
+title: Prices entered once, shown on the Elementor page
+project: tati-pilates
+problem: Plan prices changed in the studio admin would otherwise have to be retyped on the public page.
+decision: A custom Elementor dynamic tag reads prices from the plugin, so any Elementor text widget can show them; it registers only when Elementor loads, so the plugin works without it.
+surfaces: [plugin, builder]
+skills: [Elementor Pro, PHP, WordPress plugin development]
+quality:
+  - Output escaped in the tag
+  - The plugin keeps working when Elementor is inactive
+order: 5
+---
+
+Prices are entered in the plugin, in bolívares and in dollars. On the page, any text widget picks
+"Precio (Tati Pilates)" from Elementor's dynamic tags and chooses the plan.
+
+```php title="includes/class-elementor-precios.php"
+public function render() {
+    if (!class_exists('TP_Precios')) {
+        return;
+    }
+
+    $plan = $this->get_settings('plan');
+    $tipo = $this->get_settings('tipo');
+
+    if ('usd' === $tipo) {
+        $valor = TP_Precios::obtener(TP_Precios::clave_usd($plan));
+        echo esc_html(TP_Precios::formatear_usd($valor));
+        return;
+    }
+
+    $valor = TP_Precios::obtener($plan);
+    echo esc_html(TP_Precios::formatear($valor));
+}
+```

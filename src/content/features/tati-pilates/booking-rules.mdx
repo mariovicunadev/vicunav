@@ -1,0 +1,45 @@
+---
+title: Bookings that never overfill a class
+project: tati-pilates
+problem: Two students booking the last spot at the same moment must not both get it, and each plan allows only so many classes a week.
+decision: Every booking runs in a database transaction that locks the class row first, then checks spots, payment, duplicates and the weekly plan limit; past the limit it spends a makeup credit or refuses.
+surfaces: [plugin, data]
+skills: [PHP, WordPress plugin development, MySQL transactions, Custom tables]
+quality:
+  - The same rules run for bookings from the portal and from wp-admin
+  - Each refusal returns a specific message (class full, payment pending, plan used up)
+order: 1
+---
+
+The plugin keeps classes, students, bookings, makeup credits and payments in its own tables,
+created on activation, because the data is relational and queried by date ranges. The booking
+function checks the cheap things first (date, active student, active class), then locks the
+class row so the spot count it reads is still true when it writes:
+
+```php title="includes/class-reservas.php"
+$wpdb->query('START TRANSACTION');
+
+$wpdb->get_row(
+    $wpdb->prepare(
+        "SELECT * FROM {$wpdb->prefix}tp_horarios WHERE id = %d FOR UPDATE",
+        $horario_id
+    )
+);
+
+if (!self::hay_cupo_disponible($horario_id, $fecha, (int) $horario->cupo_maximo)) {
+    $wpdb->query('ROLLBACK');
+    return new WP_Error('tp_clase_llena', __('Clase llena.', 'tatipilates'));
+}
+
+// … individual plans booked by the admin skip this check
+$estado_pago = TP_Pagos::estado_para_reservas($alumna_id, TP_Pagos::normalizar_mes($fecha));
+
+if (empty($estado_pago['puede_reservar'])) {
+    $wpdb->query('ROLLBACK');
+    return new WP_Error('tp_pago_no_permite_reserva', $estado_pago['mensaje']);
+}
+```
+
+The weekly limit counts only normal bookings in the class week. Once a student has used it, the
+booking becomes a makeup session if there is a credit from a reported absence; the admin can
+still add an extra class by hand.

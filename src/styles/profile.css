@@ -1,0 +1,162 @@
+/* Profile pages (home = Shopify, /wordpress): shared section styles, imported per page (spec 014). */
+
+.hero {
+  display: grid;
+  gap: var(--space-6);
+  padding-block: var(--space-10) var(--space-8);
+}
+
+.hero__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-muted);
+}
+
+.hero__status .dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-ok);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-ok) 20%, transparent);
+}
+
+.hero__title {
+  font-size: var(--step-5);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  max-width: 16ch;
+}
+
+/* Marker highlight (tokens --mark-*): the text always keeps full contrast. */
+.hero__title em {
+  font-style: normal;
+  color: var(--mark-ink);
+  background-image: linear-gradient(
+    transparent 58%,
+    var(--mark-fill) 58%,
+    var(--mark-fill) 90%,
+    transparent 90%
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.proof {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-text);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.employers {
+  margin-top: var(--space-4);
+}
+
+.employers__name {
+  color: var(--color-text);
+}
+
+.access {
+  margin: calc(-1 * var(--space-5)) 0 var(--space-7);
+}
+
+.access code {
+  padding: 0.05em 0.35em;
+  font-weight: 600;
+  background: var(--mark-fill);
+  color: var(--mark-ink);
+  border-radius: var(--radius);
+}
+
+.proof li {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-5) var(--space-5) var(--space-5) 0;
+}
+
+.proof__value {
+  font-size: var(--step-4);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.h2 {
+  font-size: var(--step-3);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  max-width: 22ch;
+}
+
+.split-heading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+  gap: var(--space-4);
+  margin-bottom: var(--space-7);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+  gap: var(--space-8) var(--space-6);
+}
+
+.caps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 0;
+  margin: var(--space-7) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-text);
+}
+
+.caps li {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-5) var(--space-6) 0;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.caps h3 {
+  font-size: var(--step-1);
+}
+
+.process {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: var(--space-5);
+  margin: var(--space-7) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.process li {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 2px solid var(--color-text);
+}
+
+.process li:first-child {
+  border-top-color: var(--color-accent);
+}
+
+.process__step {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.closing {
+  display: grid;
+  gap: var(--space-5);
+}

@@ -1,0 +1,14 @@
+---
+title: Custom work that survives theme updates
+project: nelson-look-flash
+problem: Changes made inside a theme are lost the next time the theme updates, and a portfolio site still needs to be found by name and city.
+decision: All custom work lives in a child theme, and Yoast SEO publishes organization data and breadcrumbs, with titles and descriptions that name the service and the city.
+surfaces: [theme, seo]
+skills: [Child themes, Yoast SEO, Structured data, Google Site Kit]
+quality:
+  - Organization and breadcrumb structured data in the page source
+  - Search Console and Analytics connected through Site Kit
+order: 3
+---
+
+The parent theme can be updated from wp-admin without touching the custom templates and styles.

@@ -89,3 +89,40 @@ export const faq = [
     a: 'Yes. Spanish is my native language and my English is C1 (EF SET).',
   },
 ];
+
+// WordPress offer on /wordpress (spec 014); /services groups both in the spec 011 review.
+export const wordpressServices = [
+  {
+    id: 'wp-site',
+    title: 'WordPress sites for local businesses',
+    outcome: 'A site that explains what you do, shows up in local searches and turns visits into bookings.',
+    includes: [
+      'Elementor Pro, Divi, WPBakery or BeTheme, whichever fits the site',
+      'Copy, local SEO and structured data',
+      'Booking by WhatsApp or a form',
+    ],
+    from: 'Fixed scope',
+  },
+  {
+    id: 'wp-plugin',
+    title: 'Custom plugins',
+    outcome: 'The feature no plugin covers, built around how your business works.',
+    includes: [
+      'Custom tables, roles and private portals',
+      'Nonces, capability checks and escaped output',
+      'Updates delivered inside wp-admin',
+    ],
+    from: 'Fixed scope or hourly',
+  },
+  {
+    id: 'wp-hosting',
+    title: 'Hosting and care',
+    outcome: 'A fast, secure server and someone who keeps the site updated.',
+    includes: [
+      'Migration to AWS with no lost content',
+      'Server cache, TLS, firewall rules and daily backups',
+      'Updates and uptime monitoring',
+    ],
+    from: 'Monthly',
+  },
+];

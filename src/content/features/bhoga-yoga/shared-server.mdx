@@ -1,0 +1,16 @@
+---
+title: Two client sites on one server, kept apart
+project: bhoga-yoga
+problem: Hosting two small businesses on one server is cheaper, but a problem in one site must not reach the other.
+decision: Each site gets its own Linux user, PHP-FPM pool, database, Nginx configuration and logs; folders are closed to the other site and PHP can't run from uploads.
+surfaces: [hosting]
+skills: [Linux, Nginx, PHP-FPM, MariaDB, AWS]
+quality:
+  - Site folders readable only by their own user and the web server
+  - PHP execution blocked in uploads and wp-includes
+order: 3
+---
+
+A provisioning script creates the next isolated site the same way: user, folders, PHP pool,
+database and Nginx configuration. Both sites share the server's page cache, security headers
+and backups described in the [Tati Pilates hosting row](/work/tati-pilates#hosting).

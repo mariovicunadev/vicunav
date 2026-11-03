@@ -1,14 +1,17 @@
 export const site = {
   name: 'Mario Vicuña',
-  role: 'Senior Shopify Developer',
-  title: 'Mario Vicuña — Senior Shopify Developer',
+  role: 'Senior Shopify & WordPress Developer',
+  title: 'Mario Vicuña — Senior Shopify & WordPress Developer',
   description:
-    'Senior Shopify developer with 9+ years shipping themes, apps, checkout extensions and Hydrogen storefronts for international brands.',
+    'Senior Shopify and WordPress developer with 9+ years shipping themes, apps, checkout extensions, Hydrogen storefronts, custom WordPress plugins and hosting.',
   email: 'mariovicunaula@gmail.com',
   location: 'Venezuela · UTC−4',
   availability: 'Open to full-time and part-time remote roles, and freelance projects',
   available: true,
+  // Dual CV at the original URL; each profile page links its own version (spec 012).
   cv: '/mario-vicuna-cv.pdf',
+  cvShopify: '/mario-vicuna-cv-shopify.pdf',
+  cvWordpress: '/mario-vicuna-cv-wordpress.pdf',
   // Public on purpose: every concept store shares it so visitors can preview without asking.
   storePassword: 'mariovic',
   socials: {
@@ -31,6 +34,14 @@ export const proof = [
   { value: '50+', label: 'Shopify and WordPress stores built' },
   { value: '−35%', label: 'average load time, Core Web Vitals work at Trafilea' },
   { value: '+15%', label: 'Facebook ad ROAS from mobile-first A/B tests at Trafilea' },
+];
+
+// WordPress profile (spec 012): CV figures plus facts anyone can check on the live sites.
+export const wordpressProof = [
+  { value: '9+', label: 'years building ecommerce and websites' },
+  { value: '50+', label: 'Shopify and WordPress stores built' },
+  { value: '3', label: 'live client sites I design, build and maintain' },
+  { value: '2', label: 'of them on a server I set up and run on AWS' },
 ];
 
 export const surfaces = {

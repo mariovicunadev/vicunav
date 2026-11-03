@@ -1,0 +1,41 @@
+---
+title: Tati Pilates
+platform: wordpress
+niche: Pilates studio
+baseTheme: Elementor Pro and a custom plugin
+summary: "A Pilates studio's website, plus the plugin that runs its classes, students, bookings and payments behind a private student portal."
+kind: client
+role: Design, copy, development and hosting
+year: 2026
+surfaces: [builder, plugin, seo, hosting]
+stack: [WordPress, PHP, MariaDB, Elementor Pro, Rank Math, GitHub Actions, Nginx, Amazon Lightsail, Amazon SES]
+live:
+  url: https://tatipilates.com
+repo:
+  visibility: on-request
+featured: true
+order: 101
+---
+
+## The brief
+
+Tati Pilates is a studio in Punto Fijo, Venezuela, teaching small groups inside a local gym. The
+owner needed two things: a site that brings in new students from local searches, and one place
+to manage classes, plans, payments and bookings that her students could also use.
+
+## How it's built
+
+The public site and the studio system are one WordPress install.
+
+- The site is a single Elementor Pro page that goes from the problems a new student has to
+  schedules, prices, the instructor's story, questions and a WhatsApp button.
+- A private plugin adds the studio: schedules with spots per class, students on their own
+  WordPress accounts, weekly and individual plans, bookings, makeup sessions, attendance,
+  monthly payments, reminders and a student portal at `/mi-pilates`.
+- Prices are entered once in the plugin and appear on the Elementor page.
+- The site runs on a server I set up on AWS and moved it to from shared hosting.
+
+## Results
+
+The studio's schedule, students and payments live in one admin, and students book their own
+classes within their plan from the portal.
