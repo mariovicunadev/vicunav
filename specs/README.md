@@ -17,7 +17,7 @@ Every change to this site starts as a spec. One spec = one branch = one PR.
 | 010 | [Features inline, no status, open stores](010-inline-features-no-status.md) | Done |
 | 011 | [Content review](011-content-review.md) | In progress |
 | 012 | [Dual profile: Shopify and WordPress](012-dual-profile.md) | Done |
-| 013 | Content model: platform | Next |
+| 013 | [Content model: platform](013-content-model-platform.md) | Done |
 | 014 | WordPress landing and case studies | Next |
 
 ## Roadmap

@@ -11,10 +11,14 @@ import { site, surfaces } from '../../../data/site';
 
 export async function getStaticPaths() {
   const projects = await getProjects();
-  return projects.map((project, i) => ({
-    params: { project: project.id },
-    props: { project, next: projects[(i + 1) % projects.length] },
-  }));
+  return projects.map((project) => {
+    // "Next project" stays within the same platform (spec 013).
+    const peers = projects.filter((q) => q.data.platform === project.data.platform);
+    return {
+      params: { project: project.id },
+      props: { project, next: peers[(peers.indexOf(project) + 1) % peers.length] },
+    };
+  });
 }
 
 const { project, next } = Astro.props;
@@ -29,7 +33,8 @@ const repoLabel = {
   private: 'Private',
   'on-request': 'Read access on request',
 }[p.repo.visibility];
-const storeHost = new URL(p.live.url).host;
+const liveHost = new URL(p.live.url).host;
+const isConcept = p.kind === 'concept';
 ---
 
 <Base title={p.title} description={p.summary}>
@@ -38,7 +43,7 @@ const storeHost = new URL(p.live.url).host;
       <nav class="mono crumbs" aria-label="Breadcrumb">
         <a href="/work">Work</a> / <span aria-current="page">{p.title}</span>
       </nav>
-      {p.kind === 'concept' && <div class="head__meta"><Chip label="Concept brand — not a client" /></div>}
+      {isConcept && <div class="head__meta"><Chip label="Concept brand — not a client" /></div>}
       <h1>{p.title}</h1>
       <p class="lede">{p.summary}</p>
     </header>
@@ -48,7 +53,7 @@ const storeHost = new URL(p.live.url).host;
         <SpecTable
           rows={[
             { key: 'Niche', value: p.niche },
-            { key: 'Base theme', value: p.baseTheme },
+            { key: p.platform === 'wordpress' ? 'Built with' : 'Base theme', value: p.baseTheme },
             { key: 'Role', value: p.role },
             { key: 'Year', value: String(p.year) },
             { key: 'Surfaces', value: p.surfaces.map((s) => surfaces[s]).join(', ') },
@@ -68,12 +73,22 @@ const storeHost = new URL(p.live.url).host;
             </ul>
           )
         }
-        <div class="store">
-          <p class="store__label mono">Live store · {storeHost}</p>
-          <p class="store__password">Password: <code>{site.storePassword}</code></p>
-          <p class="muted">Public password, no need to ask for access.</p>
-          <a class="button button--primary" href={p.live.url}>View the store</a>
-        </div>
+        {
+          isConcept ? (
+            <div class="store">
+              <p class="store__label mono">Live store · {liveHost}</p>
+              <p class="store__password">Password: <code>{site.storePassword}</code></p>
+              <p class="muted">Public password, no need to ask for access.</p>
+              <a class="button button--primary" href={p.live.url}>View the store</a>
+            </div>
+          ) : (
+            <div class="store">
+              <p class="store__label mono">Live site · {liveHost}</p>
+              <p class="muted">Client project, live and open to everyone.</p>
+              <a class="button button--primary" href={p.live.url}>Visit the site</a>
+            </div>
+          )
+        }
         {
           p.repo.url && p.repo.visibility === 'public' && (
             <div class="button-row aside__actions">

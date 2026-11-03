@@ -5,3 +5,5 @@
 /work/commerce-showcase/store-seed /work/saelle-care#store-seed 301
 # Features are rows on the project page (spec 010).
 /work/:project/:feature /work/:project#:feature 301
+# Profile links (spec 012): the Shopify profile is the home page.
+/shopify / 301
