@@ -1,0 +1,19 @@
+---
+title: An ingredient glossary built from data
+project: saelle-care
+problem: Shoppers look up ingredients before they buy, and a page written by hand for each one goes out of date.
+decision: The ingredient metaobject publishes its own web pages, with an A–Z glossary built from the same entries and product pages linking to them.
+surfaces: [theme, data]
+skills: [Metaobjects, SEO, Liquid]
+quality:
+  - SEO title and description come from each entry's fields
+  - Every ingredient page lists the products that use it
+order: 12
+---
+Turning on the metaobject's online store capability gives each ingredient a URL and a template,
+`templates/metaobject/ingredient.json`. The glossary page groups every entry by letter, and the
+ingredient chips on a product page link to those pages.
+
+Liquid can't look up which products reference a metaobject, so "Found in" scans the catalog for the
+ingredient when the page renders. That holds for a catalog this size; the limit and the trade-off are
+documented in the spec.

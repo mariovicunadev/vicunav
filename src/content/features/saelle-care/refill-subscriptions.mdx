@@ -1,0 +1,19 @@
+---
+title: Refills on subscription
+project: saelle-care
+problem: Refills are the products customers buy again, so they should be able to subscribe without leaving the product page.
+decision: Shopify Subscriptions owns the plans and the renewal billing; the theme renders its own purchase options block that reads those plans.
+surfaces: [theme, checkout]
+skills: [Selling plans, Shopify Subscriptions, Liquid, Progressive enhancement]
+quality:
+  - Tested end to end with a test order; the contract appears in Shopify Subscriptions
+  - The block joins the product form with the HTML form attribute, without touching theme core
+order: 11
+---
+Plans (every 4, 8 or 12 weeks, 10% off) are created in Shopify Subscriptions, not by a script: the
+app that owns a plan is the one that bills renewals and lists the contracts. The theme reads them
+through `product.selling_plan_groups`, swaps the price when the shopper picks "Subscribe and save"
+and shows the plan under the line in the cart.
+
+A disabled field is not submitted, so switching back to one-time purchase removes the plan from the
+request with no script logic. Checkout shows the recurring subtotal and the delivery frequency.

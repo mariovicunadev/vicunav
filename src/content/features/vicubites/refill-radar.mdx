@@ -1,0 +1,24 @@
+---
+title: "Refill Radar: reminders before the bag runs out"
+project: vicubites
+problem: Pet food is bought again on a rhythm, and a customer who runs out before reordering may buy elsewhere.
+decision: The app predicts each customer's run-out date from their orders; the storefront, Klaviyo and Flow deliver the reminder.
+surfaces: [app, theme, data]
+skills: [Webhooks, App metafields, Theme app extensions, Web pixels, Klaviyo, Shopify Flow]
+quality:
+  - Reorders counted server-side from orders, so ad blockers and consent don't hide them
+  - Reminder events carry a unique id, so a retried event is not counted twice
+  - Customer data limited to what a reminder needs, read when sending and not stored
+order: 16
+---
+Every new order arrives through a webhook. The app estimates when the food runs out (bag size and
+daily portion, or the customer's own reorder rhythm once there is one) and stores the date in the
+app's own metafields.
+
+A theme app block shows "Time to restock?" on the home page with a one-click reorder of the exact
+bag, closest pet first. A `Refill due` event goes to Klaviyo for the email, and a Flow trigger lets
+the merchant build their own automation without code. B2B companies sync to HubSpot with their
+contacts.
+
+The web pixel measures views and clicks as a minimum; the reorders themselves are counted from
+orders on the server.

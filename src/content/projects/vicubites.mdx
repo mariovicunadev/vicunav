@@ -6,8 +6,8 @@ summary: "Pet food for two kinds of buyer on one store: pet owners on autoship a
 kind: concept
 role: Design and development
 year: 2026
-surfaces: [theme, data]
-stack: [Liquid, Horizon (OS 2.0), JavaScript, Metafields, Metaobjects, Shopify Subscriptions, Search & Discovery]
+surfaces: [theme, app, checkout, functions, data, performance]
+stack: [Liquid, Horizon (OS 2.0), JavaScript, Metafields, Metaobjects, Shopify Subscriptions, Search & Discovery, TypeScript, React Router, Polaris, Prisma, PostgreSQL, Shopify Functions, Klaviyo, Shopify Flow, HubSpot, Vercel]
 live:
   url: https://vicubites.myshopify.com
 repo:
@@ -31,3 +31,7 @@ stopped.
   ingredient pages read the same data the merchant edits.
 - Badge, Benefit, Ingredients and Purchase options are theme blocks that drop into any section.
 - The feeding calculator, the autoship picker and the filters work before JavaScript loads.
+- An embedded app checks the catalog's nutrition data and fixes it in bulk, and predicts when each
+  customer runs out of food so the storefront, Klaviyo and Flow can remind them.
+- Shopify Functions handle the checkout rules: a reward for reordering on time, an order limit for
+  retail buyers and a starter kit built at checkout from the shopper's choice.

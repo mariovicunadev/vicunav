@@ -1,0 +1,21 @@
+---
+title: A free gift the cart can see coming
+project: saelle-care
+problem: A free-gift offer only works if shoppers know how close they are, and the gift has to come and go with the cart without breaking it.
+decision: An automatic Buy X Get Y discount prices the gift at zero; the theme shows the progress and adds, removes or limits the gift through the Ajax Cart API.
+surfaces: [theme, data]
+skills: [Discounts, Ajax Cart API, JavaScript, Accessibility, Unit testing]
+quality:
+  - Cart rules in a pure function with 13 unit tests
+  - Progress announced to screen readers (role="status") and exposed as a progressbar
+  - A shopper's "no thanks" is respected, stored as a cart attribute
+order: 13
+---
+The price is always Shopify's: the discount is seeded like the rest of the store, and the theme
+never sets a price. A bar in the cart drawer and on `/cart` shows how far the cart is from the
+threshold; crossing it adds the travel-size gift, dropping below removes it, and a second gift is
+clamped back to one.
+
+Testing in the storefront found two issues the unit tests couldn't: the theme's storefront cart
+action is refused on a password-protected store, so the cart calls use the Ajax Cart API, and a
+duplicated gift could split into two lines, now handled in the tested rules.

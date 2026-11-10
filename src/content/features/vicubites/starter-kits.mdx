@@ -1,0 +1,21 @@
+---
+title: "Starter kits: native bundle vs. Cart Transform"
+project: vicubites
+problem: New customers want a starter kit, and one kit has a single fixed content while the other lets them pick a recipe and a flavor.
+decision: The fixed kit is a native bundle created through the Admin API; the configurable kit uses a Cart Transform Function that expands it into the chosen products and splits the price to the cent.
+surfaces: [functions, checkout, app, theme]
+skills: [Shopify Functions, Cart Transform, Bundles, Theme app extensions, TypeScript]
+quality:
+  - Worst case measured at 10.31 M of 11 M instructions (200 lines, 18 kit lines), with the limit documented
+  - Inventory and fulfillment tracked per component, checked with a test order
+  - Component prices always add up to the kit price
+order: 18
+---
+Eighteen recipe and flavor combinations would mean eighteen variants on a native bundle, so the
+cat kit is one product and a theme app block collects the choice as line properties. The Function
+expands the line into its two components at checkout; the order shows them grouped under the kit.
+An admin page builds the Function's configuration from the store's products and warns when it needs
+an update.
+
+The margin is thin by design and stated in the README: about 25 kit lines in a full cart would pass
+the limit, and growing the options would mean moving the Function to Rust.

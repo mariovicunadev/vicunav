@@ -1,0 +1,18 @@
+---
+title: Measuring performance the way Shopify does
+project: vicubites
+problem: A single Lighthouse run is noisy, and most of a store's mobile score can be platform script the theme doesn't control.
+decision: A repeatable audit command that follows Shopify's theme method (median of three runs, preview bar blocked), then fixes only the causes the theme owns.
+surfaces: [theme, performance]
+skills: [Lighthouse, Core Web Vitals, Images, Tooling]
+quality:
+  - Theme Store-style average of 74, above the 60 bar
+  - One command reruns the audit, ready for CI
+order: 13
+---
+The baseline separated the platform's own scripts from the theme's cost before anything was
+changed. Late or oversized images competing with the largest contentful paint were the theme's
+part, and those were fixed.
+
+One hypothesis, that the product gallery was the bottleneck, was measured and turned out wrong, so
+it was dropped instead of "optimised". `npm run audit` gives the same numbers on any machine.

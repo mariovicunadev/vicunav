@@ -1,0 +1,21 @@
+---
+title: A routine quiz that runs on content, not code
+project: saelle-care
+problem: New shoppers don't know which four products make a routine for their skin, and a long collection page doesn't tell them.
+decision: Questions and routines as metaobjects, a pure scoring module, the result rendered by the Section Rendering API and the whole routine added to the cart in one request.
+surfaces: [theme, data]
+skills: [Metaobjects, Section Rendering API, Ajax Cart API, Progressive enhancement, Unit testing]
+quality:
+  - Scoring covered by 19 unit tests that run against the seeded quiz content
+  - Works without JavaScript (form post and a list of routine links)
+  - Reloading the page keeps the result
+order: 9
+---
+Four questions, their answers and the tags each answer adds are metaobject entries, so the merchant
+edits the quiz in the admin. A pure function scores the tags and picks a routine; the routine is its
+own metaobject web page with SEO fields, and the quiz shows that same page as its result through the
+Section Rendering API, so one template serves both.
+
+"Add the routine" sends every product in one `/cart/add.js` call and opens the theme's cart drawer
+through the theme's own cart update event, instead of a custom drawer. Headings inside the embedded
+result are re-levelled so the page keeps one outline.

@@ -1,0 +1,21 @@
+---
+title: Accessibility checked with a screen reader
+project: saelle-care
+problem: Automated audits pass pages that still confuse people using a screen reader or a pointer with speech.
+decision: A page-by-page review with the mouse, the keyboard and NVDA, every finding traced to its cause, and minimal changes where the cause is in the base theme.
+surfaces: [theme, performance]
+skills: [Accessibility, ARIA, WCAG 2.2, Lighthouse]
+quality:
+  - Lighthouse accessibility and SEO 100 at release, mobile and desktop
+  - Every color the theme renders checked against the tokens, all text at WCAG AA
+  - Each finding recorded with its cause and fix in the spec
+order: 15
+---
+A design review first brought every color the theme renders back to the brand tokens: section
+backgrounds kept from the base theme, muted text drawn with opacity and a few hard-coded values
+passed the token check but not WCAG. Type, elevation and motion were refined in the same pass.
+
+The screen reader review then found what the audits missed. Menu items without a submenu were
+announced as "collapsed", the hero and the journal and collection cards read only their image under
+the pointer because of a full-card link overlay, and dialogs left focus on the page body when they
+closed. Each one was fixed at its cause, and the changes to theme core are listed in the spec.

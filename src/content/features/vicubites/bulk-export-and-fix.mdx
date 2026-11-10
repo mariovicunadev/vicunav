@@ -1,0 +1,23 @@
+---
+title: Bulk export and a spreadsheet fix with a preview
+project: vicubites
+problem: Fixing missing data one product at a time doesn't scale, and a bulk write that half-applies is worse than none.
+decision: One bulk operations engine for reading and writing; fixes go through a CSV template, a reviewed preview and a single bulk mutation with results per line.
+surfaces: [app, data]
+skills: [Bulk operations, Admin GraphQL API, Webhooks, TypeScript, Streaming]
+quality:
+  - An invalid row is skipped whole, with the reason taken from the metafield definition; nothing is half-fixed
+  - Webhook and polling can each finish a job, so a race between them can't lose a result
+  - Results matched back to rows through each line's number
+order: 15
+---
+Exports run a bulk query, stream the JSONL result, rebuild the product tree from `__parentId`
+(children can arrive before or after their parent) and write a CSV. The same engine feeds the data
+health audit and later the order history for refill predictions.
+
+A fix starts from a downloaded template. The app validates the uploaded file, shows which rows will
+change, which stay the same and which are skipped and why, and only after "Apply" stages a JSONL
+file and runs `bulkOperationRunMutation`.
+
+A webhook only says that an operation finished, so the handler reads the operation again before
+completing the job, the same way polling does.
