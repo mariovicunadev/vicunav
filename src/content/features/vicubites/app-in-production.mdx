@@ -1,0 +1,21 @@
+---
+title: A typed app, in production
+project: vicubites
+problem: An app that reads and writes store data needs types that follow the API, checks on every change and a deployment that doesn't depend on a laptop.
+decision: Admin GraphQL operations typed by codegen, business logic in pure tested modules, CI on every push, and production on Vercel with Neon Postgres.
+surfaces: [app]
+skills: [TypeScript, GraphQL codegen, Vitest, GitHub Actions, Vercel, PostgreSQL, Prisma]
+quality:
+  - 314 unit and contract tests; typecheck, lint, tests and production build run on every push and pull request
+  - Access scopes added per feature and listed in each spec
+  - Admin API version pinned to 2026-10 in the app, codegen and app config
+order: 19
+---
+Every Admin API call goes through one typed helper, so a field that doesn't exist fails codegen and
+reading a field the query didn't ask for fails the typecheck. Routes stay thin: authenticate, call
+a pure function, render.
+
+The app runs serverless on Vercel, since everything it does starts from a request or a webhook, with
+Postgres on Neon (pooled connections for the app, a direct one for migrations). The production
+build is part of CI because it catches server-only code imported into the browser, which the
+typecheck misses.

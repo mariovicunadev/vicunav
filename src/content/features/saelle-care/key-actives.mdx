@@ -1,0 +1,19 @@
+---
+title: Key actives and the rest of the routine
+project: saelle-care
+problem: A product page has to say who it is for, what is in it and what to use with it, without the merchant writing that copy for every product.
+decision: An identity line, key actives with their concentration from a join metaobject, a shared benefits group and complementary products from Search & Discovery, each block hidden when its data is missing.
+surfaces: [theme, data]
+skills: [Metaobjects, Search & Discovery, Theme blocks, Accessibility]
+quality:
+  - axe reports 0 violations and Lighthouse accessibility is 100 on the product page
+  - Blocks render nothing when their data is missing, so no empty headings
+order: 14
+---
+Concentrations depend on the product, not on the ingredient, so a `key_active` metaobject joins the
+two; refills share their formula's entries. "How refills and subscriptions work" comes from one
+benefits group used by every product, and "Complete the routine" reads Search & Discovery's
+complementary products.
+
+The base theme's sticky add-to-cart button had no accessible name. It is fixed in the store's own
+code, without editing the theme file.

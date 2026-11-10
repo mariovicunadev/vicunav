@@ -1,0 +1,20 @@
+---
+title: A cart drawer that helps finish the order
+project: vicubites
+problem: Pet owners stop one bag short of free shipping and forget the wet food or treats that go with what they just added.
+decision: Horizon's own drawer, extended with a free-shipping bar tied to a real discount, a delivery note and "Pairs well with" from Search & Discovery, all rendered in Liquid.
+surfaces: [theme]
+skills: [Liquid, Section Rendering API, Search & Discovery, B2B]
+quality:
+  - The bar matches an automatic free-shipping discount at $49, not a number in the theme
+  - Suggestions render server-side, so they work without JavaScript and survive the drawer's re-render
+  - B2B buyers see none of the consumer incentives
+order: 12
+---
+Horizon re-renders the drawer through the Section Rendering API after every cart change, so
+anything rendered in Liquid stays current with no extra script. The free-shipping bar reads the
+cart total against the $49 threshold of a real automatic discount; "Pairs well with" reads the
+complementary products set in Search & Discovery instead of fetching recommendations.
+
+A buyer signed in as a B2B customer gets the same drawer without the bar or the suggestions, from
+the same theme.

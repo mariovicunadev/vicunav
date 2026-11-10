@@ -1,0 +1,23 @@
+---
+title: Checkout rules with Shopify Functions
+project: vicubites
+problem: Customers who reorder on time should get a reward, and retail buyers shouldn't place wholesale-sized orders, without a script running outside Shopify's checkout.
+decision: Two Functions in TypeScript, a product discount and a cart validation, configured from an app page that edits each instance without a redeploy.
+surfaces: [functions, checkout, app]
+skills: [Shopify Functions, Discounts, Cart validation, TypeScript, Performance]
+quality:
+  - "Measured on 200-line carts: 7.45 M and 6.73 M instructions of the 11 M limit"
+  - Unit tests with typed input fixtures, plus a contract test between the admin page and each Function
+  - "Both fail open: missing settings mean no discount and no error, and a failing validation never blocks checkout"
+order: 17
+---
+The refill reward discounts dry food when the customer's predicted refill date is within 14 days,
+before or after. The order limit caps six units per variant for retail buyers and points them to a
+B2B account; B2B buyers are not limited.
+
+Testing in the store changed two decisions. A validation error during cart interaction makes the
+Ajax Cart API reject every change, removals included, so the limit runs only at checkout steps. And
+a subscription line could take two discounts, so it is excluded.
+
+Half of a Function's cost is parsing its input. A first version of the order limit built with
+`flatMap` and a `Map` cost 9.1 M at 200 lines; plain loops brought it to 6.73 M.

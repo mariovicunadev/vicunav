@@ -1,0 +1,23 @@
+---
+title: A health score for the catalog's nutrition data
+project: vicubites
+problem: Filters, the feeding calculator and the nutrition panel only work if every product has its data, and nobody notices a missing field until a shopper does.
+decision: An embedded app that scores every product against declarative rules, shows what each one is missing, and puts the same score on the product page in the admin.
+surfaces: [app, data]
+skills: [TypeScript, React Router, Polaris, Admin UI extensions, Bulk operations, B2B]
+quality:
+  - Rules are pure functions with unit tests; an invariant test checks that the weights add up to 100
+  - The full audit and the product page block share one evaluation, so they give the same score
+  - Read-only access; the Admin API version is pinned in one place per config file
+order: 14
+---
+Each rule (guaranteed analysis, ingredients, feeding guide, image alt text, B2B catalog coverage)
+is declared as data with a weight and returns what is missing, so a message reads "add kcal per kg",
+not "invalid". The audit reads the whole catalog through a bulk operation; an Admin UI extension on
+the product page asks the app for one product and shows the same score.
+
+Adding the B2B coverage rule dropped the average from 92 to 84: eighteen recipes were not in any
+catalog that clinics could order from. The first audit also caught an image whose alt text a demo
+script had cleared on a live product.
+
+The app is open source: [vicubites-app](https://github.com/mariovicunadev/vicubites-app).

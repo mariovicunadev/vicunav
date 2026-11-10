@@ -1,0 +1,20 @@
+---
+title: Routine sets as native bundles
+project: saelle-care
+problem: Shoppers who want the whole routine should get a set price, while stock is still counted per bottle.
+decision: Shopify's fixed bundles, created by the seed with a fixed price and components linked per variant, instead of a bundle app or a separate product with its own stock.
+surfaces: [data, theme, checkout]
+skills: [Bundles, Admin GraphQL API, Liquid, Idempotent seeding]
+quality:
+  - Inventory checked per component with a test draft order, cancelled and restocked
+  - Compare-at price is the sum of the components, so the saving shown is real
+order: 10
+---
+Three sets are created by the same seed as the rest of the catalog (`productSet`, then
+`productVariantRelationshipBulkUpdate`). They are variant fixed bundles: each component has a single
+size, so a product bundle would only add one-value pickers to the page. A "What's inside" block lists
+the components, the cart shows them under the set, and each quiz routine points to its set with the
+saving.
+
+Without `priceInput: FIXED`, Shopify resets the set price to the sum of its components, so the seed
+always sends it, and rewrites components only when they differ.
